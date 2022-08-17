@@ -1,8 +1,8 @@
 api/build:
-	cd ./apps/api; go build -o ./tmp/api ./main.go; cd -
+	cd ./apps/api; make build; cd -
 
-api/run: api/build
-	cd ./apps/api; ./tmp/api; cd -
+api/run:
+	cd ./apps/api; make run; cd -
 
 api/watch:
 	ulimit -n 1000 #increase the file watch limit, might required on MacOS
