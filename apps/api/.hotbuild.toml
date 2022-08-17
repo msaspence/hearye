@@ -1,0 +1,4 @@
+buildcmd = "go run ./main.go"
+excludedir = [".git", "tmp", "docs", "vendor"]
+projectdir = "/Users/msaspence/Projects/hearye"
+runcmd = "tmp/tmp_bin"
