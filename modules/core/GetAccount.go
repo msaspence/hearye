@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/hearye/hearye/persistence"
+	"github.com/hearye/hearye/db"
 )
 
 type Account struct {
@@ -11,19 +11,19 @@ type Account struct {
 	Source      string
 }
 
-func GetAccount(account Account) (persistence.Account, error) {
-	foundAccount, found, findErr := persistence.FindByExternalIDAndSource(account.ExternalID, account.Source)
+func GetAccount(account Account) (db.Account, error) {
+	foundAccount, found, findErr := db.FindByExternalIDAndSource(account.ExternalID, account.Source)
 	if findErr != nil {
-		return persistence.Account{}, findErr
+		return db.Account{}, findErr
 	}
 	if found {
-		_, _ = persistence.UpdateAccount(foundAccount.ID, persistence.AccountInput{DisplayName: account.DisplayName, Domain: account.Domain, ExternalID: account.ExternalID, Source: account.Source})
+		_, _ = db.UpdateAccount(foundAccount.ID, db.AccountInput{DisplayName: account.DisplayName, Domain: account.Domain, ExternalID: account.ExternalID, Source: account.Source})
 		return foundAccount, nil
 	}
 
-	createdAccount, createErr := persistence.CreateAccount(persistence.AccountInput{DisplayName: account.DisplayName, Domain: account.Domain, ExternalID: account.ExternalID, Source: account.Source})
+	createdAccount, createErr := db.CreateAccount(db.AccountInput{DisplayName: account.DisplayName, Domain: account.Domain, ExternalID: account.ExternalID, Source: account.Source})
 	if createErr != nil {
-		return persistence.Account{}, createErr
+		return db.Account{}, createErr
 	}
 
 	return createdAccount, nil

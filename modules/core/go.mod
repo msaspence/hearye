@@ -2,11 +2,11 @@ module github.com/hearye/hearye/core
 
 go 1.19
 
-replace github.com/hearye/hearye/persistence => ../persistence
+replace github.com/hearye/hearye/db => ../db
 
 replace github.com/hearye/hearye/env => ../env
 
-require github.com/hearye/hearye/persistence v0.0.0-00010101000000-000000000000
+require github.com/hearye/hearye/db v0.0.0-00010101000000-000000000000
 
 require (
 	github.com/hearye/hearye/env v0.0.0-00010101000000-000000000000 // indirect

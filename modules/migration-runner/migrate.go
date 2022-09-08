@@ -4,9 +4,9 @@ import (
 	"log"
 
 	"github.com/go-gormigrate/gormigrate/v2"
+	"github.com/hearye/hearye/db"
+	"github.com/hearye/hearye/db/migrations"
 	"github.com/hearye/hearye/env"
-	"github.com/hearye/hearye/persistence"
-	"github.com/hearye/hearye/persistence/migrations"
 )
 
 // const (
@@ -15,11 +15,11 @@ import (
 
 func main() {
 	env.Load()
-	db := persistence.Db()
+	db := db.Db()
 
 	m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{
-		// create accounts table
 		migrations.M201608301400_createAccounts(),
+		migrations.M201608301401_createUsers(),
 	})
 
 	if err := m.Migrate(); err != nil {

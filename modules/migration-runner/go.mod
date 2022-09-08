@@ -4,12 +4,12 @@ go 1.19
 
 replace github.com/hearye/hearye/env => ../env
 
-replace github.com/hearye/hearye/persistence => ../persistence
+replace github.com/hearye/hearye/db => ../db
 
 require (
 	github.com/go-gormigrate/gormigrate/v2 v2.0.2
 	github.com/hearye/hearye/env v0.0.0-00010101000000-000000000000
-	github.com/hearye/hearye/persistence v0.0.0-00010101000000-000000000000
+	github.com/hearye/hearye/db v0.0.0-00010101000000-000000000000
 )
 
 require (
