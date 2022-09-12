@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "paths": {
+      "@hearye/api": ["../../apps/api/src"],
+      "@hearye/api/*": ["../../apps/api/src/*"],
+    }
+  },
+  "extends": "@tsconfig/recommended/tsconfig.json"
+}
