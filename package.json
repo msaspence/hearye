@@ -27,7 +27,8 @@
   },
   "workspaces": [
     "apps/api",
-    "packages/db"
+    "packages/db",
+    "packages/env"
   ],
   "dependencies": {
     "dotenv": "^16.0.2"
