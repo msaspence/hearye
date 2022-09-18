@@ -2,7 +2,7 @@ import { FastifyPluginCallback } from 'fastify'
 import { App, FileInstallationStore, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 import { eventHandler } from './eventHandler'
-
+import { homedir } from 'os'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 
 import {
@@ -12,10 +12,6 @@ import {
   SLACK_STATE_SECRET,
 } from '@hearye/env'
 
-console.log('SLACK_CLIENT_ID', SLACK_CLIENT_ID)
-console.log('SLACK_CLIENT_SECRET', SLACK_CLIENT_SECRET)
-console.log('SLACK_SIGNING_SECRET', SLACK_SIGNING_SECRET)
-console.log('SLACK_STATE_SECRET', SLACK_STATE_SECRET)
 export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const receiver = new FastifyReceiver({
     signingSecret: SLACK_SIGNING_SECRET,
@@ -38,8 +34,12 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     logLevel: LogLevel.DEBUG,
     receiver,
   })
+  app.event('app_mention', async (x) => {
+    const { event, say } = x
 
-  app.event('app_mention', async ({ event, say }) => {
+    console.dir(await x.client.users.info({ user: event.user }), {
+      depth: null,
+    })
     await say({
       text: `<@${event.user}> Hi there :wave:`,
       blocks: [
