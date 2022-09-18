@@ -87,8 +87,7 @@ module.exports = {
           'sm',
           'md',
           'lg',
-          'gp',
-          'pc',
+          'up'
         ],
         min: 3,
       },

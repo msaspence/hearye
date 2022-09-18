@@ -80,7 +80,7 @@ async function devApiApp(
     return watcher
   }
 
-  createWatch('./')
+  createWatch('../../')
 })()
 
 function clearImportCache() {

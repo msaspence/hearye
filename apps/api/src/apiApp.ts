@@ -1,3 +1,5 @@
+import { Account } from '@hearye/db'
+
 import {
   FastifyBaseLogger,
   FastifyInstance,
@@ -5,6 +7,8 @@ import {
   RawServerDefault,
 } from 'fastify'
 import { IncomingMessage, ServerResponse } from 'http'
+
+import { registerSlack } from './integrations/slack'
 
 export async function apiApp(
   app: FastifyInstance<
@@ -15,7 +19,9 @@ export async function apiApp(
     FastifyTypeProviderDefault
   >
 ) {
-  app.get('/', () => {
+  app.get('/', async () => {
+    return (await Account.query().limit(1))[0].id
     return { hello: 'world' }
   })
+  app.register(registerSlack, { prefix: '/slack' })
 }
