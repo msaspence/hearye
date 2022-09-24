@@ -1,8 +1,7 @@
 import { FastifyPluginCallback } from 'fastify'
 import { App, FileInstallationStore, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
-import { eventHandler } from './eventHandler'
-import { homedir } from 'os'
+import { handleEvent } from './handleEvent'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 
 import {
@@ -34,23 +33,6 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     logLevel: LogLevel.DEBUG,
     receiver,
   })
-  app.event('app_mention', async (x) => {
-    const { event, say } = x
 
-    console.dir(await x.client.users.info({ user: event.user }), {
-      depth: null,
-    })
-    await say({
-      text: `<@${event.user}> Hi there :wave:`,
-      blocks: [
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `<@${event.user}> Hi there :wave:`,
-          },
-        },
-      ],
-    })
-  })
+  app.event('app_mention', handleEvent)
 }
