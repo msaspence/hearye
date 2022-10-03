@@ -1,12 +1,7 @@
 import { MessageEvent } from '@slack/bolt'
 
 export async function isSlackEventAnnouncment(event: MessageEvent) {
-  const mentions = getMentionedUsersFromSlackEvent(event)
-  console.dir(event.payload.type, { depth: null })
-  return true
-  //     const appId = await event.client.users.info(mentions[0])
-  // console.log(appId)
-  // return !!event
+  return event.payload.type === 'app_mention'
 }
 
 function getMentionedUsersFromSlackEvent(event: MessageEvent) {

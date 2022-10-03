@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:api": "npm run dev -w @hearye/api",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:api": "npm run dev --workspace @hearye/api",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npm run migrate --workspace @hearye/db"
   },
   "author": "",
   "license": "ISC",
