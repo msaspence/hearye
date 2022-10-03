@@ -5,7 +5,9 @@ export function up(knex: Knex) {
     table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'))
     table.string('source').notNullable()
     table.string('externalId').notNullable()
+    table.uuid('accountId').notNullable().references('id').inTable('accounts')
 
+    table.index('accountId')
     table.unique(['source', 'externalId'])
   })
 }

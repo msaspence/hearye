@@ -2,13 +2,15 @@ import { Model } from 'objection'
 
 import '../init'
 
-export class Account extends Model {
+export class Announcement extends Model {
   id: string | undefined
-  domain: string | undefined
+  channelExternalId: string | undefined
+  timestamp: string | undefined
+  accountId: string | undefined
   externalId: string | undefined
   source: string | undefined
 
   static get tableName() {
-    return 'accounts'
+    return 'announcements'
   }
 }

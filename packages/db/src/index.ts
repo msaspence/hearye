@@ -1,5 +1,6 @@
 export { upsertAccount } from './access/accounts/upsertAccount'
 export { findOrCreateAccount } from './access/accounts/findOrCreateAccount'
 export { findOrCreateUsers } from './access/users/findOrCreateUsers'
+export { findOrCreateAnnouncement } from './access/announcements/findOrCreateAnnouncement'
 export * from './models/Account'
 export * from './models/User'

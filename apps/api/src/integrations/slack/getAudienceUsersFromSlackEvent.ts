@@ -1,10 +1,10 @@
 // import { getUsersDetailsFromSlackEvent } from './getUsersDetailsFromSlackEvent'
 import { findOrCreateUsers } from '@hearye/db'
 
-export async function getAudienceUsersFromSlackEvent(account, event) {
+export async function getAudienceUsersFromSlackEvent(accountId: string, event) {
   //   console.dir(event.payload.blocks, { depth: null })
   const userIds = await getUsersDetailsFromSlackEvent(event)
-  return findOrCreateUsers('slack', userIds)
+  return findOrCreateUsers('slack', accountId, userIds)
 }
 
 type PossibleMentionBlock = {
@@ -30,6 +30,5 @@ function getUsersDetailsFromSlackEvent(event) {
   const uniqueMentions = mentions.filter(
     (id, index, self) => self.indexOf(id) === index
   )
-  console.log('uniqueMentions', uniqueMentions)
   return uniqueMentions
 }

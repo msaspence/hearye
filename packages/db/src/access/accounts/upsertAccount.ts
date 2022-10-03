@@ -6,19 +6,6 @@ export function upsertAccount({
   source: string
   externalId: string
 }) {
-  console.log(
-    source,
-    externalId,
-    Account.query()
-      .insert({
-        source,
-        externalId,
-      })
-      .onConflict(['source', 'externalId'])
-      .merge()
-      .toKnexQuery()
-      .toSQL()
-  )
   return Account.query()
     .insert({
       source,

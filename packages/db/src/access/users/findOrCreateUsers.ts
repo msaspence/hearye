@@ -3,11 +3,13 @@ import { UniqueViolationError } from 'objection'
 
 export async function findOrCreateUsers(
   source: string,
+  accountId: string,
   externalIds: string[]
 ): Promise<User[]> {
   const existingUsers = await User.query()
-    .whereIn('externalId', externalIds)
+    .where('accountId', accountId)
     .where('source', 'slack')
+    .whereIn('externalId', externalIds)
     .select('id', 'externalId')
   const existingUserExternalIds = existingUsers.map(
     ({ externalId }) => externalId
@@ -19,6 +21,7 @@ export async function findOrCreateUsers(
   try {
     return await User.query().insert(
       missingUsers.map((externalId) => ({
+        accountId,
         source,
         externalId,
       }))
@@ -26,7 +29,7 @@ export async function findOrCreateUsers(
   } catch (error) {
     if (error instanceof UniqueViolationError) {
       // return []
-      return findOrCreateUsers(source, externalIds)
+      return findOrCreateUsers(source, accountId, externalIds)
     }
     throw error
   }
