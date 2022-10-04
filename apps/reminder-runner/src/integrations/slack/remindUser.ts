@@ -1,4 +1,5 @@
 import { Reminder, markReminderSent } from '@hearye/db'
+import { WebClient } from '@slack/web-api'
 
 import { clientForAccountId } from './clientForAccount'
 
@@ -10,11 +11,16 @@ export async function remindUser(reminder: Reminder) {
   await markReminderSent(reminder, async () => {
     await client.chat.postMessage({
       channel: reminder.user.externalId,
-      text: generateTextForReminder(reminder),
+      text: await generateTextForReminder(client, reminder),
     })
   })
 }
 
-function generateTextForReminder(reminder: Reminder) {
-  return `Hey <@${reminder.user.externalId}>, you have an unacknoledged announcement in <#${reminder.announcement.channelExternalId}>.\n\nPlease take the time read and acknowledge this announcment with a 👍🏻.\n\n`
+async function generateTextForReminder(client: WebClient, reminder: Reminder) {
+  const { permalink } = await client.chat.getPermalink({
+    channel: reminder.announcement.channelExternalId,
+    message_ts: reminder.announcement.timestamp,
+  })
+
+  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged announcement in <#${reminder.announcement.channelExternalId}>.\n\n<${permalink}|Go To Announcment>\n\nPlease take the time read and acknowledge this announcment with a 👍🏻.`
 }

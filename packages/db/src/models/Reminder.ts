@@ -16,7 +16,7 @@ export class Reminder extends Model {
   announcement!: Announcement
 
   static relationMappings = {
-    announcment: {
+    announcement: {
       relation: Model.BelongsToOneRelation,
       modelClass: Announcement,
       join: {
