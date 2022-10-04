@@ -3,7 +3,7 @@ import { App, FileInstallationStore, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 import { handleEvent } from './handleEvent'
 import { FastifyReceiver } from 'slack-bolt-fastify'
-
+import * as installationManagement from './installationManagement'
 import {
   SLACK_CLIENT_ID,
   SLACK_CLIENT_SECRET,
@@ -18,7 +18,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     clientSecret: SLACK_CLIENT_SECRET,
     scopes: ['commands', 'chat:write', 'app_mentions:read'],
     stateSecret: SLACK_STATE_SECRET,
-    installationStore: new FileInstallationStore(),
+    installationStore: installationManagement,
     path: '/events',
     installerOptions: {
       directInstall: true,
@@ -35,4 +35,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
   })
 
   app.event('app_mention', handleEvent)
+  app.event('app_mention', (event) => {
+    event.client
+  })
 }

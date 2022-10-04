@@ -1,0 +1,11 @@
+{
+  "name": "@hearye/reminder-runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "DEBUG=hearye* node src/dev.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

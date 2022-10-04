@@ -5,6 +5,7 @@ export function up(knex: Knex) {
     table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'))
     table.string('source').notNullable()
     table.string('externalId').notNullable()
+    table.text('installation')
 
     table.unique(['source', 'externalId'])
   })
