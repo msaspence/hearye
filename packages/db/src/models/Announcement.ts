@@ -3,12 +3,12 @@ import { Model } from 'objection'
 import '../init'
 
 export class Announcement extends Model {
-  id: string | undefined
-  channelExternalId: string | undefined
-  timestamp: string | undefined
-  accountId: string | undefined
-  externalId: string | undefined
-  source: string | undefined
+  id!: string
+  channelExternalId!: string
+  timestamp!: string
+  accountId!: string
+  externalId!: string
+  source!: string
 
   static get tableName() {
     return 'announcements'

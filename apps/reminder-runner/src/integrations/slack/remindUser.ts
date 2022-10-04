@@ -9,8 +9,8 @@ export async function remindUser(reminder: Reminder) {
 
   await markReminderSent(reminder, async () => {
     await client.chat.postMessage({
-      channel: 'U03T5T28UU8',
-      text: "here's a reminder",
+      channel: reminder.user.externalId,
+      text: "Here's a reminder",
     })
   })
 }

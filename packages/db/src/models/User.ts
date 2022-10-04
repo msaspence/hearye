@@ -3,10 +3,10 @@ import { Model } from 'objection'
 import '../init'
 
 export class User extends Model {
-  id: string | undefined
-  externalId: string | undefined
-  source: string | undefined
-  accountId: string | undefined
+  id!: string
+  externalId!: string
+  source!: string
+  accountId!: string
 
   static get tableName() {
     return 'users'
