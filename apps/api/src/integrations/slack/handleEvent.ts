@@ -19,7 +19,7 @@ export async function handleEvent(event) {
 
     const announcement = await getAnnouncementFromSlackEvent(account.id, event)
     if (!announcement.id) throw new Error('Announcement with id required')
-
+    console.log(event.payload)
     await scheduleReminder(account.id, announcement.id, userIds)
 
     await acknowledgeAnnouncementReciept(event)

@@ -2,6 +2,7 @@ import { Model } from 'objection'
 
 import { User } from './User'
 import '../init'
+import { Announcement } from './Announcement'
 
 export class Reminder extends Model {
   id!: string
@@ -12,8 +13,17 @@ export class Reminder extends Model {
   remindedAt?: Date
 
   user!: User
+  announcement!: Announcement
 
   static relationMappings = {
+    announcment: {
+      relation: Model.BelongsToOneRelation,
+      modelClass: Announcement,
+      join: {
+        from: 'reminders.announcementId',
+        to: 'announcements.id',
+      },
+    },
     user: {
       relation: Model.BelongsToOneRelation,
       modelClass: User,

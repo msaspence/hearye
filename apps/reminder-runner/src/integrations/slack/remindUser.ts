@@ -10,7 +10,11 @@ export async function remindUser(reminder: Reminder) {
   await markReminderSent(reminder, async () => {
     await client.chat.postMessage({
       channel: reminder.user.externalId,
-      text: "Here's a reminder",
+      text: generateTextForReminder(reminder),
     })
   })
+}
+
+function generateTextForReminder(reminder: Reminder) {
+  return `Hey <@${reminder.user.externalId}>, you have an unacknoledged announcement in <#${reminder.announcement.channelExternalId}>.\n\nPlease take the time read and acknowledge this announcment with a 👍🏻.\n\n`
 }
