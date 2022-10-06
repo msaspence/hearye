@@ -11,6 +11,7 @@ export class Reminder extends Model {
   userId!: string | undefined
   remindAt?: Date
   remindedAt?: Date
+  acknowledgedAt?: Date
 
   user!: User
   announcement!: Announcement

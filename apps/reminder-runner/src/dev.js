@@ -46,6 +46,12 @@ async function handleChange() {
   try {
     register()
     runner = require('./main')
+    if (global.gc) {
+      debug('Garbage collecting')
+      global.gc()
+    } else {
+      debug('Garbage collection not exposed')
+    }
     await runner.main()
     debug('App reloaded')
   } catch (error) {

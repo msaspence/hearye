@@ -1,27 +1,32 @@
-import { MessageEvent } from '@slack/bolt'
+// import { SlackEventMiddlewareArgs } from '@slack/bolt'
 
-export async function isSlackEventAnnouncment(event: MessageEvent) {
+export async function isSlackEventAnnouncment(event: {
+  payload: { type: string }
+}) {
   return event.payload.type === 'app_mention'
 }
 
-function getMentionedUsersFromSlackEvent(event: MessageEvent) {
-  return traverseBlocksForMentions(event.payload.blocks)
-}
+// function getMentionedUsersFromSlackEvent(
+//   event: SlackEventMiddlewareArgs<'app_mention'>
+// ) {
+//   const { blocks } = event.payload
+//   return traverseBlocksForMentions(blocks || [])
+// }
 
-type BlockWithMentions = {
-  type: string
-  elements: BlockWithMentions[]
-  user_id: string
-}
-function traverseBlocksForMentions(
-  blocks: BlockWithMentions | BlockWithMentions[]
-): string[] {
-  if (Array.isArray(blocks)) {
-    return blocks.flatMap(traverseBlocksForMentions)
-  } else if (blocks.type === 'user') {
-    return [blocks.user_id]
-  } else if (blocks.elements) {
-    return traverseBlocksForMentions(blocks.elements)
-  }
-  return []
-}
+// type BlockWithMentions = {
+//   type: string
+//   elements?: BlockWithMentions[]
+//   user_id?: string
+// }
+// function traverseBlocksForMentions(
+//   blocks: BlockWithMentions | BlockWithMentions[]
+// ): string[] {
+//   if (Array.isArray(blocks)) {
+//     return blocks.flatMap(traverseBlocksForMentions)
+//   } else if (blocks.type === 'user' && blocks.user_id) {
+//     return [blocks.user_id]
+//   } else if (blocks.elements) {
+//     return traverseBlocksForMentions(blocks.elements)
+//   }
+//   return []
+// }

@@ -62,6 +62,12 @@ async function devApiApp(
   async function handleChange() {
     debug('Change detected reloading app')
     clearImportCache()
+    if (global.gc) {
+      debug('Garbage collecting')
+      global.gc()
+    } else {
+      debug('Garbage collection not exposed')
+    }
     await restart()
     debug('App restarted')
   }

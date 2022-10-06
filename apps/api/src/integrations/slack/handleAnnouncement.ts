@@ -1,4 +1,4 @@
-import { App } from '@slack/bolt'
+import { SlackEventMiddlewareArgs } from '@slack/bolt'
 
 import { isSlackEventAnnouncment } from './isSlackEventAnnouncment'
 import { acknowledgeAnnouncementReciept } from './acknowledgeAnnouncementReciept'
@@ -7,7 +7,9 @@ import { getAudienceUsersFromSlackEvent } from './getAudienceUsersFromSlackEvent
 import { getAnnouncementFromSlackEvent } from './getAnnouncementFromSlackEvent'
 import { scheduleReminder } from '@hearye/db'
 
-export async function handleEvent(event) {
+export async function handleAnnouncement(
+  event: SlackEventMiddlewareArgs<'app_mention'>
+) {
   if (await isSlackEventAnnouncment(event)) {
     const account = await getAccountFromSlackEvent(event)
     if (!account.id) throw new Error('Account with id required')
@@ -19,7 +21,6 @@ export async function handleEvent(event) {
 
     const announcement = await getAnnouncementFromSlackEvent(account.id, event)
     if (!announcement.id) throw new Error('Announcement with id required')
-    console.log(event.payload)
     await scheduleReminder(account.id, announcement.id, userIds)
 
     await acknowledgeAnnouncementReciept(event)

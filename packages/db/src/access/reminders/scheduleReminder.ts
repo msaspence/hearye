@@ -20,7 +20,10 @@ export async function scheduleReminder(
     (userId) => !existingReminderUserIds.includes(userId)
   )
   if (!missingUsers.length) return
-  const remindAt = dayjs().add(1, 'day').toDate()
+  const remindAt = dayjs()
+    .add(iteration - 1, 'minute')
+    .add(10, 'seconds')
+    .toDate()
   try {
     await Reminder.query().insert(
       missingUsers.map((userId) => ({

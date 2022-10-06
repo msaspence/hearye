@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "DEBUG=hearye* node src/dev.js"
+    "dev": "DEBUG=hearye* node --expose-gc src/dev.js"
   },
   "author": "",
   "license": "ISC"

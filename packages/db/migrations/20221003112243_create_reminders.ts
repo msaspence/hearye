@@ -12,11 +12,12 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('userId').notNullable().references('id').inTable('users')
     table.datetime('remindAt').notNullable()
     table.datetime('remindedAt')
-    table.datetime('acknoledgedAt')
+    table.datetime('acknowledgedAt')
     table.integer('iteration').defaultTo(1)
 
     table.index(['accountId', 'userId', 'remindedAt'])
-    table.index(['remindAt', 'remindedAt', 'acknoledgedAt'])
+    table.index(['announcementId', 'userId', 'acknowledgedAt']) // acknowledgeAnnouncement
+    table.index(['remindAt', 'remindedAt', 'acknowledgedAt']) // findDueRemindersWithAnnouncementAndUser
     table.unique(['accountId', 'announcementId', 'userId', 'iteration'])
   })
 }

@@ -1,7 +1,8 @@
 import { FastifyPluginCallback } from 'fastify'
-import { App, FileInstallationStore, LogLevel } from '@slack/bolt'
+import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
-import { handleEvent } from './handleEvent'
+import { handleAnnouncement } from './handleAnnouncement'
+import { handleReaction } from './handleReaction'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 import * as installationManagement from './installationManagement'
 import {
@@ -34,8 +35,6 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     receiver,
   })
 
-  app.event('app_mention', handleEvent)
-  app.event('app_mention', (event) => {
-    event.client
-  })
+  app.event('app_mention', handleAnnouncement)
+  app.event('reaction_added', handleReaction)
 }

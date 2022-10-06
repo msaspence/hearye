@@ -10,6 +10,7 @@ export async function up(knex: Knex): Promise<void> {
     table.string('timestamp').notNullable()
 
     table.index('accountId')
+    table.index(['channelExternalId', 'timestamp']) // acknowledgeAnnouncement
     table.unique(['accountId', 'source', 'channelExternalId', 'timestamp'])
     table.unique(['accountId', 'source', 'externalId'])
   })
