@@ -14,10 +14,17 @@ export async function up(knex: Knex): Promise<void> {
     table.datetime('remindedAt')
     table.datetime('acknowledgedAt')
     table.integer('iteration').defaultTo(1)
+    table.datetime('lockedUntil').defaultTo(null)
 
     table.index(['accountId', 'userId', 'remindedAt'])
-    table.index(['announcementId', 'userId', 'acknowledgedAt']) // acknowledgeAnnouncement
-    table.index(['remindAt', 'remindedAt', 'acknowledgedAt']) // findDueRemindersWithAnnouncementAndUser
+    table.index(
+      ['announcementId', 'userId', 'acknowledgedAt'],
+      'reminders_index_for_acknowledgeAnnouncement'
+    )
+    table.index(
+      ['remindAt', 'remindedAt', 'acknowledgedAt', 'lockedUntil'],
+      'reminders_index_for_findDueRemindersWithAnnouncementAndUser'
+    )
     table.unique(['accountId', 'announcementId', 'userId', 'iteration'])
   })
 }

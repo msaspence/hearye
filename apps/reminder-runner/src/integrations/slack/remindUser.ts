@@ -7,7 +7,9 @@ export async function remindUser(reminder: Reminder) {
   if (!reminder.accountId) throw new Error('Must provide accountId')
   const client = await clientForAccountId(reminder.accountId)
   if (!client) throw new Error("Couldn't initialize client")
-
+  await new Promise((resolve) => {
+    setTimeout(resolve, 10000)
+  })
   await markReminderSent(reminder, async () => {
     await client.chat.postMessage({
       channel: reminder.user.externalId,

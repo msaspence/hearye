@@ -6,7 +6,7 @@ export async function acknowledgeAnnouncement(
   timestamp: string
 ) {
   await Reminder.query()
-    .update({ acknowledgedAt: new Date() })
+    .patch({ acknowledgedAt: new Date() })
     .whereIn('id', function () {
       this.select('reminders.id')
         .from('reminders')

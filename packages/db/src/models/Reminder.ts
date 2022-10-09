@@ -9,9 +9,10 @@ export class Reminder extends Model {
   accountId!: string
   iteration!: number
   userId!: string | undefined
-  remindAt?: Date
-  remindedAt?: Date
-  acknowledgedAt?: Date
+  remindAt!: Date
+  remindedAt?: Date | null
+  acknowledgedAt?: Date | null
+  lockedUntil?: Date | null
 
   user!: User
   announcement!: Announcement

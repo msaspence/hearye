@@ -1,4 +1,4 @@
-import { findDueRemindersWithAnnouncementAndUser } from '@hearye/db'
+import { findDueRemindersWithAnnouncementAndUser, Reminder } from '@hearye/db'
 import createDebug from 'debug'
 
 import { remindUser } from './integrations/slack/remindUser'
@@ -7,10 +7,19 @@ const debug = createDebug('hearye:db:findAndProcessDueReminders')
 
 export async function findAndProcessDueReminders() {
   const reminders = await findDueRemindersWithAnnouncementAndUser()
-  debug(
-    `${reminders.length} found to process`,
-    findDueRemindersWithAnnouncementAndUser
-  )
-  await Promise.all(reminders.map(remindUser))
+  debug(`${reminders.length} found to process`)
+  await Promise.all(reminders.map(manageErrors(remindUser)))
   return reminders.length
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function manageErrors(callback: (reminder: Reminder) => Promise<any>) {
+  return async (reminder: Reminder) => {
+    try {
+      return await callback(reminder)
+    } catch (error: unknown) {
+      debug('Error')
+      // Do nothing for now
+    }
+  }
 }

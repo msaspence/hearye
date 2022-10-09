@@ -16,7 +16,6 @@ export async function markReminderSent(
         .findById(id)
         .patch({ remindedAt: new Date() })
       debug('Patched existing')
-
       const remindAt = dayjs()
         .add(reminder.iteration, 'minute')
         .add(10, 'seconds')
@@ -25,6 +24,7 @@ export async function markReminderSent(
         ...reminder,
         remindAt,
         iteration: reminder.iteration + 1,
+        lockedUntil: null,
       }
       await Reminder.query(transaction).insert(newReminder)
       debug('Inserted next reminder')
