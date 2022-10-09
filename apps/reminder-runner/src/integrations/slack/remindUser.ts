@@ -7,26 +7,41 @@ export async function remindUser(reminder: Reminder) {
   if (!reminder.accountId) throw new Error('Must provide accountId')
   const client = await clientForAccountId(reminder.accountId)
   if (!client) throw new Error("Couldn't initialize client")
-  await new Promise((resolve) => {
-    setTimeout(resolve, 10000)
-  })
   await markReminderSent(reminder, async () => {
+    const announcementPermalink = await generateAnnouncmentPermalink(
+      client,
+      reminder
+    )
+    if (!announcementPermalink) throw new Error("Couldn't generate permalink")
     await client.chat.postMessage({
       channel: reminder.user.externalId,
-      blocks: await generateBlocksForReminder(client, reminder),
+      blocks: await generateBlocksForReminder(
+        announcementPermalink,
+        reminder.announcement.channelExternalId
+      ),
+      text: await generateTextForReminder(
+        announcementPermalink,
+        reminder.announcement.channelExternalId
+      ),
     })
   })
 }
 
-async function generateBlocksForReminder(
+async function generateAnnouncmentPermalink(
   client: WebClient,
-  reminder: Reminder
+  reminder: { announcement: { channelExternalId: string; timestamp: string } }
 ) {
   const { permalink } = await client.chat.getPermalink({
     channel: reminder.announcement.channelExternalId,
     message_ts: reminder.announcement.timestamp,
   })
+  return permalink
+}
 
+async function generateBlocksForReminder(
+  permalink: string,
+  channelExternalId: string
+) {
   return [
     {
       type: 'header',
@@ -39,15 +54,14 @@ async function generateBlocksForReminder(
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `You have an unacknowledged announcement in <#${reminder.announcement.channelExternalId}>`,
+        text: `You have an unacknowledged announcement in <#${channelExternalId}>`,
       },
     },
     {
       type: 'section',
       text: {
-        type: 'plain_text',
-        text: 'Please take the time read and acknowledge this announcment with a :+1:',
-        emoji: true,
+        type: 'mrkdwn',
+        text: `Please take the time read and acknowledge <${permalink}|this announcement> with a :+1:`,
       },
     },
     {
@@ -69,4 +83,11 @@ async function generateBlocksForReminder(
       type: 'divider',
     },
   ]
+}
+
+async function generateTextForReminder(
+  permalink: string,
+  channelExternalId: string
+) {
+  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged announcement in <#${channelExternalId}>.\n\n<${permalink}|Go To Announcment>\n\nPlease take the time read and acknowledge this announcement with a 👍🏻.`
 }
