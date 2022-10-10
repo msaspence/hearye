@@ -6,6 +6,8 @@ export function up(knex: Knex) {
     table.string('source').notNullable()
     table.string('externalId').notNullable()
     table.text('installation')
+    table.datetime('createdAt', { useTz: false })
+    table.datetime('updatedAt', { useTz: false })
 
     table.unique(['source', 'externalId'])
   })

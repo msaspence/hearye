@@ -8,6 +8,8 @@ export async function up(knex: Knex): Promise<void> {
     table.string('source').notNullable()
     table.string('channelExternalId').notNullable()
     table.string('timestamp').notNullable()
+    table.datetime('createdAt', { useTz: false })
+    table.datetime('updatedAt', { useTz: false })
 
     table.index('accountId')
     table.index(

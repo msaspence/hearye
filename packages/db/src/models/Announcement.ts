@@ -1,8 +1,8 @@
-import { Model } from 'objection'
+import { BaseModel } from './BaseModel'
 
 import '../init'
 
-export class Announcement extends Model {
+export class Announcement extends BaseModel {
   id!: string
   channelExternalId!: string
   timestamp!: string

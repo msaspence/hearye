@@ -1,8 +1,8 @@
-import { Model } from 'objection'
+import { BaseModel } from './BaseModel'
 
 import '../init'
 
-export class Account extends Model {
+export class Account extends BaseModel {
   id: string | undefined
   domain: string | undefined
   externalId: string | undefined

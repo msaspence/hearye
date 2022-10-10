@@ -1,8 +1,8 @@
-import { Model } from 'objection'
+import { BaseModel } from './BaseModel'
 
 import '../init'
 
-export class User extends Model {
+export class User extends BaseModel {
   id!: string
   externalId!: string
   source!: string

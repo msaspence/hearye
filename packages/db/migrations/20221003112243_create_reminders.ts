@@ -15,6 +15,8 @@ export async function up(knex: Knex): Promise<void> {
     table.datetime('acknowledgedAt')
     table.integer('iteration').defaultTo(1)
     table.datetime('lockedUntil').defaultTo(null)
+    table.datetime('createdAt', { useTz: false })
+    table.datetime('updatedAt', { useTz: false })
 
     table.index(['accountId', 'userId', 'remindedAt'])
     table.index(

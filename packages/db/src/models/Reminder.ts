@@ -1,10 +1,9 @@
-import { Model } from 'objection'
-
 import { User } from './User'
+import { BaseModel } from './BaseModel'
 import '../init'
 import { Announcement } from './Announcement'
 
-export class Reminder extends Model {
+export class Reminder extends BaseModel {
   id!: string
   accountId!: string
   iteration!: number
@@ -19,7 +18,7 @@ export class Reminder extends Model {
 
   static relationMappings = {
     announcement: {
-      relation: Model.BelongsToOneRelation,
+      relation: BaseModel.BelongsToOneRelation,
       modelClass: Announcement,
       join: {
         from: 'reminders.announcementId',
@@ -27,7 +26,7 @@ export class Reminder extends Model {
       },
     },
     user: {
-      relation: Model.BelongsToOneRelation,
+      relation: BaseModel.BelongsToOneRelation,
       modelClass: User,
       join: {
         from: 'reminders.userId',
