@@ -7,6 +7,7 @@ export class User extends BaseModel {
   externalId!: string
   source!: string
   accountId!: string
+  timezone?: string
 
   static get tableName() {
     return 'users'
