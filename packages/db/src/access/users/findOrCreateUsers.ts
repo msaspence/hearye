@@ -4,7 +4,10 @@ import { UniqueViolationError } from 'objection'
 export async function findOrCreateUsers(
   source: string,
   accountId: string,
-  externalIds: string[]
+  externalIds: string[],
+  loadAdditionalFields: (
+    userIds: string[]
+  ) => Promise<{ externalId: string; timezone: string }[]>
 ): Promise<User[]> {
   const existingUsers = await User.query()
     .where('accountId', accountId)
@@ -14,22 +17,27 @@ export async function findOrCreateUsers(
   const existingUserExternalIds = existingUsers.map(
     ({ externalId }) => externalId
   )
-  const missingUsers = externalIds.filter(
+  const missingUserIds = externalIds.filter(
     (externalId) => !existingUserExternalIds.includes(externalId)
   )
-  if (!missingUsers.length) return existingUsers
+  if (!missingUserIds.length) return existingUsers
   try {
-    return await User.query().insert(
-      missingUsers.map((externalId) => ({
-        accountId,
-        source,
-        externalId,
-      }))
-    )
+    const additionalUserData = await loadAdditionalFields(missingUserIds)
+    const mappedUsersForInserts = additionalUserData.map((user) => ({
+      accountId,
+      source,
+      ...user,
+    }))
+    return await User.query().insert(mappedUsersForInserts)
   } catch (error) {
     if (error instanceof UniqueViolationError) {
       // return []
-      return findOrCreateUsers(source, accountId, externalIds)
+      return findOrCreateUsers(
+        source,
+        accountId,
+        externalIds,
+        loadAdditionalFields
+      )
     }
     throw error
   }

@@ -6,6 +6,7 @@ export class BaseModel extends Model {
 
   $beforeInsert() {
     this.createdAt = new Date()
+    this.updatedAt = new Date()
   }
 
   $beforeUpdate() {

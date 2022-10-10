@@ -18,6 +18,7 @@
   "dependencies": {
     "@fastify/middie": "^8.0.0",
     "@slack/bolt": "^3.12.1",
+    "@supercharge/promise-pool": "^2.3.2",
     "dd-trace": "^3.2.0",
     "debug": "^4.3.4",
     "fastify": "^4.5.3",

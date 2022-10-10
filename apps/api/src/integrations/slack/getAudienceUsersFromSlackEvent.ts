@@ -1,10 +1,17 @@
 // import { getUsersDetailsFromSlackEvent } from './getUsersDetailsFromSlackEvent'
 import { findOrCreateUsers } from '@hearye/db'
+import { WebClient } from '@slack/web-api'
+import { PromisePool } from '@supercharge/promise-pool'
 
 export async function getAudienceUsersFromSlackEvent(accountId: string, event) {
   //   console.dir(event.payload.blocks, { depth: null })
   const userIds = await getUsersDetailsFromSlackEvent(event)
-  return findOrCreateUsers('slack', accountId, userIds)
+  return findOrCreateUsers(
+    'slack',
+    accountId,
+    userIds,
+    loadSlackUserData(event)
+  )
 }
 
 type PossibleMentionBlock = {
@@ -31,4 +38,16 @@ function getUsersDetailsFromSlackEvent(event) {
     (id, index, self) => self.indexOf(id) === index
   )
   return uniqueMentions
+}
+
+function loadSlackUserData({ client }: { client: WebClient }) {
+  return async (userIds: string[]) => {
+    const { results } = await PromisePool.for(userIds).process(
+      async (externalId) => {
+        const { user } = await client.users.info({ user: externalId })
+        return { externalId, timezone: user?.tz || 'UTC' }
+      }
+    )
+    return results
+  }
 }

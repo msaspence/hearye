@@ -8,6 +8,7 @@ export function up(knex: Knex) {
     table.uuid('accountId').notNullable().references('id').inTable('accounts')
     table.datetime('createdAt', { useTz: false })
     table.datetime('updatedAt', { useTz: false })
+    table.string('timezone')
 
     table.index('accountId')
     table.unique(['source', 'externalId'])
