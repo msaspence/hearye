@@ -46,7 +46,7 @@ export async function scheduleReminder(
           userId,
           iteration,
           remindAt,
-          lockedUntil: dayjs.utc().add(1, 'minute').toDate(),
+          lockedUntil: dayjs().add(1, 'minute').toDate(),
         }
       })
     )

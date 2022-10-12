@@ -30,11 +30,11 @@
   "workspaces": [
     "apps/api",
     "apps/reminder-runner",
+    "packages/dayjs",
     "packages/db",
     "packages/env"
   ],
   "dependencies": {
-    "dayjs": "^1.11.5",
     "dotenv": "^16.0.2"
   }
 }

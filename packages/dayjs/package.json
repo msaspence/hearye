@@ -1,15 +1,14 @@
 {
-  "name": "@hearye/db",
+  "name": "@hearye/dayjs",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
-  "scripts": {
-    "migrate": "knex migrate:latest",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "./src/index.ts",
+  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dayjs": "^1.11.5",
+    "dayjs-business-days2": "^1.1.1",
     "knex": "^2.3.0",
     "objection": "^3.0.1",
     "pg": "^8.8.0"
