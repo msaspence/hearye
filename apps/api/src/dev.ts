@@ -60,6 +60,7 @@ async function devApiApp(
   debug(`Server listening on ${address}:${port}`)
 
   async function handleChange() {
+    debug('=====================================================')
     debug('Change detected reloading app')
     clearImportCache()
     if (global.gc) {

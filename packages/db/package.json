@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dayjs-business-days": "^1.0.4",
+    "dayjs-business-days2": "^1.1.1",
     "knex": "^2.3.0",
     "objection": "^3.0.1",
     "pg": "^8.8.0"

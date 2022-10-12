@@ -1,3 +1,7 @@
+import dayjs from 'dayjs'
+import dayjsBusinessDays from 'dayjs-business-days2'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 export { upsertAccount } from './access/accounts/upsertAccount'
 export { updateAccountInstallation } from './access/accounts/updateAccountInstallation'
 export { deleteAccountInstallation } from './access/accounts/deleteAccountInstallation'
@@ -15,3 +19,7 @@ export { findInstallationByAccountId } from './access/accounts/findAccountTokenB
 export * from './models/Account'
 export * from './models/User'
 export * from './models/Reminder'
+
+dayjs.extend(dayjsBusinessDays)
+dayjs.extend(utc)
+dayjs.extend(timezone)

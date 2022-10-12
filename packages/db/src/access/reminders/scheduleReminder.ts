@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { UniqueViolationError } from 'objection'
 
 import { Reminder } from '../../models/Reminder'
+import { User } from '../../models/User'
 
 export async function scheduleReminder(
   accountId: string,
@@ -15,25 +16,39 @@ export async function scheduleReminder(
     .whereIn('userId', userIds)
     .where('iteration', iteration)
     .select('id', 'userId')
+  const timezones = (await User.query().whereIn('id', userIds)).reduce(
+    (result, { id, timezone }) => {
+      if (id) result[id] = timezone || 'UTC'
+      return result
+    },
+    {} as Record<string, string>
+  )
   const existingReminderUserIds = existingReminders.map(({ userId }) => userId)
   const missingUsers = userIds.filter(
     (userId) => !existingReminderUserIds.includes(userId)
   )
   if (!missingUsers.length) return
-  const remindAt = dayjs()
-    .add(iteration - 1, 'minute')
-    .add(10, 'seconds')
-    .toDate()
+
   try {
     await Reminder.query().insert(
-      missingUsers.map((userId) => ({
-        accountId,
-        announcementId,
-        userId,
-        iteration,
-        remindAt,
-        lockedUntil: dayjs().add(1, 'minute').toDate(),
-      }))
+      missingUsers.map((userId) => {
+        const remindAt = dayjs()
+          .tz(timezones[userId])
+          .businessDaysAdd(1)
+          .hour(9)
+          .minute(0)
+          .second(0)
+          .millisecond(0)
+          .toDate()
+        return {
+          accountId,
+          announcementId,
+          userId,
+          iteration,
+          remindAt,
+          lockedUntil: dayjs.utc().add(1, 'minute').toDate(),
+        }
+      })
     )
     return
   } catch (error) {

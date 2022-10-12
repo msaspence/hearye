@@ -8,7 +8,7 @@ const debug = createDebug('hearye:db:findDueRemindersWithAnnouncementAndUser')
 export async function findDueRemindersWithAnnouncementAndUser() {
   const lockedIds = (
     await Reminder.query()
-      .patch({ lockedUntil: dayjs().add(1, 'minute').toDate() })
+      .patch({ lockedUntil: dayjs.utc().add(1, 'minute').toDate() })
       .whereIn('reminders.id', function () {
         return this.select('reminders.id')
           .where('remindAt', '<', new Date())
