@@ -5,6 +5,7 @@ export { findAccountInstallation } from './access/accounts/findAccountInstallati
 export { findOrCreateAccount } from './access/accounts/findOrCreateAccount'
 export { findOrCreateUsers } from './access/users/findOrCreateUsers'
 export { findUser } from './access/users/findUser'
+export { updateUserTimezone } from './access/users/updateUserTimezone'
 export { findOrCreateAnnouncement } from './access/announcements/findOrCreateAnnouncement'
 export { scheduleReminder } from './access/reminders/scheduleReminder'
 export { findDueRemindersWithAnnouncementAndUser } from './access/reminders/findDueRemindersWithAnnouncementAndUser'

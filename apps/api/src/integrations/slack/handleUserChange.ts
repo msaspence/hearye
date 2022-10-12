@@ -1,5 +1,5 @@
 import { UserChangeEvent } from '@slack/bolt'
-import { User } from '@hearye/db'
+import { updateUserTimezone } from '@hearye/db'
 
 export async function handleUserChange({
   payload: {
@@ -8,8 +8,5 @@ export async function handleUserChange({
 }: {
   payload: UserChangeEvent
 }) {
-  return User.query()
-    .where('source', 'slack')
-    .where('externalId', id)
-    .patch({ timezone })
+  return updateUserTimezone(id, timezone)
 }
