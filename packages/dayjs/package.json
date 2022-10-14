@@ -4,6 +4,7 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
+    "hello": "echo hello",
     "build": "rm -rf ./dist && swc ./src --out-dir ./dist"
   },
   "author": "",
