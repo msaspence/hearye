@@ -4,7 +4,14 @@
       "syntax": "typescript",
       "tsx": false
     },
-    "target": "es2019"
+    "target": "es2019",
+    "baseUrl": ".",
+    "paths": {
+      "@hearye/env": ["../../packages/env/dist"],
+      "@hearye/env/*": ["../../packages/env/dist/*"],
+      "@hearye/db": ["../../packages/db/dist"],
+      "@hearye/db/*": ["../../packages/db/dist/*"]
+    }
   },
   "sourceMaps": true,
   "module": {

@@ -1,4 +1,4 @@
-import { dayjs } from '../../../../dayjs/src'
+import { dayjs } from '@hearye/dayjs'
 import { Reminder } from '../../models/Reminder'
 import { User } from '../../models/User'
 
