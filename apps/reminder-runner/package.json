@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist",
+    "start": "TZ=UTC DEBUG=* node dist/index.js",
     "dev": "TZ=UTC DEBUG=\"${DEBUG:=hearye*}\" node --expose-gc src/dev.js"
   },
   "author": "",
