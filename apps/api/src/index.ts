@@ -1,11 +1,11 @@
 import Fastify from 'fastify'
 
 import { apiApp } from './apiApp'
-import { config } from './config'
+import { PORT } from '@hearye/env'
 
 const fastify = Fastify({
   logger: true,
 })
 
 apiApp(fastify)
-fastify.listen({ port: config.port })
+fastify.listen({ port: PORT })

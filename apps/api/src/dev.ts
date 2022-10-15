@@ -10,7 +10,7 @@ import Debug from 'debug'
 import chokidar from 'chokidar'
 import ConvertAnsi from 'ansi-to-html'
 
-import { config } from './config'
+import { PORT } from '@hearye/env'
 import { isErrorWithStack } from './utils/errors'
 const convert = new ConvertAnsi()
 
@@ -51,7 +51,7 @@ async function devApiApp(
   const { restart, listen } = await start({
     protocol: 'http',
     hostname: '127.0.0.1',
-    port: config.port,
+    port: PORT,
     app: devApiApp,
   })
 
