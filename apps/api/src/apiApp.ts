@@ -6,6 +6,8 @@ import {
 } from 'fastify'
 import { IncomingMessage, ServerResponse } from 'http'
 
+import { connectionCheck } from '@hearye/db'
+
 import { registerSlack } from './integrations/slack'
 
 export async function apiApp(
@@ -18,7 +20,7 @@ export async function apiApp(
   >
 ) {
   app.get('/', async () => {
-    return { hello: 'world' }
+    return { hello: 'world', dbConnection: await connectionCheck() }
   })
   app.register(registerSlack, { prefix: '/slack' })
 }

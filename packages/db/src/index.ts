@@ -12,6 +12,7 @@ export { findDueRemindersWithAnnouncementAndUser } from './access/reminders/find
 export { markReminderSent } from './access/reminders/markReminderSent'
 export { acknowledgeAnnouncement } from './access/reminders/acknowledgeAnnouncement'
 export { findInstallationByAccountId } from './access/accounts/findAccountTokenByAccountId'
+export { connectionCheck } from './connectionCheck'
 export * from './models/Account'
 export * from './models/User'
 export * from './models/Reminder'
