@@ -14,6 +14,7 @@
     "migrate": "npm run migrate --workspace @hearye/db",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "npm run start --workspace @hearye/api",
+    "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
     "tunnel": "lt --subdomain hearye --port 8080"
   },
   "author": "",
