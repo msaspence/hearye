@@ -4,7 +4,7 @@
     "experimentalDecorators": true,
     "jsx": "react",
     "module": "commonjs",
-    "baseUrl": "/Users/msaspence/Projects/hearye",
+    "baseUrl": ".",
     "paths": {
       "@hearye/api": ["apps/api/src"],
       "@hearye/api/*": ["apps/api/src/*"],

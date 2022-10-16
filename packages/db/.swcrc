@@ -8,7 +8,9 @@
     "baseUrl": ".",
     "paths": {
       "@hearye/dayjs": ["../../packages/dayjs/dist"],
-      "@hearye/dayjs/*": ["../../packages/dayjs/dist/*"]
+      "@hearye/dayjs/*": ["../../packages/dayjs/dist/*"],
+      "@hearye/env": ["../../packages/env/dist"],
+      "@hearye/env/*": ["../../packages/env/dist/*"]
     }
   },
   "sourceMaps": true,
