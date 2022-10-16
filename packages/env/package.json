@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "rm -rf ./dist && swc ./src --out-dir ./dist",
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file .swcrc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

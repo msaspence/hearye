@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "build": "rm -rf ./dist && swc ./src --out-dir ./dist",
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file .swcrc",
     "migrate": "knex migrate:latest --knexfile ./src/knexconfig.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

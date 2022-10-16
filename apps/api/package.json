@@ -4,7 +4,7 @@
   "description": "",
   "main": "dev.js",
   "scripts": {
-    "build": "rm -rf ./dist && swc ./src --out-dir ./dist",
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file .swcrc",
     "start": "node dist/index.js",
     "dev": "node --expose-gc --loader ts-node/esm src/dev.ts",
     "test": "echo \"Error: no test specified\" && exit 1",

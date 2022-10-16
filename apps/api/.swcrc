@@ -10,7 +10,9 @@
       "@hearye/env": ["../../packages/env/dist"],
       "@hearye/env/*": ["../../packages/env/dist/*"],
       "@hearye/db": ["../../packages/db/dist"],
-      "@hearye/db/*": ["../../packages/db/dist/*"]
+      "@hearye/db/*": ["../../packages/db/dist/*"],
+      "@hearye/dayjs": ["../../packages/dayjs/dist"],
+      "@hearye/dayjs/*": ["../../packages/dayjs/dist/*"]
     }
   },
   "sourceMaps": true,

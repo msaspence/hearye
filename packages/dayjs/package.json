@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "build": "rm -rf ./dist && swc ./src --out-dir ./dist"
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file .swcrc"
   },
   "author": "",
   "license": "ISC",
