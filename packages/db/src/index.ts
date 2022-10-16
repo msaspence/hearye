@@ -16,5 +16,7 @@ export { connectionCheck } from './connectionCheck'
 export * from './models/Account'
 export * from './models/User'
 export * from './models/Reminder'
+import * as env from '@hearye/env'
 import { xxx } from 'xxx'
 console.log(xxx)
+console.log(env)
