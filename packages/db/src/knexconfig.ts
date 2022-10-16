@@ -1,6 +1,5 @@
 import type { Knex } from 'knex'
 import '@hearye/env'
-import { xxx } from 'xxx'
 
 const config: Knex.Config | { [key: string]: Knex.Config } = {
   client: 'postgresql',
@@ -14,5 +13,4 @@ const config: Knex.Config | { [key: string]: Knex.Config } = {
     max: 10,
   },
 }
-console.log(xxx)
 module.exports = config
