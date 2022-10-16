@@ -3,6 +3,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "jsx": "react",
+    "module": "commonjs",
     "paths": {
       "@hearye/api": ["../../apps/api/src"],
       "@hearye/api/*": ["../../apps/api/src/*"],
