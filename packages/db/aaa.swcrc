@@ -1,0 +1,21 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false
+    },
+    "target": "es2019",
+    "baseUrl": ".",
+    "paths": {
+      "@hearye/dayjs": ["../../packages/dayjs/dist"],
+      "@hearye/dayjs/*": ["../../packages/dayjs/dist/*"],
+      "@hearye/env": ["../../packages/env/dist"],
+      "xxx": ["../../zzz"],
+      "@hearye/env/*": ["../../packages/env/dist/*"]
+    }
+  },
+  "sourceMaps": true,
+  "module": {
+    "type": "commonjs"
+  }
+}
