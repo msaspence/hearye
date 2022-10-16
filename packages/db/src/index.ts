@@ -16,3 +16,5 @@ export { connectionCheck } from './connectionCheck'
 export * from './models/Account'
 export * from './models/User'
 export * from './models/Reminder'
+import { xxx } from 'xxx'
+console.log(xxx)
