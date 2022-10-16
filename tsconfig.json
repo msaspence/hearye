@@ -5,12 +5,12 @@
     "jsx": "react",
     "module": "commonjs",
     "paths": {
-      "@hearye/api": ["../../apps/api/src"],
-      "@hearye/api/*": ["../../apps/api/src/*"],
-      "@hearye/db": ["../../packages/db/src"],
-      "@hearye/db/*": ["../../packages/db/src/*"],
-      "@hearye/env": ["../../packages/env/src"],
-      "@hearye/env/*": ["../../packages/env/src/*"]
+      "@hearye/api": ["./apps/api/src"],
+      "@hearye/api/*": ["./apps/api/src/*"],
+      "@hearye/db": ["./packages/db/src"],
+      "@hearye/db/*": ["./packages/db/src/*"],
+      "@hearye/env": ["./packages/env/src"],
+      "@hearye/env/*": ["./packages/env/src/*"]
     }
   },
   "ts-node": {

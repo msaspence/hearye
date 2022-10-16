@@ -15,7 +15,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "npm run start --workspace @hearye/api",
     "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
-    "tunnel": "lt --subdomain hearye --port 8080"
+    "tunnel": "lt --subdomain hearye --port 8080",
+    "test-ts": "ts-node ./test-ts.ts"
   },
   "author": "",
   "license": "ISC",
