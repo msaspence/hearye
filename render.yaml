@@ -42,7 +42,6 @@ envVarGroups:
   - name: DB Envs
     envVars:
       - key: DATABASE_URL
-        fromService:
-          type: postgres
+        fromDatabase:
           name: DB Production
           property: connectionString
