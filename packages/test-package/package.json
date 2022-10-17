@@ -1,0 +1,32 @@
+{
+  "name": "@hearye/test-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dev.js",
+  "scripts": {
+    "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file .swcrc",
+    "start": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/middie": "^8.0.0",
+    "@slack/bolt": "^3.12.1",
+    "@supercharge/promise-pool": "^2.3.2",
+    "dd-trace": "^3.2.0",
+    "debug": "^4.3.4",
+    "fastify": "^4.5.3",
+    "fastify-cli": "^5.4.1",
+    "slack-bolt-fastify": "^0.3.1",
+    "typescript": "^4.8.3"
+  },
+  "devDependencies": {
+    "@fastify/restartable": "^1.2.1",
+    "@swc-node/register": "^1.5.1",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.3.8",
+    "ansi-to-html": "^0.7.2",
+    "chokidar": "^3.5.3",
+    "ts-node": "^10.9.1"
+  }
+}
