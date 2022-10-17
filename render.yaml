@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: API Production
+    name: HearYe API Production
     env: node
     repo: https://github.com/msaspence/hearye
     buildCommand: DEBUG=* npm ci --production=false && npm run migrate && npm run build:api
