@@ -1,0 +1,48 @@
+services:
+  - type: web
+    name: API Production
+    env: node
+    repo: https://github.com/msaspence/hearye
+    buildCommand: DEBUG=* npm ci --production=false && npm run migrate && npm run build:api
+    startCommand: DEBUG=* npm run start:api
+    region: oregon
+    plan: starter
+    branch: main
+    rootDir: .
+    numInstances: 1
+    healthCheckPath: /
+    envVars:
+      - fromGroup: Production
+      - fromGroup: DB Envs
+    autoDeploy: true
+    domains:
+      - api.hearyebot.com
+  - type: worker
+    name: Reminder Runner Production
+    env: node
+    repo: https://github.com/msaspence/hearye
+    buildCommand: DEBUG=* npm ci && npm run build:reminder-runner
+    startCommand: DEBUG=* npm run start:reminder-runner
+
+    region: oregon
+    plan: starter
+    branch: main
+    rootDir: .
+    numInstances: 1
+    envVars:
+      - fromGroup: Production
+      - fromGroup: DB Envs
+    autoDeploy: true
+
+databases:
+  - name: DB Production
+    databaseName: hearye
+
+envVarGroups:
+  - name: DB Envs
+    envVars:
+      - key: DATABASE_URL
+        fromService:
+          type: postgres
+          name: DB Production
+          property: connectionString
