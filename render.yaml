@@ -10,7 +10,6 @@ services:
     branch: main
     rootDir: .
     numInstances: 1
-    healthCheckPath: /
     envVars:
       - fromGroup: Production
     autoDeploy: true
@@ -20,9 +19,8 @@ services:
     name: Reminder Runner Production
     env: node
     repo: https://github.com/msaspence/hearye
-    buildCommand: DEBUG=* npm ci && npm run build:reminder-runner
+    buildCommand: DEBUG=* npm ci --production=false && npm run build:reminder-runner
     startCommand: DEBUG=* npm run start:reminder-runner
-
     region: oregon
     plan: starter
     branch: main
