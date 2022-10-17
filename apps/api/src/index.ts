@@ -8,4 +8,4 @@ const fastify = Fastify({
 })
 
 apiApp(fastify)
-fastify.listen({ port: PORT })
+fastify.listen({ host: '0.0.0.0', port: PORT })
