@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:api": "npm run build:db && npm run build:env && npm run build --workspace @hearye/api && ls -la && cat packages/db/dist/index.js && cat apps/api/dist/apiApp.js && cat apps/api/dist/index.js",
+    "build:api": "npm run build:db && npm run build:env && npm run build --workspace @hearye/api && cat apps/api/dist/apiApp.js && cat apps/api/dist/index.js && cat packages/db/dist/index.js",
     "build:dayjs": "npm run build --workspace @hearye/dayjs",
     "build:db": "npm run build:dayjs && npm run build --workspace @hearye/db",
     "build:env": "npm run build --workspace @hearye/env",
