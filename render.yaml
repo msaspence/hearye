@@ -8,7 +8,10 @@ services:
       paths:
         - apps/api/**/*
         - packages/**/*
+      ignoredPaths:
+        - apps/reminder-runner/**/*
     startCommand: DEBUG=* npm run start:api
+    healthCheckPath: /
     region: oregon
     plan: starter
     branch: main
@@ -32,6 +35,8 @@ services:
       paths:
         - apps/reminder-runner/**/*
         - packages/**/*
+      ignoredPaths:
+        - apps/api/**/*
     startCommand: DEBUG=* npm run start:reminder-runner
     region: oregon
     plan: starter
