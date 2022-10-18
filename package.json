@@ -8,7 +8,7 @@
     "build:dayjs": "npm run build --workspace @hearye/dayjs",
     "build:db": "npm run build:env && npm run build:dayjs && npm run build --workspace @hearye/db",
     "build:env": "npm run build --workspace @hearye/env",
-    "build:reminder-runner": "npm run build --workspace @hearye/reminder-runner",
+    "build:reminder-runner": "npm run build:env && npm run build:db && npm run build --workspace @hearye/reminder-runner",
     "dev:api": "npm run dev --workspace @hearye/api",
     "dev:reminder-runner": "npm run dev --workspace @hearye/reminder-runner",
     "migrate": "npm run migrate --workspace @hearye/db",
