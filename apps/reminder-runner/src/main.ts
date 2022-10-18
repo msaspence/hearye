@@ -14,6 +14,6 @@ export async function main() {
 }
 
 export function stop() {
-  debug('Stopping loop')
+  debug('Stopping loop2')
   if (loop) clearTimeout(loop)
 }
