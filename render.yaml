@@ -1,9 +1,13 @@
 services:
   - type: web
-    name: HearYe API Production
+    name: API Production
     env: node
     repo: https://github.com/msaspence/hearye
     buildCommand: DEBUG=* npm ci --production=false && npm run migrate && npm run build:api
+    buildFilter:
+      paths:
+        - apps/api/**/*
+        - packages/**/*
     startCommand: DEBUG=* npm run start:api
     region: oregon
     plan: starter
@@ -20,6 +24,10 @@ services:
     env: node
     repo: https://github.com/msaspence/hearye
     buildCommand: DEBUG=* npm ci --production=false && npm run build:reminder-runner
+    buildFilter:
+      paths:
+        - apps/reminder-runner/**/*
+        - packages/**/*
     startCommand: DEBUG=* npm run start:reminder-runner
     region: oregon
     plan: starter
