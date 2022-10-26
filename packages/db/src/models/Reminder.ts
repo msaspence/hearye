@@ -8,6 +8,7 @@ export class Reminder extends BaseModel {
   accountId!: string
   iteration!: number
   userId!: string
+  retries!: number
   remindAt!: Date
   remindedAt?: Date | null
   acknowledgedAt?: Date | null

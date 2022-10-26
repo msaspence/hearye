@@ -1,4 +1,9 @@
-import { findDueRemindersWithAnnouncementAndUser, Reminder } from '@hearye/db'
+import {
+  findDueRemindersWithAnnouncementAndUser,
+  Reminder,
+  scheduleRetryReminder,
+} from '@hearye/db'
+import * as xxx from '@hearye/db'
 import createDebug from 'debug'
 
 import { remindUser } from './integrations/slack/remindUser'
@@ -16,10 +21,16 @@ export async function findAndProcessDueReminders() {
 function manageErrors(callback: (reminder: Reminder) => Promise<any>) {
   return async (reminder: Reminder) => {
     try {
-      return await callback(reminder)
+      return callback(reminder)
     } catch (error: unknown) {
-      debug('Error')
-      // Do nothing for now
+      try {
+        debug('Reminder failed, rescheduling')
+        return scheduleRetryReminder(reminder)
+      } catch (scheduleRetryError) {
+        // Do nothing for now
+        // eslint-disable-next-line no-console
+        console.error(scheduleRetryError)
+      }
     }
   }
 }

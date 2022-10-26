@@ -1,0 +1,22 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false
+    },
+    "target": "es2019",
+    "baseUrl": ".",
+    "paths": {
+      "@hearye/env": ["../../packages/env/src"],
+      "@hearye/env/*": ["../../packages/env/src/*"],
+      "@hearye/db": ["../../packages/db/src"],
+      "@hearye/db/*": ["../../packages/db/src/*"],
+      "@hearye/dayjs": ["../../packages/dayjs/src"],
+      "@hearye/dayjs/*": ["../../packages/dayjs/src/*"]
+    }
+  },
+  "sourceMaps": true,
+  "module": {
+    "type": "commonjs"
+  }
+}
