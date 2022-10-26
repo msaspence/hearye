@@ -3,6 +3,7 @@ import { UniqueViolationError } from 'objection'
 
 import { Reminder } from '../../models/Reminder'
 import { User } from '../../models/User'
+import { getRemindAt } from './getRemindAt'
 
 export async function scheduleReminder(
   accountId: string,
@@ -23,6 +24,7 @@ export async function scheduleReminder(
     },
     {} as Record<string, string>
   )
+
   const existingReminderUserIds = existingReminders.map(({ userId }) => userId)
   const missingUsers = userIds.filter(
     (userId) => !existingReminderUserIds.includes(userId)
@@ -32,20 +34,12 @@ export async function scheduleReminder(
   try {
     await Reminder.query().insert(
       missingUsers.map((userId) => {
-        const remindAt = dayjs()
-          .tz(timezones[userId])
-          .businessDaysAdd(1)
-          .hour(10)
-          .minute(Math.round(Math.random() * 59))
-          .second(0)
-          .millisecond(0)
-          .toDate()
         return {
           accountId,
           announcementId,
           userId,
           iteration,
-          remindAt,
+          remindAt: getRemindAt(iteration, timezones[userId]),
           lockedUntil: dayjs().add(1, 'minute').toDate(),
         }
       })

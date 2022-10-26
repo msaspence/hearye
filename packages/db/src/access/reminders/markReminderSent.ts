@@ -1,12 +1,13 @@
-import dayjs from 'dayjs'
 import createDebug from 'debug'
 
 const debug = createDebug('hearye:db:markReminderSent')
 
 import { Reminder } from '../../models/Reminder'
+import { getRemindAt } from './getRemindAt'
 
 export async function markReminderSent(
   { id, ...reminder }: Reminder,
+  timezone: string,
   callback: () => Promise<void>
 ) {
   try {
@@ -16,14 +17,12 @@ export async function markReminderSent(
         .findById(id)
         .patch({ remindedAt: new Date() })
       debug('Patched existing')
-      const remindAt = dayjs()
-        .add(reminder.iteration, 'minute')
-        .add(10, 'seconds')
-        .toDate()
+      const iteration = reminder.iteration + 1
+      const remindAt = getRemindAt(iteration, timezone)
       const newReminder = {
         ...reminder,
         remindAt,
-        iteration: reminder.iteration + 1,
+        iteration,
         lockedUntil: null,
       }
       await Reminder.query(transaction).insert(newReminder)

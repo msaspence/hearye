@@ -1,6 +1,6 @@
 import { User } from '../../models/User'
 
-export async function findUser(
+export async function findUserBySourceAndExternalId(
   source: string,
   externalId: string
 ): Promise<User | undefined> {

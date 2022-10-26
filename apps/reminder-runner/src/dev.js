@@ -17,12 +17,11 @@ function register() {
     (source, filename) => {
       const { code, map } = transformSync(source, {
         filename,
-        configFile: 'dev.swcrc',
+        configFile: '../../.swcrc',
       })
       SourcemapMap.set(filename, map)
 
       return code
-        .replace('@hearye/db', '@hearye/db/src')
     },
     { exts: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'] }
   )
@@ -77,4 +76,6 @@ function createWatch(dir, description = dir) {
 
 createWatch('./src')
 createWatch('../../packages/db', '@hearye/db')
+createWatch('../../packages/env', '@hearye/env')
+createWatch('../../packages/dayjs', '@hearye/dayjs')
 handleChange()
