@@ -17,10 +17,10 @@ function register() {
     (source, filename) => {
       const { code, map } = transformSync(source, {
         filename,
-        configFile: '../../.swcrc',
+        swcrc: false,
+        configFile: '../../dev.swcrc',
       })
       SourcemapMap.set(filename, map)
-
       return code
     },
     { exts: ['.js', '.jsx', '.es6', '.es', '.mjs', '.ts', '.tsx'] }

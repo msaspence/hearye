@@ -42,8 +42,9 @@ async function devApiApp(
         }</pre></body></html>`
       })
       debug('Waiting for changes...')
+    } else {
+      throw error
     }
-    throw error
   }
 }
 

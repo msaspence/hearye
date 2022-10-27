@@ -1,4 +1,5 @@
 import { dayjs } from '@hearye/dayjs'
+import { connectionCheck } from '@hearye/db/connectionCheck'
 import createDebug from 'debug'
 
 import { Reminder } from '../../models/Reminder'
@@ -25,7 +26,6 @@ export async function findDueRemindersWithAnnouncementAndUser() {
   ).map(({ id }) => id)
 
   debug(`Locked ${lockedIds.length} reminders for processing`)
-
   const reminders = await Reminder.query()
     .whereIn('reminders.id', lockedIds)
     .withGraphJoined('[user, announcement]')
