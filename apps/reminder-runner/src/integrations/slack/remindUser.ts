@@ -63,7 +63,7 @@ async function generateBlocksForReminder(
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `Please take the time read and acknowledge <${permalink}|this announcement> with a :+1:`,
+        text: `Please take the time to read and acknowledge <${permalink}|this announcement> with a :+1:`,
       },
     },
     {
@@ -91,5 +91,5 @@ async function generateTextForReminder(
   permalink: string,
   channelExternalId: string
 ) {
-  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged announcement in <#${channelExternalId}>.\n\n<${permalink}|Go To Announcment>\n\nPlease take the time read and acknowledge this announcement with a 👍🏻.`
+  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged announcement in <#${channelExternalId}>.\n\n<${permalink}|Go To Announcment>\n\nPlease take the time to read and acknowledge this announcement with a 👍🏻.`
 }
