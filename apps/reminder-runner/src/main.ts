@@ -1,4 +1,6 @@
+import * as Sentry from '@sentry/node'
 import createDebug from 'debug'
+import { initSentry, trace } from './sentry'
 
 import { findAndProcessDueReminders } from './findAndProcessDueReminders'
 
@@ -7,10 +9,21 @@ const debug = createDebug('hearye:runner:main')
 let loop: ReturnType<typeof setTimeout>
 const SLEEP: number = parseInt(process.env.LOOP_LENGTH || '1000')
 
+initSentry()
+
 export async function main() {
-  debug('Running runner loop')
-  const processed = await findAndProcessDueReminders()
-  loop = setTimeout(main, processed === 0 ? SLEEP : 0)
+  let processed
+  try {
+    await trace('findAndProcessDueReminders', async () => {
+      debug('Running runner loop')
+      processed = await findAndProcessDueReminders()
+    })
+  } catch (error) {
+    processed = 0
+    Sentry.captureException(error)
+  } finally {
+    loop = setTimeout(main, processed === 0 ? SLEEP : 0)
+  }
 }
 
 export function stop() {

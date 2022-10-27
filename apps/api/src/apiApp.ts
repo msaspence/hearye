@@ -10,6 +10,8 @@ import { connectionCheck } from '@hearye/db'
 
 import { registerSlack } from './integrations/slack'
 
+import { registerSentry } from './Sentry'
+
 export async function apiApp(
   app: FastifyInstance<
     RawServerDefault,
@@ -19,8 +21,14 @@ export async function apiApp(
     FastifyTypeProviderDefault
   >
 ) {
+  registerSentry(app)
   app.get('/', async () => {
     return { hello: 'world', dbConnection: await connectionCheck() }
   })
+  app.get('/error', async () => {
+    throw new CustomError('A message ')
+  })
   app.register(registerSlack, { prefix: '/slack' })
 }
+
+class CustomError extends Error {}

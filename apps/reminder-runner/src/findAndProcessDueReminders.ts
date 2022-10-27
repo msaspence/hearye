@@ -1,8 +1,10 @@
+import * as Sentry from '@sentry/node'
 import {
   findDueRemindersWithAnnouncementAndUser,
   Reminder,
   scheduleRetryReminder,
 } from '@hearye/db'
+import { traced } from './sentry'
 
 import createDebug from 'debug'
 
@@ -13,7 +15,9 @@ const debug = createDebug('hearye:db:findAndProcessDueReminders')
 export async function findAndProcessDueReminders() {
   const reminders = await findDueRemindersWithAnnouncementAndUser()
   debug(`${reminders.length} found to process`)
-  await Promise.all(reminders.map(manageErrors(remindUser)))
+  await Promise.all(
+    reminders.map(manageErrors(traced('remindUser', remindUser)))
+  )
   return reminders.length
 }
 
@@ -25,9 +29,12 @@ function manageErrors(callback: (reminder: Reminder) => Promise<any>) {
     } catch (error: unknown) {
       try {
         debug('Reminder failed, rescheduling')
+        Sentry.captureException(error)
+        // eslint-disable-next-line no-console
+        console.error(error)
         return scheduleRetryReminder(reminder)
       } catch (scheduleRetryError) {
-        // Do nothing for now
+        Sentry.captureException(scheduleRetryError)
         // eslint-disable-next-line no-console
         console.error(scheduleRetryError)
       }

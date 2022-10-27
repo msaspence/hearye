@@ -10,29 +10,24 @@ export async function markReminderSent(
   timezone: string,
   callback: () => Promise<void>
 ) {
-  try {
-    debug('Starting transaction')
-    await Reminder.transaction(async (transaction) => {
-      await Reminder.query(transaction)
-        .findById(id)
-        .patch({ remindedAt: new Date() })
-      debug('Patched existing')
-      const iteration = reminder.iteration + 1
-      const remindAt = getRemindAt(iteration, timezone)
-      const newReminder = {
-        ...reminder,
-        remindAt,
-        iteration,
-        lockedUntil: null,
-      }
-      await Reminder.query(transaction).insert(newReminder)
-      debug('Inserted next reminder')
+  debug('Starting transaction')
+  await Reminder.transaction(async (transaction) => {
+    await Reminder.query(transaction)
+      .findById(id)
+      .patch({ remindedAt: new Date() })
+    debug('Patched existing')
+    const iteration = reminder.iteration + 1
+    const remindAt = getRemindAt(iteration, timezone)
+    const newReminder = {
+      ...reminder,
+      remindAt,
+      iteration,
+      lockedUntil: null,
+    }
+    await Reminder.query(transaction).insert(newReminder)
+    debug('Inserted next reminder')
 
-      await callback()
-      debug('Message sent')
-    })
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-  }
+    await callback()
+    debug('Message sent')
+  })
 }

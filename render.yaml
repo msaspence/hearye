@@ -3,14 +3,14 @@ services:
     name: API Production
     env: node
     repo: https://github.com/msaspence/hearye
-    buildCommand: DEBUG=* npm ci --production=false && npm run migrate && npm run build:api
+    buildCommand: npm run sentry:release:new && DEBUG=* npm ci --production=false && npm run migrate && npm run build:api && npm run sentry:release:finalize
     buildFilter:
       paths:
         - apps/api/**/*
         - packages/**/*
       ignoredPaths:
         - apps/reminder-runner/**/*
-    startCommand: DEBUG=* npm run start:api
+    startCommand: npm run sentry:release:deploy && DEBUG=* npm run start:api
     healthCheckPath: /
     region: oregon
     plan: starter

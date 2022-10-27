@@ -15,11 +15,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "npm run start --workspace @hearye/api",
     "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
-    "tunnel": "lt --subdomain hearye --port 8080"
+    "tunnel": "lt --subdomain hearye --port 8080",
+    "sentry:release:new": "sentry-cli releases --org hear-ye new $RENDER_GIT_COMMIT",
+    "sentry:release:finalize": "sentry-cli releases --org hear-ye finalize $RENDER_GIT_COMMIT",
+    "sentry:release:deploy": "sentry-cli releases --org hear-ye deploys $RENDER_GIT_COMMIT new -e $NODE_ENV"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@sentry/cli": "^2.8.0",
     "@swc-node/sourcemap-support": "^0.2.0",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.248",
@@ -33,9 +37,9 @@
     "jest": "^29.0.3",
     "localtunnel": "^2.0.2",
     "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
-    "tslib": "^2.4.0",
-    "ts-node": "^10.9.1"
+    "tslib": "^2.4.0"
   },
   "workspaces": [
     "apps/api",
@@ -45,6 +49,9 @@
     "packages/env"
   ],
   "dependencies": {
+    "@immobiliarelabs/fastify-sentry": "^5.0.0-next.1",
+    "@sentry/node": "^7.16.0",
+    "@sentry/tracing": "^7.16.0",
     "dotenv": "^16.0.2"
   }
 }
