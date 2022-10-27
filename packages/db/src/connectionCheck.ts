@@ -1,7 +1,6 @@
 import { User } from './models/User'
 
 export async function connectionCheck() {
-  return 'hello'
   try {
     const start = Date.now()
     const count = await User.query().resultSize()
