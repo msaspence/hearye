@@ -3,14 +3,14 @@ services:
     name: API Production
     env: node
     repo: https://github.com/msaspence/hearye
-    buildCommand: npm run sentry:release:new && DEBUG=* npm ci --production=false && npm run migrate && npm run build:api && npm run sentry:release:finalize
+    buildCommand: npm run sentry:release:new --workspace @hearye/api && DEBUG=* npm ci --production=false && npm run migrate && npm run build:api && npm run sentry:release:finalize --workspace @hearye/api
     buildFilter:
       paths:
         - apps/api/**/*
         - packages/**/*
       ignoredPaths:
         - apps/reminder-runner/**/*
-    startCommand: npm run sentry:release:deploy && DEBUG=* npm run start:api
+    startCommand: npm run sentry:release:deploy --workspace @hearye/api && DEBUG=* npm run start:api
     healthCheckPath: /
     region: oregon
     plan: starter
@@ -30,14 +30,14 @@ services:
     name: Reminder Runner Production
     env: node
     repo: https://github.com/msaspence/hearye
-    buildCommand: DEBUG=* npm ci --production=false && npm run build:reminder-runner
+    buildCommand: npm run sentry:release:new --workspace @hearye/reminder-runner && DEBUG=* npm ci --production=false && npm run build:reminder-runner && npm run sentry:release:finalize --workspace @hearye/reminder-runner
     buildFilter:
       paths:
         - apps/reminder-runner/**/*
         - packages/**/*
       ignoredPaths:
         - apps/api/**/*
-    startCommand: DEBUG=* npm run start:reminder-runner
+    startCommand: npm run sentry:release:deploy --workspace @hearye/reminder-runner && DEBUG=* npm run start:reminder-runner
     region: oregon
     plan: starter
     branch: main

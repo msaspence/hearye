@@ -11,7 +11,10 @@
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint --max-warnings 0 ./src",
     "lint:prettier": "prettier --check ./src",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sentry:release:new": "sentry-cli releases --org hear-ye --project api  new $RENDER_GIT_COMMIT",
+    "sentry:release:finalize": "sentry-cli releases --org hear-ye --project api finalize $RENDER_GIT_COMMIT",
+    "sentry:release:deploy": "sentry-cli releases --org hear-ye --project api  deploys $RENDER_GIT_COMMIT new -e $NODE_ENV"
   },
   "author": "",
   "license": "ISC",
