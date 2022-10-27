@@ -8,8 +8,8 @@
     "start": "node dist/index.js",
     "dev": "TZ=UTC DEBUG=\"${DEBUG:=hearye*}\" node --expose-gc src/dev.js",
     "sentry:release:new": "sentry-cli releases --org hear-ye --project reminder-runner new $RENDER_GIT_COMMIT",
-    "sentry:release:finalize": "echo $NODE_ENV:reminder-runner:$RENDER_GIT_COMMIT && sentry-cli releases --org hear-ye --project reminder-runner finalize $RENDER_GIT_COMMIT",
-    "sentry:release:deploy": "echo $NODE_ENV:reminder-runner:$RENDER_GIT_COMMIT && sentry-cli releases --org hear-ye --project reminder-runner deploys $RENDER_GIT_COMMIT new -e $NODE_ENV --name $NODE_ENV:reminder-runner:$RENDER_GIT_COMMIT"
+    "sentry:release:finalize": "sentry-cli releases --org hear-ye --project reminder-runner finalize $RENDER_GIT_COMMIT",
+    "sentry:release:deploy": "echo $NODE_ENV:reminder-run:$RENDER_GIT_COMMIT && sentry-cli releases --org hear-ye --project reminder-runner deploys $RENDER_GIT_COMMIT new -e $NODE_ENV --name $NODE_ENV:reminder-runner:$RENDER_GIT_COMMIT"
   },
   "author": "",
   "license": "ISC",
