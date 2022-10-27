@@ -7,6 +7,7 @@ import {
 import { IncomingMessage, ServerResponse } from 'http'
 
 import { connectionCheck } from '@hearye/db'
+import { RENDER_GIT_COMMIT } from '@hearye/env'
 
 import { registerSlack } from './integrations/slack'
 
@@ -23,7 +24,11 @@ export async function apiApp(
 ) {
   registerSentry(app)
   app.get('/', async () => {
-    return { hello: 'world', dbConnection: await connectionCheck() }
+    return {
+      hello: 'world',
+      dbConnection: await connectionCheck(),
+      version: RENDER_GIT_COMMIT,
+    }
   })
   app.get('/error', async () => {
     throw new CustomError('A message ')
