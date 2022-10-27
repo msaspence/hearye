@@ -1,7 +1,13 @@
 import * as Sentry from '@sentry/node'
 import '@sentry/tracing'
 
-import { FOO, NODE_ENV, SENTRY_DSN, SENTRY_SAMPLE_RATE } from '@hearye/env'
+import {
+  FOO,
+  NODE_ENV,
+  SENTRY_DSN,
+  SENTRY_SAMPLE_RATE,
+  RENDER_GIT_COMMIT,
+} from '@hearye/env'
 
 export function initSentry() {
   console.log(FOO, `${SENTRY_DSN}/4504054457237505`)
@@ -9,6 +15,7 @@ export function initSentry() {
     dsn: SENTRY_DSN,
     environment: NODE_ENV,
     tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE),
+    release: RENDER_GIT_COMMIT,
   })
 }
 
