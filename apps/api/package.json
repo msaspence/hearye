@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit",
     "sentry:release:new": "sentry-cli releases --org hear-ye --project api  new $RENDER_GIT_COMMIT",
     "sentry:release:finalize": "sentry-cli releases --org hear-ye --project api finalize $RENDER_GIT_COMMIT",
-    "sentry:release:deploy": "sentry-cli releases --org hear-ye --project api  deploys $RENDER_GIT_COMMIT new -e $NODE_ENV"
+    "sentry:release:deploy": "sentry-cli releases --org hear-ye --project api  deploys $RENDER_GIT_COMMIT new -e $NODE_ENV --name $NODE_ENV:reminder-runner:$RENDER_GIT_COMMIT"
   },
   "author": "",
   "license": "ISC",
