@@ -3,7 +3,7 @@ import {
   Reminder,
   scheduleRetryReminder,
 } from '@hearye/db'
-import * as xxx from '@hearye/db'
+
 import createDebug from 'debug'
 
 import { remindUser } from './integrations/slack/remindUser'

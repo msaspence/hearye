@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf ./dist && swc ./src --out-dir ./dist --config-file ../../.swcrc",
     "start": "node dist/index.js",
-    "dev": "node --expose-gc src/dev.js"
+    "dev": "TZ=UTC DEBUG=\"${DEBUG:=hearye*}\" node --expose-gc src/dev.js"
   },
   "author": "",
   "license": "ISC",

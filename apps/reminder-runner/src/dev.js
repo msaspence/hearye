@@ -66,6 +66,7 @@ function createWatch(dir, description = dir) {
       stabilityThreshold: 50,
       pollInterval: 100,
     },
+    ignored: /(node_modules)|(\.git)/,
   })
   watcher.on('ready', () => {
     debug(`Monitoring ${description || dir} for changes`)
@@ -75,7 +76,5 @@ function createWatch(dir, description = dir) {
 }
 
 createWatch('./src')
-createWatch('../../packages/db', '@hearye/db')
-createWatch('../../packages/env', '@hearye/env')
-createWatch('../../packages/dayjs', '@hearye/dayjs')
+createWatch('../../packages')
 handleChange()

@@ -79,6 +79,7 @@ async function devApiApp(
         stabilityThreshold: 50,
         pollInterval: 100,
       },
+      ignored: /(node_modules)|(\.git)/,
     })
     watcher.on('ready', () => {
       debug(`Monitoring ${dir} for changes`)
@@ -87,7 +88,8 @@ async function devApiApp(
     return watcher
   }
 
-  createWatch('../../')
+  createWatch('./src')
+  createWatch('../../packages')
 })()
 
 function clearImportCache() {

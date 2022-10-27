@@ -20,7 +20,7 @@ export async function apiApp(
   >
 ) {
   app.get('/', async () => {
-    return { hello: 'world', dbConnection: await connectionCheck() }
+    return { hello: 'world2', dbConnection: await connectionCheck() }
   })
   app.register(registerSlack, { prefix: '/slack' })
 }
