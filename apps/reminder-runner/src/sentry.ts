@@ -10,7 +10,6 @@ import {
 } from '@hearye/env'
 
 export function initSentry() {
-  console.log(FOO, `${SENTRY_DSN}/4504054457237505`)
   Sentry.init({
     dsn: SENTRY_DSN,
     environment: NODE_ENV,

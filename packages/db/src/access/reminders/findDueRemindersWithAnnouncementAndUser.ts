@@ -1,10 +1,10 @@
 import { dayjs } from '@hearye/dayjs'
 import { connectionCheck } from '@hearye/db/connectionCheck'
-import createDebug from 'debug'
+import { createLogger } from '@hearye/logger'
 
 import { Reminder } from '../../models/Reminder'
 
-const debug = createDebug('hearye:db:findDueRemindersWithAnnouncementAndUser')
+const logger = createLogger('hearye:db:findDueRemindersWithAnnouncementAndUser')
 
 export async function findDueRemindersWithAnnouncementAndUser() {
   const lockedIds = (
@@ -25,7 +25,7 @@ export async function findDueRemindersWithAnnouncementAndUser() {
       .returning('id')
   ).map(({ id }) => id)
 
-  debug(`Locked ${lockedIds.length} reminders for processing`)
+  logger.info(`Locked ${lockedIds.length} reminders for processing`)
   const reminders = await Reminder.query()
     .whereIn('reminders.id', lockedIds)
     .withGraphJoined('[user, announcement]')

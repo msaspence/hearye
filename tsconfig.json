@@ -11,7 +11,9 @@
       "@hearye/db": ["packages/db/src"],
       "@hearye/db/*": ["packages/db/src/*"],
       "@hearye/env": ["packages/env/src"],
-      "@hearye/env/*": ["packages/env/src/*"]
+      "@hearye/env/*": ["packages/env/src/*"],
+      "@hearye/logger": ["packages/logger/src"],
+      "@hearye/logger/*": ["packages/logger/src/*"]
     }
   },
   "ts-node": {

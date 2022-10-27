@@ -6,15 +6,15 @@ import {
 } from '@hearye/db'
 import { traced } from './sentry'
 
-import createDebug from 'debug'
+import { createLogger } from '@hearye/logger'
 
 import { remindUser } from './integrations/slack/remindUser'
 
-const debug = createDebug('hearye:db:findAndProcessDueReminders')
+const logger = createLogger('hearye:db:findAndProcessDueReminders')
 
 export async function findAndProcessDueReminders() {
   const reminders = await findDueRemindersWithAnnouncementAndUser()
-  debug(`${reminders.length} found to process`)
+  logger.info(`${reminders.length} found to process`)
   await Promise.all(
     reminders.map(manageErrors(traced('remindUser', remindUser)))
   )
@@ -28,7 +28,7 @@ function manageErrors(callback: (reminder: Reminder) => Promise<any>) {
       return callback(reminder)
     } catch (error: unknown) {
       try {
-        debug('Reminder failed, rescheduling')
+        logger.info('Reminder failed, rescheduling')
         Sentry.captureException(error)
         // eslint-disable-next-line no-console
         console.error(error)

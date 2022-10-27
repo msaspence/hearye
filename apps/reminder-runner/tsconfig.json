@@ -4,4 +4,7 @@
     "isolatedModules": true,
     "baseUrl": "../../",
   },
+  "ts-node": {
+    "swc": true
+  }
 }

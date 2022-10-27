@@ -1,10 +1,10 @@
 import * as Sentry from '@sentry/node'
-import createDebug from 'debug'
+import { createLogger } from '@hearye/logger'
 import { initSentry, trace } from './sentry'
 
 import { findAndProcessDueReminders } from './findAndProcessDueReminders'
 
-const debug = createDebug('hearye:runner:main')
+const logger = createLogger('hearye:runner:main')
 
 let loop: ReturnType<typeof setTimeout>
 const SLEEP: number = parseInt(process.env.LOOP_LENGTH || '1000')
@@ -15,7 +15,7 @@ export async function main() {
   let processed
   try {
     await trace('findAndProcessDueReminders', async () => {
-      debug('Running runner loop')
+      logger.info('Running runner loop')
       processed = await findAndProcessDueReminders()
     })
   } catch (error) {
@@ -27,6 +27,6 @@ export async function main() {
 }
 
 export function stop() {
-  debug('Stopping loop')
+  logger.info('Stopping loop')
   if (loop) clearTimeout(loop)
 }

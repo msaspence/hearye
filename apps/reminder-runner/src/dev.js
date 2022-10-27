@@ -5,8 +5,8 @@ const {
   installSourceMapSupport,
 } = require('@swc-node/sourcemap-support')
 const { addHook } = require('pirates')
-
-const debug = require('debug')('hearye:runner:dev')
+const { createLogger } = require('@hearye/logger')
+const logger = createLogger('hearye:runner:dev')
 
 let runner
 let revert = null
@@ -39,24 +39,24 @@ function clearCache() {
 }
 
 async function handleChange() {
-  debug('Change detected reloading app')
+  logger.info('Change detected reloading app')
   if (runner) runner.stop()
   clearCache()
   try {
     register()
     runner = require('./main')
     if (global.gc) {
-      debug('Garbage collecting')
+      logger.info('Garbage collecting')
       global.gc()
     } else {
-      debug('Garbage collection not exposed')
+      logger.info('Garbage collection not exposed')
     }
     await runner.main()
-    debug('App reloaded')
+    logger.info('App reloaded')
   } catch (error) {
-    debug('Error while reloading')
-    debug(error)
-    debug('Waiting for changes...')
+    logger.info('Error while reloading')
+    logger.info(error)
+    logger.info('Waiting for changes...')
   }
 }
 
@@ -69,7 +69,7 @@ function createWatch(dir, description = dir) {
     ignored: /(node_modules)|(\.git)/,
   })
   watcher.on('ready', () => {
-    debug(`Monitoring ${description || dir} for changes`)
+    logger.info(`Monitoring ${description || dir} for changes`)
     watcher.on('all', handleChange)
   })
   return watcher
