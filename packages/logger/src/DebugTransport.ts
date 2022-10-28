@@ -11,21 +11,29 @@ export class DebugTransport extends Transport {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   log(
-    { level, message }: { level: string; message: string },
+    {
+      level,
+      message,
+      stack,
+    }: { level: string; message: string; stack: string[] },
     callback: () => void
   ) {
-    this.debug(`${LEVEL_EMOJIS[level] || 'ℹ️'}  ${message}`)
+    const joinedStack = stack?.join ? stack?.join('\n') : stack
+    this.debug(`${LEVEL_EMOJIS[level] || '  '} ${joinedStack || message}`)
     callback()
   }
 }
 
 const LEVEL_EMOJIS = {
+  fatal: '💀',
   emerg: '🚑',
   alert: '📣',
-  crit: '‼️',
+  crit: '‼️ ',
   error: '🚨',
-  warning: '⚠️',
+  warning: '⚠️ ',
+  warn: '⚠️ ',
   notice: '📜',
-  info: 'ℹ️',
-  debug: '🪲',
+  info: '💬',
+  debug: '🪲 ',
+  trace: '✏️ ',
 } as Record<string, string>

@@ -13,7 +13,7 @@ import {
   RENDER_GIT_COMMIT,
 } from '@hearye/env'
 
-export function registerSentry(
+export async function sentry(
   app: FastifyInstance<
     RawServerDefault,
     IncomingMessage,

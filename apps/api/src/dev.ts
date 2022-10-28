@@ -14,7 +14,7 @@ import { isErrorWithStack } from './utils/errors'
 import { createLogger } from '@hearye/logger'
 const convert = new ConvertAnsi()
 
-const log = createLogger('hearye:api:dev')
+const logger = createLogger('hearye:api:dev')
 
 async function devApiApp(
   app: FastifyInstance<
@@ -26,14 +26,15 @@ async function devApiApp(
   >,
   _: FastifyRestartableOptions
 ) {
-  log.info('Loading app...')
+  logger.info('Loading app...')
   try {
     const { apiApp } = await require('./apiApp')
-    app.register(apiApp)
+    await apiApp(app)
+    app.get('/foo', async () => 'bar')
   } catch (error) {
     if (error instanceof Error) {
-      log.error('Error while loading')
-      log.error(error)
+      logger.fatal('Error while loading')
+      logger.fatal(error)
       app.all('*', (_, res) => {
         res.header('Content-Type', 'text/html')
         res.status(500)
@@ -41,7 +42,7 @@ async function devApiApp(
           isErrorWithStack(error) && convert.toHtml(error.stack.toString())
         }</pre></body></html>`
       })
-      log.info('Waiting for changes...')
+      logger.info('Waiting for changes...')
     } else {
       throw error
     }
@@ -54,24 +55,25 @@ async function devApiApp(
     hostname: '127.0.0.1',
     port: PORT,
     app: devApiApp,
+    logger: false,
   })
 
   const { address, port } = await listen()
 
-  log.info(`Server listening on ${address}:${port}`)
+  logger.info(`Server listening on ${address}:${port}`)
 
   async function handleChange() {
-    log.info('=====================================================')
-    log.info('Change detected reloading app')
+    logger.info('=====================================================')
+    logger.info('Change detected reloading app')
     clearImportCache()
     if (global.gc) {
-      log.info('Garbage collecting')
+      logger.info('Garbage collecting')
       global.gc()
     } else {
-      log.info('Garbage collection not exposed')
+      logger.info('Garbage collection not exposed')
     }
     await restart()
-    log.info('App restarted')
+    logger.info('App restarted')
   }
 
   function createWatch(dir: string) {
@@ -83,7 +85,7 @@ async function devApiApp(
       ignored: /(node_modules)|(\.git)/,
     })
     watcher.on('ready', () => {
-      log.info(`Monitoring ${dir} for changes`)
+      logger.info(`Monitoring ${dir} for changes`)
       watcher.on('all', handleChange)
     })
     return watcher

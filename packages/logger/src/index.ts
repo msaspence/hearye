@@ -1,21 +1,40 @@
 import { LogtailTransport } from '@logtail/winston'
 import { Logtail } from '@logtail/node'
-import winston from 'winston'
+import winston, { transport } from 'winston'
 
 import { DebugTransport } from './DebugTransport'
 
-import { LOGTAIL_SOURCE_TOKEN, NODE_ENV, RENDER_GIT_COMMIT } from '@hearye/env'
+import {
+  LOGTAIL_ENABLED,
+  LOGTAIL_SOURCE_TOKEN,
+  NODE_ENV,
+  RENDER_GIT_COMMIT,
+} from '@hearye/env'
 
 const logtailTransport = new LogtailTransport(new Logtail(LOGTAIL_SOURCE_TOKEN))
-
+declare module 'winston' {
+  export interface Logger {
+    fatal: winston.LeveledLogMethod
+    warn: winston.LeveledLogMethod
+    trace: winston.LeveledLogMethod
+  }
+}
 export function createLogger(namespace: string) {
+  const transports = [new DebugTransport({ namespace })] as [transport]
+  if (LOGTAIL_ENABLED === 'true') transports.push(logtailTransport)
+
   return winston.createLogger({
+    level: 'trace',
+    levels: Object.assign(
+      { fatal: 0, warn: 4, trace: 7 },
+      winston.config.syslog.levels
+    ),
     defaultMeta: {
       environment: NODE_ENV,
       release: RENDER_GIT_COMMIT,
       namespace,
     },
     format: winston.format.json(),
-    transports: [logtailTransport, new DebugTransport({ namespace })],
+    transports,
   })
 }

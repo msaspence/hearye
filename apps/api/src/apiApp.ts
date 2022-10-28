@@ -8,10 +8,10 @@ import { IncomingMessage, ServerResponse } from 'http'
 
 import { connectionCheck } from '@hearye/db'
 import { RENDER_GIT_COMMIT } from '@hearye/env'
-
 import { registerSlack } from './integrations/slack'
 
-import { registerSentry } from './Sentry'
+import { sentry } from './sentry'
+import { logging } from './logging'
 
 export async function apiApp(
   app: FastifyInstance<
@@ -22,7 +22,7 @@ export async function apiApp(
     FastifyTypeProviderDefault
   >
 ) {
-  registerSentry(app)
+  app.register(sentry)
   app.get('/', async () => {
     return {
       hello: 'world',
@@ -34,6 +34,7 @@ export async function apiApp(
     throw new CustomError('A message ')
   })
   app.register(registerSlack, { prefix: '/slack' })
+  app.register(logging)
 }
 
 class CustomError extends Error {}

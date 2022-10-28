@@ -4,7 +4,7 @@ import { apiApp } from './apiApp'
 import { PORT } from '@hearye/env'
 
 const fastify = Fastify({
-  logger: true,
+  logger: false,
 })
 
 apiApp(fastify)
