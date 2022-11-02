@@ -10,8 +10,10 @@
     "build:env": "npm run build --workspace @hearye/env",
     "build:logger": "npm run build --workspace @hearye/logger",
     "build:reminder-runner": "npm run build:logger && npm run build:env && npm run build:db && npm run build --workspace @hearye/reminder-runner",
+    "build:site": "npm run build --workspace @hearye/site",
     "dev:api": "npm run dev --workspace @hearye/api",
     "dev:reminder-runner": "npm run dev --workspace @hearye/reminder-runner",
+    "dev:site": "npm run dev --workspace @hearye/site",
     "migrate": "npm run migrate --workspace @hearye/db",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "npm run start --workspace @hearye/api",
@@ -42,6 +44,7 @@
   "workspaces": [
     "apps/api",
     "apps/reminder-runner",
+    "apps/site",
     "packages/dayjs",
     "packages/db",
     "packages/env",
