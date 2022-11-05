@@ -3,7 +3,7 @@ import findConfig from 'find-config'
 
 dotenv.config({ path: findConfig('.env') || './.env' })
 
-module.exports = {
+export const env: Record<Uppercase<string>, string | undefined> = {
   NODE_ENV: 'development',
   ...(process.env as Record<string, string>),
 }

@@ -7,12 +7,13 @@ import {
 import { IncomingMessage, ServerResponse } from 'http'
 
 import { connectionCheck } from '@hearye/db'
-import { RENDER_GIT_COMMIT } from '@hearye/env'
+import { env } from '@hearye/env'
 import { registerSlack } from './integrations/slack'
 
 import { sentry } from './sentry'
 import { logging } from './logging'
 
+const { RENDER_GIT_COMMIT } = env
 export async function apiApp(
   app: FastifyInstance<
     RawServerDefault,

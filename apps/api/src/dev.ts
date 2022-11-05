@@ -9,11 +9,11 @@ import { start, FastifyRestartableOptions } from '@fastify/restartable'
 import chokidar from 'chokidar'
 import ConvertAnsi from 'ansi-to-html'
 
-import { PORT } from '@hearye/env'
+import { env } from '@hearye/env'
 import { isErrorWithStack } from './utils/errors'
 import { createLogger } from '@hearye/logger'
 const convert = new ConvertAnsi()
-
+const { PORT } = env
 const logger = createLogger('hearye:api:dev')
 
 async function devApiApp(
@@ -53,7 +53,7 @@ async function devApiApp(
   const { restart, listen } = await start({
     protocol: 'http',
     hostname: '127.0.0.1',
-    port: PORT,
+    port: parseInt(PORT || '3000'),
     app: devApiApp,
     logger: false,
   })

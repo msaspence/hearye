@@ -1,19 +1,14 @@
 import * as Sentry from '@sentry/node'
 import '@sentry/tracing'
 
-import {
-  FOO,
-  NODE_ENV,
-  SENTRY_DSN,
-  SENTRY_SAMPLE_RATE,
-  RENDER_GIT_COMMIT,
-} from '@hearye/env'
+import { env } from '@hearye/env'
 
+const { NODE_ENV, SENTRY_DSN, SENTRY_SAMPLE_RATE, RENDER_GIT_COMMIT } = env
 export function initSentry() {
   Sentry.init({
     dsn: SENTRY_DSN,
     environment: NODE_ENV,
-    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE),
+    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
     release: RENDER_GIT_COMMIT,
   })
 }
@@ -31,7 +26,9 @@ export async function trace(name: string, callback: () => Promise<void>) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function traced(name: string, callback: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (...args: any[]) => {
     return trace(name, () => callback(...args))
   }

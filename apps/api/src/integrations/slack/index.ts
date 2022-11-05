@@ -6,12 +6,23 @@ import { handleReaction } from './handleReaction'
 import { handleUserChange } from './handleUserChange'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 import * as installationManagement from './installationManagement'
-import {
+import { env } from '@hearye/env'
+
+const {
   SLACK_CLIENT_ID,
   SLACK_CLIENT_SECRET,
   SLACK_SIGNING_SECRET,
   SLACK_STATE_SECRET,
-} from '@hearye/env'
+} = env
+
+if (
+  !SLACK_CLIENT_ID ||
+  !SLACK_CLIENT_SECRET ||
+  !SLACK_SIGNING_SECRET ||
+  !SLACK_STATE_SECRET
+) {
+  throw new Error('Slack creditials missing')
+}
 
 export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const receiver = new FastifyReceiver({

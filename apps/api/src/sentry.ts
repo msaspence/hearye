@@ -6,12 +6,8 @@ import {
 } from 'fastify'
 import { IncomingMessage, ServerResponse } from 'http'
 import fastifySentry from '@immobiliarelabs/fastify-sentry'
-import {
-  NODE_ENV,
-  SENTRY_DSN,
-  SENTRY_SAMPLE_RATE,
-  RENDER_GIT_COMMIT,
-} from '@hearye/env'
+import { env } from '@hearye/env'
+const { NODE_ENV, SENTRY_DSN, SENTRY_SAMPLE_RATE, RENDER_GIT_COMMIT } = env
 
 export async function sentry(
   app: FastifyInstance<
@@ -26,6 +22,6 @@ export async function sentry(
     dsn: SENTRY_DSN,
     environment: NODE_ENV,
     release: RENDER_GIT_COMMIT,
-    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE || 1),
+    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
   })
 }
