@@ -18,6 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:api": "npm run start --workspace @hearye/api",
     "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
+    "start:site": "npm run start --workspace @hearye/site",
     "tunnel": "lt --subdomain hearye --port 8080"
   },
   "author": "",

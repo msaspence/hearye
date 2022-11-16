@@ -1,0 +1,34 @@
+@font-face {
+    font-family: 'Neumatic Gothic Round';
+    src: url('neumaticgothicround-bold-webfont.woff2') format('woff2'),
+         url('neumaticgothicround-bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neumatic Gothic Round';
+    src: url('neumaticgothicround-medium-webfont.woff2') format('woff2'),
+         url('neumaticgothicround-medium-webfont.woff') format('woff');
+    font-weight: medium;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Neumatic Gothic Round';
+    src: url('neumaticgothicround-light-webfont.woff2') format('woff2'),
+         url('neumaticgothicround-light-webfont.woff') format('woff');
+    font-weight: light;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Neumatic Gothic Round';
+    src: url('neumaticgothicround-black-webfont.woff2') format('woff2'),
+         url('neumaticgothicround-black-webfont.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+
+}
