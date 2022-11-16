@@ -27,7 +27,6 @@ export function BannerHeader() {
           marginTop: '20px',
           width: '400px',
         }}
-        onClick={() => alert('hello')}
       >
         <Typography sx={{ marginBottom: '20px' }} variant="h2">
           Don't Miss Another!
