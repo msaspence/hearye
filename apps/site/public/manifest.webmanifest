@@ -1,5 +1,5 @@
 {
-  "name": "Hear Ye! - Slack message acknowledgements and reminders.",
+  "name": "Hear Ye!",
   "short_name": "Hear Ye!",
   "description": "Slack app to ensure reaction acknowledgement of important messages and announcements.",
   "dir": "auto",
