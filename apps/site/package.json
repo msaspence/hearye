@@ -9,7 +9,7 @@
     "build:favicons": "ts-node src/favicons/generate",
     "test": "ts-node test.tsx",
     "dev": "TZ=UTC DEBUG=\"${DEBUG:=hearye*}\" vite --port 4000",
-    "start": "serve --listen 3001 ./dist/client"
+    "start": "serve --listen 4001 ./dist/client"
   },
   "author": "",
   "license": "ISC",

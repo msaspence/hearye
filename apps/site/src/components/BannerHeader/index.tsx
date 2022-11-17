@@ -30,7 +30,7 @@ export function BannerHeader() {
           width: '550px',
         }}
       >
-        <Typography variant="h2">Don't Miss Another!</Typography>
+        <Typography variant="h2">Don't Miss Another</Typography>
         <Box
           sx={{
             display: 'flex',
