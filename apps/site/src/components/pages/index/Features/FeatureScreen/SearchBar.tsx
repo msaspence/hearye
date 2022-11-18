@@ -3,6 +3,9 @@ import { SkeletonBox } from '../../../../Skeleton'
 
 export function SearchBar({ sx }: { sx: CSSProperties }) {
   return (
-    <SkeletonBox sx={{ width: '200px', height: '10px', ...sx }} on="dark" />
+    <SkeletonBox
+      sx={{ width: '200px', height: '10px', opacity: '0.3', ...sx }}
+      on="dark"
+    />
   )
 }

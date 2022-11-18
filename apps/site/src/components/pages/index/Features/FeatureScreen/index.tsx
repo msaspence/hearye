@@ -4,13 +4,13 @@ import { ReactNode } from 'react'
 import { WindowControl } from './WindowControl'
 import { SearchBar } from './SearchBar'
 import { Avatar, User } from './Avatar'
-import { Skeleton } from '../../../../../components/Skeleton'
+import { NavigationSection } from './NavigationSection'
 
 export function FeatureScreen({
   children,
   side = 'right',
   user = 'Angela',
-  sections = [5, 7],
+  sections = [5, 6],
 }: {
   children: ReactNode
   sections?: number[]
@@ -61,34 +61,12 @@ export function FeatureScreen({
               width: '20%',
             }}
           >
-            {sections.map((channelCount, sectionIndex) => {
+            {sections.map((channelCount, index) => {
               return (
-                <Box
-                  sx={{
-                    padding: sectionIndex === 0 ? '7px' : '7px 7px 0',
-                    borderBottom:
-                      sectionIndex === 0
-                        ? '1px solid rgba(254, 254, 254, 0.2)'
-                        : 'none',
-                  }}
-                >
-                  {new Array(channelCount)
-                    .fill(undefined)
-                    .map((_, channelIndex) => {
-                      return (
-                        <Skeleton
-                          on="dark"
-                          sx={{
-                            height: '5px',
-                            opacity:
-                              channelIndex === 0 && sectionIndex !== 0
-                                ? '0.5'
-                                : '0.3',
-                          }}
-                        />
-                      )
-                    })}
-                </Box>
+                <NavigationSection
+                  channelCount={channelCount}
+                  headed={index !== 0}
+                />
               )
             })}
           </Box>
