@@ -25,7 +25,7 @@ export function Features() {
       </Feature>
 
       <Feature>
-        <FeatureScreen sections={[3, 5, 4]} side="left" user="Michael">
+        <FeatureScreen side="left" user="Michael">
           Hello World
         </FeatureScreen>
         <FeatureText>
@@ -61,7 +61,7 @@ export function Features() {
             commodo.
           </FeatureBody>
         </FeatureText>
-        <FeatureScreen user="Angela">Hello World</FeatureScreen>
+        <FeatureScreen user="Michael">Hello World</FeatureScreen>
       </Feature>
     </Box>
   )

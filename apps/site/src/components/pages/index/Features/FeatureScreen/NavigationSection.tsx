@@ -25,10 +25,11 @@ export function NavigationSection({
           }}
         />
       )}
-      {new Array(channelCount).fill(undefined).map(() => {
+      {new Array(channelCount).fill(undefined).map((index) => {
         return (
           <Skeleton
             on="dark"
+            key={index}
             sx={{
               height: '5px',
               opacity: '0.3',
