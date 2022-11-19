@@ -79,7 +79,46 @@ export function FeatureScreen({
               }}
             >
               <Box
-                sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+                sx={{
+                  borderTop: '1px solid rgba(254, 254, 254, 0.2)',
+                  borderBottom: '1px solid rgba(254, 254, 254, 0.2)',
+                  display: 'flex',
+                  padding: '7px',
+                }}
+              >
+                <SkeletonBox
+                  on="dark"
+                  sx={{
+                    borderRadius: '6px',
+                    height: '5px',
+                    opacity: '0.5',
+                    margin: 0,
+                    width: '40%',
+                  }}
+                />
+                <Box sx={{ flexGrow: 1 }} />
+                <SkeletonBox
+                  on="dark"
+                  sx={{
+                    borderRadius: '10px',
+                    height: '10px',
+                    opacity: '0.5',
+                    margin: '-3px 0',
+                    width: '10px',
+                  }}
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flexGrow: 1,
+                  maxHeight: '219px',
+                  overflow: 'hidden',
+                  justifyContent: hearYeSelected ? 'flex-end' : 'flex-start',
+                  paddingBottom: '10px',
+                }}
               >
                 {SECTIONS[user].map((channelCount, index) => {
                   return (
@@ -97,6 +136,7 @@ export function FeatureScreen({
                   channelCount={2}
                   headed
                 />
+                <Box sx={{ flexGrow: 1 }} />
               </Box>
               {huddle && (
                 <Box

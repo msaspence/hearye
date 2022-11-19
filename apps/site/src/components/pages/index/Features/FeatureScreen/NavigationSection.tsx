@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 
-import { Skeleton, SkeletonBox } from '../../../../Skeleton'
+import { Skeleton } from '../../../../Skeleton'
 import { SkeletonWidthProvider } from '../../../../../contexts/SkeletonWidth'
 import { NavigationItem } from './NavigationItem'
 
