@@ -18,14 +18,14 @@ const SECTIONS: Record<User, number[]> = {
 
 export function FeatureScreen({
   children,
-  appsSelected = false,
-  huddle = !appsSelected,
+  hearYeSelected = false,
+  huddle = !hearYeSelected,
   side = 'right',
   user = 'Angela',
   messageCount = 2,
   seed = user,
 }: {
-  appsSelected?: boolean
+  hearYeSelected?: boolean
   children?: ReactNode
   huddle?: boolean
   messageCount?: number
@@ -67,7 +67,7 @@ export function FeatureScreen({
             <Box sx={{ flexGrow: 1 }}>
               <SearchBar sx={{ margin: '0 auto' }} />
             </Box>
-            <Avatar user={user} />
+            <Avatar />
           </Box>
           <Box sx={{ flexGrow: 1, alignItems: 'stretch', display: 'flex' }}>
             <Box
@@ -84,6 +84,7 @@ export function FeatureScreen({
                 {SECTIONS[user].map((channelCount, index) => {
                   return (
                     <NavigationSection
+                      channelSelected={index === 1 && !hearYeSelected}
                       channelCount={channelCount}
                       headed={index !== 0}
                       key={index}
@@ -91,8 +92,8 @@ export function FeatureScreen({
                   )
                 })}
                 <NavigationSection
+                  hearYeSelected={hearYeSelected}
                   apps
-                  appsSelected={appsSelected}
                   channelCount={2}
                   headed
                 />
@@ -107,7 +108,7 @@ export function FeatureScreen({
                   <SkeletonBox
                     on="dark"
                     sx={{
-                      height: '5px',
+                      height: '4px',
                       opacity: '0.3',
                       width: '60%',
                     }}
@@ -140,6 +141,7 @@ export function FeatureScreen({
                   height: '35px',
                   position: 'relative',
                   overflow: 'hidden',
+                  flexShrink: 0,
                 }}
               >
                 <Box

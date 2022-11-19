@@ -17,10 +17,10 @@ export function SkeletonMessage({
 }) {
   const lines = linesProp ? linesProp : Math.round(usePrando(1, 3))
   return (
-    <Box sx={{ display: 'flex', marginBottom: '7px', ...sx }}>
+    <Box sx={{ display: 'flex', marginBottom: '5px', ...sx }}>
       {!nested && (
         <SkeletonBox
-          sx={{ width: '15px', height: '15px', marginRight: '5px' }}
+          sx={{ width: '11px', height: '11px', marginRight: '5px' }}
         />
       )}
       <Box sx={{ flexGrow: 1 }}>
@@ -28,16 +28,17 @@ export function SkeletonMessage({
           {nested && (
             <SkeletonBox
               sx={{
-                width: '7px',
-                height: '7px',
-                marginTop: '4px',
+                width: '5px',
+                borderRadius: '1px',
+                height: '5px',
+                marginTop: '4.5px',
                 marginRight: '3px',
                 marginBottom: '3px',
               }}
             />
           )}
           <Skeleton
-            sx={{ height: '5px', opacity: 0.5, marginBottom: '3px' }}
+            sx={{ height: '4px', opacity: 0.5, marginBottom: '3px' }}
             max={0.4}
             min={0.2}
           />
@@ -46,7 +47,7 @@ export function SkeletonMessage({
           return (
             <Skeleton
               key={index}
-              sx={{ height: '5px', marginBottom: '3px', marginTop: 0 }}
+              sx={{ height: '4px', marginBottom: '3px', marginTop: 0 }}
               min={index !== lines - 1 ? 0.9 : 0.4}
             />
           )

@@ -1,12 +1,12 @@
-import MuiAvatar from '@mui/material/Avatar'
+// import MuiAvatar from '@mui/material/Avatar'
 import { SkeletonBox } from '../../../../../Skeleton'
 
-import AngelaUrl from './images/Angela.png'
-import MichaelUrl from './images/Michael.png'
+// import AngelaUrl from './images/Angela.png'
+// import MichaelUrl from './images/Michael.png'
 
-export type User = 'Angela' | 'Michael'
+// export type User = 'Angela' | 'Michael'
 
-export function Avatar({ user }: { user: User }) {
+export function Avatar() {
   return (
     <SkeletonBox
       on="dark"
@@ -18,3 +18,8 @@ export function Avatar({ user }: { user: User }) {
     />
   )
 }
+
+// const URLS: Record<User, string> = {
+//   Angela: AngelaUrl,
+//   Michael: MichaelUrl,
+// }

@@ -21,11 +21,11 @@ export function Features() {
             commodo.
           </FeatureBody>
         </FeatureText>
-        <FeatureScreen messageCount={5} user="Angela" />
+        <FeatureScreen messageCount={7} user="Angela" />
       </Feature>
 
       <Feature>
-        <FeatureScreen appsSelected side="left" user="Michael">
+        <FeatureScreen hearYeSelected side="left" user="Michael">
           <SkeletonHearYeMessage />
         </FeatureScreen>
         <FeatureText>
@@ -61,7 +61,7 @@ export function Features() {
             commodo.
           </FeatureBody>
         </FeatureText>
-        <FeatureScreen messageCount={5} user="Michael" />
+        <FeatureScreen messageCount={7} user="Michael" />
       </Feature>
     </Box>
   )
