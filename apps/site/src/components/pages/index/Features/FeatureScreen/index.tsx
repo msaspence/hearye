@@ -6,18 +6,24 @@ import { SearchBar } from './SearchBar'
 import { Avatar, User } from './Avatar'
 import { NavigationSection } from './NavigationSection'
 import { SkeletonWidthProvider } from '../../../../../contexts/SkeletonWidth'
+import { SkeletonMessage } from './SkeletonMessage'
+
+export { SkeletonHearYeMessage } from './SkeletonHearYeMessage'
 
 const SECTIONS: Record<User, number[]> = {
   Angela: [5, 6],
   Michael: [3, 5, 4],
 }
+
 export function FeatureScreen({
   children,
   side = 'right',
   user = 'Angela',
+  messageCount = 2,
   seed = user,
 }: {
-  children: ReactNode
+  children?: ReactNode
+  messageCount?: number
   seed?: string
   side?: 'right' | 'left'
   user?: User
@@ -77,7 +83,55 @@ export function FeatureScreen({
                 )
               })}
             </Box>
-            <Box sx={{ flexGrow: 1, padding: '10px' }}>{children}</Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                flexDirection: 'column',
+                flexShrink: 0,
+                flexGrow: 1,
+                padding: '7px',
+                maxHeight: '240px',
+                overflow: 'hidden',
+              }}
+            >
+              {children
+                ? children
+                : new Array(messageCount).fill(undefined).map((_, index) => {
+                    return <SkeletonMessage key={index} />
+                  })}
+
+              <Box
+                sx={{
+                  border: '1px solid #C8C8C8',
+                  borderRadius: '2px',
+                  height: '35px',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
+              >
+                <Box
+                  sx={{
+                    height: '10px',
+                    left: '0',
+                    top: '0',
+                    right: '0',
+                    background: '#F8F8F8',
+                  }}
+                />
+                <Box
+                  sx={{
+                    backgroundColor: '#34785C',
+                    borderRadius: '2px',
+                    height: '10px',
+                    width: '15px',
+                    bottom: '3px',
+                    right: '3px',
+                    position: 'absolute',
+                  }}
+                />
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>

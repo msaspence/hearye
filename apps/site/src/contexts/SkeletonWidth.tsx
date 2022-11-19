@@ -9,13 +9,18 @@ import {
 } from 'react'
 import Prando from 'prando'
 
-export function useSkeletonWidth() {
+export function usePrando(min: number, max: number) {
   const { next, reset } = useContext(SkeletonWidthContext)
   useEffect(reset, [])
+  return next(min, max)
+}
+
+export function useSkeletonWidth(min = 0.4, max = 1) {
+  const prandoValue = usePrando(min, max)
   return useMemo(() => {
-    const value = Math.round(next(0.4, 1) * 100)
-    return `${value}%`
-  }, [next])
+    const width = Math.round(prandoValue * 100)
+    return `${width}%`
+  }, [prandoValue])
 }
 
 const SkeletonWidthContext = createContext<{
@@ -39,16 +44,6 @@ export function SkeletonWidthProvider({
 }) {
   const [prando, setPrando] = useState(new Prando(seed))
   const reset = useCallback(() => setPrando(new Prando(seed)), [])
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  // if (import.meta.hot) {
-  //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //   // @ts-ignore
-  //   import.meta.hot.on('vite:beforeUpdate', () => {
-  //     setPrando(new Prando(seed))
-  //     value.reset()
-  //   })
-  // }
   const value = useMemo(
     () => ({
       reset,

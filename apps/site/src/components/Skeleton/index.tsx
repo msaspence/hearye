@@ -8,11 +8,15 @@ type On = 'light' | 'dark'
 export function Skeleton({
   sx = {},
   on = 'light',
+  min = 0.4,
+  max = 1,
 }: {
   on?: On
   sx?: CSSProperties
+  min?: number
+  max?: number
 }) {
-  const width = useSkeletonWidth()
+  const width = useSkeletonWidth(min, max)
   return (
     <SkeletonBox
       sx={{

@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import { Feature, FeatureBody, FeatureText, FeatureTitle } from './Feature'
-import { FeatureScreen } from './FeatureScreen'
+import { FeatureScreen, SkeletonHearYeMessage } from './FeatureScreen'
 
 export function Features() {
   return (
@@ -21,15 +21,15 @@ export function Features() {
             commodo.
           </FeatureBody>
         </FeatureText>
-        <FeatureScreen user="Angela">Hello World</FeatureScreen>
+        <FeatureScreen messageCount={5} user="Angela" />
       </Feature>
 
       <Feature>
         <FeatureScreen side="left" user="Michael">
-          Hello World
+          <SkeletonHearYeMessage />
         </FeatureScreen>
         <FeatureText>
-          <FeatureTitle>2. Recieve Reminders</FeatureTitle>
+          <FeatureTitle>2. Receive Reminders</FeatureTitle>
           <FeatureBody>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
             imperdiet mi in eleifend rhoncus. Nulla facilisi. Ut molestie, diam
@@ -61,7 +61,7 @@ export function Features() {
             commodo.
           </FeatureBody>
         </FeatureText>
-        <FeatureScreen user="Michael">Hello World</FeatureScreen>
+        <FeatureScreen messageCount={5} user="Michael" />
       </Feature>
     </Box>
   )
