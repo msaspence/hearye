@@ -25,7 +25,7 @@ export function Features() {
       </Feature>
 
       <Feature>
-        <FeatureScreen side="left" user="Michael">
+        <FeatureScreen appsSelected side="left" user="Michael">
           <SkeletonHearYeMessage />
         </FeatureScreen>
         <FeatureText>

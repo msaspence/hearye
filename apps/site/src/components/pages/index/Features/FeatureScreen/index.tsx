@@ -6,6 +6,7 @@ import { SearchBar } from './SearchBar'
 import { Avatar, User } from './Avatar'
 import { NavigationSection } from './NavigationSection'
 import { SkeletonWidthProvider } from '../../../../../contexts/SkeletonWidth'
+import { SkeletonBox } from '../../../../Skeleton'
 import { SkeletonMessage } from './SkeletonMessage'
 
 export { SkeletonHearYeMessage } from './SkeletonHearYeMessage'
@@ -17,12 +18,16 @@ const SECTIONS: Record<User, number[]> = {
 
 export function FeatureScreen({
   children,
+  appsSelected = false,
+  huddle = !appsSelected,
   side = 'right',
   user = 'Angela',
   messageCount = 2,
   seed = user,
 }: {
+  appsSelected?: boolean
   children?: ReactNode
+  huddle?: boolean
   messageCount?: number
   seed?: string
   side?: 'right' | 'left'
@@ -73,15 +78,42 @@ export function FeatureScreen({
                 width: '20%',
               }}
             >
-              {SECTIONS[user].map((channelCount, index) => {
-                return (
-                  <NavigationSection
-                    channelCount={channelCount}
-                    headed={index !== 0}
-                    key={index}
+              <Box
+                sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+              >
+                {SECTIONS[user].map((channelCount, index) => {
+                  return (
+                    <NavigationSection
+                      channelCount={channelCount}
+                      headed={index !== 0}
+                      key={index}
+                    />
+                  )
+                })}
+                <NavigationSection
+                  apps
+                  appsSelected={appsSelected}
+                  channelCount={2}
+                  headed
+                />
+              </Box>
+              {huddle && (
+                <Box
+                  sx={{
+                    borderTop: '1px solid rgba(254, 254, 254, 0.2)',
+                    padding: '0 5px',
+                  }}
+                >
+                  <SkeletonBox
+                    on="dark"
+                    sx={{
+                      height: '5px',
+                      opacity: '0.3',
+                      width: '60%',
+                    }}
                   />
-                )
-              })}
+                </Box>
+              )}
             </Box>
             <Box
               sx={{

@@ -37,13 +37,13 @@ const SkeletonWidthContext = createContext<{
 
 export function SkeletonWidthProvider({
   children,
-  seed = 'global',
+  seed,
 }: {
   children: ReactNode
   seed?: string | number
 }) {
-  const [prando, setPrando] = useState(new Prando(seed))
-  const reset = useCallback(() => setPrando(new Prando(seed)), [])
+  const [prando, setPrando] = useState(new Prando(seed || 'global'))
+  const reset = useCallback(() => setPrando(new Prando(seed || 'global')), [])
   const value = useMemo(
     () => ({
       reset,
