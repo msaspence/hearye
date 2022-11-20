@@ -40,7 +40,7 @@ export function ChannelBar({ app = false }: { app: boolean }) {
           borderBottom: '1px solid #C8C8C8',
 
           display: 'flex',
-          padding: '5px 7px',
+          padding: '4px 7px',
         }}
       >
         <SkeletonBox
@@ -50,7 +50,7 @@ export function ChannelBar({ app = false }: { app: boolean }) {
             height: '4px',
             opacity: '0.5',
             margin: 0,
-            marginRight: '3px',
+            marginRight: '4px',
             width: app ? '20px' : '40px;',
           }}
         />

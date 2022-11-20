@@ -6,6 +6,7 @@
     "baseUrl": "../../",
     "types": ["vite/client"],
     "jsx": "react-jsxdev",
+    "module": "esnext",
 
     "target": "es2015"
   },

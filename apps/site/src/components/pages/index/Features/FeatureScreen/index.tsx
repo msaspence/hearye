@@ -127,6 +127,7 @@ export function FeatureScreen({
                       channelSelected={index === 1 && !hearYeSelected}
                       channelCount={channelCount}
                       headed={index !== 0}
+                      seed={user + index}
                       key={index}
                     />
                   )
@@ -144,6 +145,8 @@ export function FeatureScreen({
                   sx={{
                     borderTop: '1px solid rgba(254, 254, 254, 0.2)',
                     padding: '0 5px',
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   <SkeletonBox
@@ -152,6 +155,15 @@ export function FeatureScreen({
                       height: '4px',
                       opacity: '0.3',
                       width: '60%',
+                    }}
+                  />
+                  <Box sx={{ flexGrow: 1 }} />
+                  <Box
+                    sx={{
+                      border: '1px solid rgba(254, 254, 254, 0.3)',
+                      borderRadius: '10px',
+                      height: '7px',
+                      width: '12px',
                     }}
                   />
                 </Box>
@@ -175,7 +187,7 @@ export function FeatureScreen({
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
                   overflow: 'hidden',
-                  padding: '7px',
+                  padding: '7px 7px 0 ',
                   flexGrow: 1,
                 }}
               >

@@ -46,11 +46,7 @@ export function NavigationSection({
               key={index}
               icon={apps || !headed}
               width={
-                apps && index === 0
-                  ? '20px'
-                  : index === 1 && channelSelected
-                  ? '45px'
-                  : undefined
+                apps && index === 0 ? '20px' : index === 1 ? '45px' : undefined
               }
               maxWidth={!headed ? 0.55 : 1}
               selected={

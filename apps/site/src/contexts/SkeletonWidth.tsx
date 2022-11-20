@@ -43,6 +43,12 @@ export function SkeletonWidthProvider({
   seed?: string | number
 }) {
   const [prando, setPrando] = useState(new Prando(seed || 'global'))
+  prando.reset()
+  if (import.meta.hot) {
+    import.meta.hot.on('vite:beforeUpdate', () => {
+      prando.reset()
+    })
+  }
   const reset = useCallback(() => setPrando(new Prando(seed || 'global')), [])
   const value = useMemo(
     () => ({
@@ -52,6 +58,7 @@ export function SkeletonWidthProvider({
     }),
     [reset, prando]
   )
+
   return (
     <SkeletonWidthContext.Provider value={value}>
       {children}
