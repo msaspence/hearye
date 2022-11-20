@@ -8,6 +8,7 @@ import { NavigationSection } from './NavigationSection'
 import { SkeletonWidthProvider } from '../../../../../contexts/SkeletonWidth'
 import { SkeletonBox } from '../../../../Skeleton'
 import { SkeletonMessage } from './SkeletonMessage'
+import { ChannelBar } from './ChannelBar'
 
 export { SkeletonHearYeMessage } from './SkeletonHearYeMessage'
 
@@ -163,17 +164,27 @@ export function FeatureScreen({
                 flexDirection: 'column',
                 flexShrink: 0,
                 flexGrow: 1,
-                padding: '7px',
                 maxHeight: '240px',
                 overflow: 'hidden',
               }}
             >
-              {children
-                ? children
-                : new Array(messageCount).fill(undefined).map((_, index) => {
-                    return <SkeletonMessage key={index} />
-                  })}
-
+              <ChannelBar app={hearYeSelected} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  overflow: 'hidden',
+                  padding: '7px',
+                  flexGrow: 1,
+                }}
+              >
+                {children
+                  ? children
+                  : new Array(messageCount).fill(undefined).map((_, index) => {
+                      return <SkeletonMessage key={index} />
+                    })}
+              </Box>
               <Box
                 sx={{
                   border: '1px solid #C8C8C8',
@@ -182,6 +193,7 @@ export function FeatureScreen({
                   position: 'relative',
                   overflow: 'hidden',
                   flexShrink: 0,
+                  margin: '0 7px 7px',
                 }}
               >
                 <Box
