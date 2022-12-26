@@ -48,6 +48,7 @@ export function FeatureScreen({
           [side == 'right' ? 'marginRight' : 'marginLeft']: '-100px',
           padding: '10px',
           position: 'relative',
+          height: '280px',
         }}
       >
         <Box

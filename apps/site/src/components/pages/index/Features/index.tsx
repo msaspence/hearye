@@ -1,16 +1,14 @@
 import Box from '@mui/material/Box'
-import Tooltip from '@mui/material/Tooltip'
 
 import { Feature, FeatureBody, FeatureText, FeatureTitle } from './Feature'
 import {
+  ChatMention,
   FeatureScreen,
   SkeletonHearYeMessage,
-  FeatureScreenZoom,
-  ChatMention,
-  ChatLink,
-  ChatButton,
 } from './FeatureScreen'
 import { OriginalMessage } from './OriginalMessage'
+import { ReminderMessage } from './ReminderMessage'
+
 export function Features() {
   return (
     <Box id="features" sx={{ paddingTop: '50px' }}>
@@ -18,16 +16,9 @@ export function Features() {
         <FeatureText>
           <FeatureTitle>1. Mark Critical Messages</FeatureTitle>
           <FeatureBody>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-            imperdiet mi in eleifend rhoncus. Nulla facilisi. Ut molestie, diam
-            vel posuere luctus, orci ligula sagittis diam, eget vehicula lacus
-            sapien in lorem. Praesent feugiat eleifend ex vitae mattis.
-            Phasellus ornare commodo ante et feugiat. Nunc imperdiet iaculis
-            est, at maximus lacus varius eget. Maecenas lobortis magna quis diam
-            tempus dapibus. Nullam porta leo lorem, sit amet tempor tortor
-            luctus a. Cras nisl libero, gravida at sem sit amet, efficitur
-            suscipit sapien. Morbi ac mollis urna. Suspendisse laoreet dictum
-            commodo.
+            To indicate a message is critical and requires acknowledgement that
+            it has been read, simply mention <ChatMention>@Hear Ye</ChatMention>{' '}
+            in the message body.
           </FeatureBody>
         </FeatureText>
         <FeatureScreen messageCount={7} user="Pam">
@@ -43,47 +34,13 @@ export function Features() {
           user="Michael"
         >
           <SkeletonHearYeMessage />
-          <FeatureScreenZoom
-            author="Hear Ye!"
-            time="12:15 PM"
-            sx={{ top: '45px', left: '-25px', right: '-0px' }}
-          >
-            Hey <ChatMention>@Michael</ChatMention>
-            <br />
-            You have an unacknowledged message in{' '}
-            <ChatMention>#paperwork</ChatMention>.
-            <br />
-            Please take the time read and acknowledge{' '}
-            <Tooltip
-              arrow
-              placement="bottom"
-              title="Easily jump to the original message"
-            >
-              <ChatLink>the message</ChatLink>
-            </Tooltip>{' '}
-            with a 👍
-            <Tooltip
-              arrow
-              placement="right"
-              title="Easily jump to the original message"
-            >
-              <ChatButton>Go To Message</ChatButton>
-            </Tooltip>
-          </FeatureScreenZoom>
+          <ReminderMessage />
         </FeatureScreen>
         <FeatureText>
           <FeatureTitle>2. Receive Reminders</FeatureTitle>
           <FeatureBody>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-            imperdiet mi in eleifend rhoncus. Nulla facilisi. Ut molestie, diam
-            vel posuere luctus, orci ligula sagittis diam, eget vehicula lacus
-            sapien in lorem. Praesent feugiat eleifend ex vitae mattis.
-            Phasellus ornare commodo ante et feugiat. Nunc imperdiet iaculis
-            est, at maximus lacus varius eget. Maecenas lobortis magna quis diam
-            tempus dapibus. Nullam porta leo lorem, sit amet tempor tortor
-            luctus a. Cras nisl libero, gravida at sem sit amet, efficitur
-            suscipit sapien. Morbi ac mollis urna. Suspendisse laoreet dictum
-            commodo.
+            Hear Ye! will remind anyone mentioned once a day sometime between
+            10am and 11am until the message is acknowledged.
           </FeatureBody>
         </FeatureText>
       </Feature>
@@ -92,16 +49,8 @@ export function Features() {
         <FeatureText>
           <FeatureTitle>3. React to Acknowledge</FeatureTitle>
           <FeatureBody>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-            imperdiet mi in eleifend rhoncus. Nulla facilisi. Ut molestie, diam
-            vel posuere luctus, orci ligula sagittis diam, eget vehicula lacus
-            sapien in lorem. Praesent feugiat eleifend ex vitae mattis.
-            Phasellus ornare commodo ante et feugiat. Nunc imperdiet iaculis
-            est, at maximus lacus varius eget. Maecenas lobortis magna quis diam
-            tempus dapibus. Nullam porta leo lorem, sit amet tempor tortor
-            luctus a. Cras nisl libero, gravida at sem sit amet, efficitur
-            suscipit sapien. Morbi ac mollis urna. Suspendisse laoreet dictum
-            commodo.
+            Messages can be acknowledged by reacting with a 👍. Once
+            acknowledged no further reminders will be sent.
           </FeatureBody>
         </FeatureText>
         <FeatureScreen messageCount={7} user="Michael">

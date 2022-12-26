@@ -49,6 +49,7 @@ export const theme = createTheme({
         },
         body1: {
           fontFamily: 'Archivo Narrow',
+          fontSize: '24px',
           lineHeight: 1.3,
         },
       },

@@ -7,7 +7,7 @@ export * from './FeatureTitle'
 
 export function Feature({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ display: 'flex', columnGap: '30px', marginBottom: '60px' }}>
+    <Box sx={{ display: 'flex', columnGap: '40px', marginBottom: '40px' }}>
       {children}
     </Box>
   )
