@@ -1,10 +1,9 @@
 import MuiAvatar from '@mui/material/Avatar'
 
 import PamUrl from './images/Pam.png'
-import MichaelUrl from './images/Michael.png'
 import IconUrl from '../../../../../../../images/icon.png'
 
-export type User = 'Pam' | 'Michael' | 'Hear Ye!'
+export type User = 'Pam' | 'Hear Ye!'
 
 export function Avatar({ user }: { user: User }) {
   return (
@@ -22,6 +21,5 @@ export function Avatar({ user }: { user: User }) {
 
 const URLS: Record<User, string> = {
   Pam: PamUrl,
-  Michael: MichaelUrl,
   'Hear Ye!': IconUrl,
 }

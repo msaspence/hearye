@@ -1,5 +1,4 @@
 import { CSSProperties } from '@mui/styled-engine'
-import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 
 import { FeatureScreenZoom, ChatMention, Reaction } from './FeatureScreen'
@@ -21,21 +20,40 @@ export function OriginalMessage({
           {
             <Tooltip
               arrow
-              placement="right"
-              title="Hear Ye! will confirm it has registered a message that requires acknowledgement by reacting with a 🔔"
+              placement="top"
+              title="Hear Ye! will confirm it has registered a message requires acknowledgement by reacting with a 🔔"
             >
-              <Box>
-                <Reaction>🔔</Reaction>
-              </Box>
+              <Reaction>🔔</Reaction>
             </Tooltip>
           }
-          {acknowledged && <Reaction self>👍</Reaction>}
+          {acknowledged && (
+            <Tooltip
+              arrow
+              placement="top"
+              title="To acknowledge a message, and dismiss future reminders just react with a 👍"
+            >
+              <Reaction self>👍</Reaction>
+            </Tooltip>
+          )}
         </>
       }
     >
-      <ChatMention>@Michael</ChatMention> Did you sign the time cards yet? We
-      really need them signed by 7pm to make the last pick up for overnight
-      delivery. <ChatMention>@Hear Ye</ChatMention>
+      <Tooltip
+        arrow
+        placement="top"
+        title="Any one mentioned in the message will be periodically reminded to acknowledge until they do"
+      >
+        <ChatMention>@Michael</ChatMention>
+      </Tooltip>{' '}
+      Did you sign the time cards yet? We really need them signed by 7pm to make
+      the last pick up for overnight delivery.{' '}
+      <Tooltip
+        arrow
+        placement="top"
+        title="To indicate a message requires acknowledgement, just mention @Hear Ye"
+      >
+        <ChatMention>@Hear Ye</ChatMention>
+      </Tooltip>
     </FeatureScreenZoom>
   )
 }

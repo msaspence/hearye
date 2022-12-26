@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { Avatar } from './Avatar'
 export { Reaction } from './Reaction'
 
-export type User = 'Pam' | 'Michael' | 'Hear Ye!'
+export type User = 'Pam' | 'Hear Ye!'
 
 export function FeatureScreenZoom({
   author,

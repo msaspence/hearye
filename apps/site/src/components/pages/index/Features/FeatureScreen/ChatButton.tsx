@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
 
-export function ChatButton({ children }: { children: ReactNode }) {
+export const ChatButton = forwardRef((props: { children: ReactNode }, ref) => {
   return (
     <Box
       component="button"
@@ -14,9 +14,13 @@ export function ChatButton({ children }: { children: ReactNode }) {
         marginTop: '10px',
         fontWeight: 700,
         fontSize: '13px',
+        cursor: 'pointer',
+        '&:hover': {
+          background: '#F6F6F6',
+        },
       }}
-    >
-      {children}
-    </Box>
+      {...props}
+      ref={ref}
+    />
   )
-}
+})

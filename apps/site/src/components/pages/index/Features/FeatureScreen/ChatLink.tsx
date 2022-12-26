@@ -1,15 +1,19 @@
 import Box from '@mui/material/Box'
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
 
-export function ChatLink({ children }: { children: ReactNode }) {
+export const ChatLink = forwardRef((props: { children: ReactNode }, ref) => {
   return (
     <Box
       component="span"
       sx={{
         color: '#4374A8',
+        cursor: 'pointer',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
       }}
-    >
-      {children}
-    </Box>
+      ref={ref}
+      {...props}
+    />
   )
-}
+})

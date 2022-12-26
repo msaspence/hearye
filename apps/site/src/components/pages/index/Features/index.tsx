@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box'
+import Tooltip from '@mui/material/Tooltip'
+
 import { Feature, FeatureBody, FeatureText, FeatureTitle } from './Feature'
 import {
   FeatureScreen,
@@ -52,8 +54,21 @@ export function Features() {
             <ChatMention>#paperwork</ChatMention>.
             <br />
             Please take the time read and acknowledge{' '}
-            <ChatLink>the message</ChatLink> with a 👍
-            <ChatButton>Go To Message</ChatButton>
+            <Tooltip
+              arrow
+              placement="bottom"
+              title="Easily jump to the original message"
+            >
+              <ChatLink>the message</ChatLink>
+            </Tooltip>{' '}
+            with a 👍
+            <Tooltip
+              arrow
+              placement="right"
+              title="Easily jump to the original message"
+            >
+              <ChatButton>Go To Message</ChatButton>
+            </Tooltip>
           </FeatureScreenZoom>
         </FeatureScreen>
         <FeatureText>

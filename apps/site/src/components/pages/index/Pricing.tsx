@@ -8,7 +8,6 @@ export function Pricing() {
       sx={{
         margin: '25px auto 0',
         padding: '50px 0',
-        // width: '400px',
         display: 'flex',
         fontFamily: 'Neumatic Gothic Round',
         fontWeight: 'bold',
@@ -26,7 +25,7 @@ export function Pricing() {
           }}
           variant="h3"
         >
-          $1
+          50¢
         </Typography>
       </Box>
       <Box>
