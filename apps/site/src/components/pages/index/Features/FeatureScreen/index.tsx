@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 import { WindowControl } from './WindowControl'
 import { SearchBar } from './SearchBar'
-import { Avatar, User } from './Avatar'
+import { Avatar } from './Avatar'
 import { NavigationSection } from './NavigationSection'
 import { SkeletonWidthProvider } from '../../../../../contexts/SkeletonWidth'
 import { SkeletonBox } from '../../../../Skeleton'
@@ -11,9 +11,15 @@ import { SkeletonMessage } from './SkeletonMessage'
 import { ChannelBar } from './ChannelBar'
 
 export { SkeletonHearYeMessage } from './SkeletonHearYeMessage'
+export { FeatureScreenZoom, Reaction } from './FeatureScreenZoom'
+export { ChatMention } from './ChatMention'
+export { ChatLink } from './ChatLink'
+export { ChatButton } from './ChatButton'
+
+export type User = 'Pam' | 'Michael'
 
 const SECTIONS: Record<User, number[]> = {
-  Angela: [5, 6],
+  Pam: [5, 6],
   Michael: [3, 5, 4],
 }
 
@@ -22,7 +28,7 @@ export function FeatureScreen({
   hearYeSelected = false,
   huddle = !hearYeSelected,
   side = 'right',
-  user = 'Angela',
+  user = 'Pam',
   messageCount = 2,
   seed = user,
 }: {
@@ -41,6 +47,7 @@ export function FeatureScreen({
           minWidth: '450px',
           [side == 'right' ? 'marginRight' : 'marginLeft']: '-100px',
           padding: '10px',
+          position: 'relative',
         }}
       >
         <Box
@@ -191,11 +198,10 @@ export function FeatureScreen({
                   flexGrow: 1,
                 }}
               >
-                {children
-                  ? children
-                  : new Array(messageCount).fill(undefined).map((_, index) => {
-                      return <SkeletonMessage key={index} />
-                    })}
+                {new Array(messageCount).fill(undefined).map((_, index) => {
+                  return <SkeletonMessage key={index} />
+                })}
+                {children}
               </Box>
               <Box
                 sx={{
@@ -214,7 +220,7 @@ export function FeatureScreen({
                     left: '0',
                     top: '0',
                     right: '0',
-                    background: '#F8F8F8',
+                    background: '#EEE',
                   }}
                 />
                 <Box

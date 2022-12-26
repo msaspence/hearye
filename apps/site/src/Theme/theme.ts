@@ -3,7 +3,20 @@ import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   components: {
     // Name of the component
-
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontFamily: 'Archivo Narrow',
+          fontSize: '16px',
+          background: '#333',
+          boxShadow: '0px 0px 5px rgba(0,0,0,0.5)',
+          padding: '8px 14px',
+        },
+        arrow: {
+          color: '#333',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

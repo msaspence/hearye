@@ -4,8 +4,6 @@ import { SkeletonBox } from '../../../../../Skeleton'
 // import AngelaUrl from './images/Angela.png'
 // import MichaelUrl from './images/Michael.png'
 
-export type User = 'Angela' | 'Michael'
-
 export function Avatar() {
   return (
     <SkeletonBox
