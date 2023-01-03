@@ -1,7 +1,7 @@
 import { User } from './User'
 import { BaseModel } from './BaseModel'
 import '../init'
-import { Announcement } from './Announcement'
+import { Message } from './Message'
 
 export class Reminder extends BaseModel {
   id!: string
@@ -15,15 +15,15 @@ export class Reminder extends BaseModel {
   lockedUntil?: Date | null
 
   user!: User
-  announcement!: Announcement
+  message!: Message
 
   static relationMappings = {
-    announcement: {
+    message: {
       relation: BaseModel.BelongsToOneRelation,
-      modelClass: Announcement,
+      modelClass: Message,
       join: {
-        from: 'reminders.announcementId',
-        to: 'announcements.id',
+        from: 'reminders.messageId',
+        to: 'messages.id',
       },
     },
     user: {

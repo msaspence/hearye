@@ -10,32 +10,29 @@ export async function remindUser(reminder: Reminder) {
   const user = await findUserById(reminder.userId)
   if (!user) throw new Error("User doesn't exist")
   await markReminderSent(reminder, user.timezone, async () => {
-    const announcementPermalink = await generateAnnouncmentPermalink(
-      client,
-      reminder
-    )
-    if (!announcementPermalink) throw new Error("Couldn't generate permalink")
+    const messagePermalink = await generateMessagePermalink(client, reminder)
+    if (!messagePermalink) throw new Error("Couldn't generate permalink")
     await client.chat.postMessage({
       channel: reminder.user.externalId,
       blocks: await generateBlocksForReminder(
-        announcementPermalink,
-        reminder.announcement.channelExternalId
+        messagePermalink,
+        reminder.message.channelExternalId
       ),
       text: await generateTextForReminder(
-        announcementPermalink,
-        reminder.announcement.channelExternalId
+        messagePermalink,
+        reminder.message.channelExternalId
       ),
     })
   })
 }
 
-async function generateAnnouncmentPermalink(
+async function generateMessagePermalink(
   client: WebClient,
-  reminder: { announcement: { channelExternalId: string; timestamp: string } }
+  reminder: { message: { channelExternalId: string; timestamp: string } }
 ) {
   const { permalink } = await client.chat.getPermalink({
-    channel: reminder.announcement.channelExternalId,
-    message_ts: reminder.announcement.timestamp,
+    channel: reminder.message.channelExternalId,
+    message_ts: reminder.message.timestamp,
   })
   return permalink
 }
@@ -56,14 +53,14 @@ async function generateBlocksForReminder(
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `You have an unacknowledged announcement in <#${channelExternalId}>`,
+        text: `You have an unacknowledged message in <#${channelExternalId}>`,
       },
     },
     {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `Please take the time to read and acknowledge <${permalink}|this announcement> with a :+1:`,
+        text: `Please take the time to read and acknowledge <${permalink}|this message> with a :+1:`,
       },
     },
     {
@@ -73,7 +70,7 @@ async function generateBlocksForReminder(
           type: 'button',
           text: {
             type: 'plain_text',
-            text: 'Go To Announcement',
+            text: 'Go To message',
             emoji: true,
           },
           url: permalink,
@@ -91,5 +88,5 @@ async function generateTextForReminder(
   permalink: string,
   channelExternalId: string
 ) {
-  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged announcement in <#${channelExternalId}>.\n\n<${permalink}|Go To Announcment>\n\nPlease take the time to read and acknowledge this announcement with a 👍🏻.`
+  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged message in <#${channelExternalId}>.\n\n<${permalink}|Go To Message>\n\nPlease take the time to read and acknowledge this message with a 👍🏻.`
 }

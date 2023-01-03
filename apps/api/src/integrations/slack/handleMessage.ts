@@ -1,16 +1,16 @@
 import { SlackEventMiddlewareArgs } from '@slack/bolt'
 
-import { isSlackEventAnnouncment } from './isSlackEventAnnouncment'
-import { acknowledgeAnnouncementReciept } from './acknowledgeAnnouncementReciept'
+import { isSlackEventMessage } from './isSlackEventMessage'
+import { acknowledgeMessageReciept } from './acknowledgeMessageReciept'
 import { getAccountFromSlackEvent } from './getAccountFromSlackEvent'
 import { getAudienceUsersFromSlackEvent } from './getAudienceUsersFromSlackEvent'
-import { getAnnouncementFromSlackEvent } from './getAnnouncementFromSlackEvent'
+import { getMessageFromSlackEvent } from './getMessageFromSlackEvent'
 import { scheduleReminder } from '@hearye/db'
 
-export async function handleAnnouncement(
+export async function handleMessage(
   event: SlackEventMiddlewareArgs<'app_mention'>
 ) {
-  if (await isSlackEventAnnouncment(event)) {
+  if (await isSlackEventMessage(event)) {
     const account = await getAccountFromSlackEvent(event)
     if (!account.id) throw new Error('Account with id required')
 
@@ -19,10 +19,10 @@ export async function handleAnnouncement(
       .map(({ id }) => id)
       .filter((id) => id !== undefined) as string[]
 
-    const announcement = await getAnnouncementFromSlackEvent(account.id, event)
-    if (!announcement.id) throw new Error('Announcement with id required')
-    await scheduleReminder(account.id, announcement.id, userIds)
+    const message = await getMessageFromSlackEvent(account.id, event)
+    if (!message.id) throw new Error('Message with id required')
+    await scheduleReminder(account.id, message.id, userIds)
 
-    await acknowledgeAnnouncementReciept(event)
+    await acknowledgeMessageReciept(event)
   }
 }

@@ -1,6 +1,6 @@
 display_information:
   name: Hear Ye!
-  description: Bot for making and acknowledging announcements
+  description: Bot to ensure critical message are acknowledged and read
   background_color: '#27282b'
 features:
   app_home:

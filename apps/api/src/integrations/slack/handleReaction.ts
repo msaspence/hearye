@@ -1,8 +1,5 @@
 import { ReactionAddedEvent } from '@slack/bolt'
-import {
-  acknowledgeAnnouncement,
-  findUserBySourceAndExternalId,
-} from '@hearye/db'
+import { acknowledgeMessage, findUserBySourceAndExternalId } from '@hearye/db'
 
 const ACCEPTED_REACTIONS = ['+1', 'mega']
 
@@ -17,6 +14,6 @@ export async function handleReaction({
 }) {
   const user = await findUserBySourceAndExternalId('slack', userExternalId)
   if (ACCEPTED_REACTIONS.includes(reaction) && type === 'message' && user) {
-    await acknowledgeAnnouncement(user.id, channel, timestamp)
+    await acknowledgeMessage(user.id, channel, timestamp)
   }
 }

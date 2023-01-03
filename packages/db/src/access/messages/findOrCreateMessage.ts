@@ -1,16 +1,16 @@
-import { Announcement } from '../../models/Announcement'
+import { Message } from '../../models/Message'
 import { UniqueViolationError } from 'objection'
 
-export async function findOrCreateAnnouncement(params: {
+export async function findOrCreateMessage(params: {
   accountId: string
   source: string
   externalId: string
   channelExternalId: string
   timestamp: string
-}): Promise<Announcement> {
+}): Promise<Message> {
   const { accountId, source, externalId } = params
 
-  const existingAnnouncement = await Announcement.query()
+  const existingMessage = await Message.query()
     .findOne({
       accountId,
       source,
@@ -18,12 +18,12 @@ export async function findOrCreateAnnouncement(params: {
     })
     .select('id')
 
-  if (existingAnnouncement) return existingAnnouncement
+  if (existingMessage) return existingMessage
   try {
-    return await Announcement.query().insert(params)
+    return await Message.query().insert(params)
   } catch (error) {
     if (error instanceof UniqueViolationError) {
-      return findOrCreateAnnouncement(params)
+      return findOrCreateMessage(params)
     }
     throw error
   }

@@ -3,7 +3,7 @@ import '@hearye/env'
 
 const config: Knex.Config | { [key: string]: Knex.Config } = {
   client: 'postgresql',
-  connection: process.env.DATABASE_URL,
+  connection: process.env.DATABASE_URL || 'psql://localhost:5432/hearye',
   migrations: {
     directory: '../migrations',
     tableName: 'knex_migrations',

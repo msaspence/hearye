@@ -1,6 +1,6 @@
 import { Reminder } from '../../models/Reminder'
 
-export async function acknowledgeAnnouncement(
+export async function acknowledgeMessage(
   userId: string,
   channelExternalId: string,
   timestamp: string
@@ -10,11 +10,11 @@ export async function acknowledgeAnnouncement(
     .whereIn('id', function () {
       this.select('reminders.id')
         .from('reminders')
-        .joinRelated('announcement')
+        .joinRelated('message')
         .where('userId', userId)
         .whereNull('acknowledgedAt')
-        .where('announcement.channelExternalId', channelExternalId)
-        .where('announcement.timestamp', timestamp)
+        .where('message.channelExternalId', channelExternalId)
+        .where('message.timestamp', timestamp)
         .orderBy('iteration', 'desc')
         .limit(1)
     })

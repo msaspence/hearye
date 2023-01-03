@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node'
 import {
-  findDueRemindersWithAnnouncementAndUser,
+  findDueRemindersWithMessageAndUser,
   Reminder,
   scheduleRetryReminder,
 } from '@hearye/db'
@@ -13,7 +13,7 @@ import { remindUser } from './integrations/slack/remindUser'
 const logger = createLogger('hearye:db:findAndProcessDueReminders')
 
 export async function findAndProcessDueReminders() {
-  const reminders = await findDueRemindersWithAnnouncementAndUser()
+  const reminders = await findDueRemindersWithMessageAndUser()
   logger.info(`${reminders.length} found to process`)
   await Promise.all(
     reminders.map(manageErrors(traced('remindUser', remindUser)))

@@ -4,11 +4,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('reminders', (table) => {
     table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'))
     table.uuid('accountId').notNullable().references('id').inTable('accounts')
-    table
-      .uuid('announcementId')
-      .notNullable()
-      .references('id')
-      .inTable('announcements')
+    table.uuid('messageId').notNullable().references('id').inTable('messages')
     table.uuid('userId').notNullable().references('id').inTable('users')
     table.datetime('remindAt', { useTz: false }).notNullable()
     table.datetime('remindedAt', { useTz: false })
@@ -20,14 +16,14 @@ export async function up(knex: Knex): Promise<void> {
 
     table.index(['accountId', 'userId', 'remindedAt'])
     table.index(
-      ['announcementId', 'userId', 'acknowledgedAt'],
-      'reminders_index_for_acknowledgeAnnouncement'
+      ['messageId', 'userId', 'acknowledgedAt'],
+      'reminders_index_for_acknowledgeMessage'
     )
     table.index(
       ['remindAt', 'remindedAt', 'acknowledgedAt', 'lockedUntil'],
-      'reminders_index_for_findDueRemindersWithAnnouncementAndUser'
+      'reminders_index_for_findDueRemindersWithMessageAndUser'
     )
-    table.unique(['accountId', 'announcementId', 'userId', 'iteration'])
+    table.unique(['accountId', 'messageId', 'userId', 'iteration'])
   })
 }
 

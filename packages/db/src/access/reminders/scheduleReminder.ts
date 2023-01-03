@@ -7,13 +7,13 @@ import { getRemindAt } from './getRemindAt'
 
 export async function scheduleReminder(
   accountId: string,
-  announcementId: string,
+  messageId: string,
   userIds: string[],
   iteration = 1
 ): Promise<void> {
   const existingReminders = await Reminder.query()
     .where('accountId', accountId)
-    .where('announcementId', announcementId)
+    .where('messageId', messageId)
     .whereIn('userId', userIds)
     .where('iteration', iteration)
     .select('id', 'userId')
@@ -36,7 +36,7 @@ export async function scheduleReminder(
       missingUsers.map((userId) => {
         return {
           accountId,
-          announcementId,
+          messageId,
           userId,
           iteration,
           remindAt: getRemindAt(iteration, timezones[userId]),
@@ -47,7 +47,7 @@ export async function scheduleReminder(
     return
   } catch (error) {
     if (error instanceof UniqueViolationError) {
-      return scheduleReminder(accountId, announcementId, userIds)
+      return scheduleReminder(accountId, messageId, userIds)
     }
     throw error
   }
