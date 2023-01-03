@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box'
 import Tooltip from '@mui/material/Tooltip'
 
 import {
@@ -12,7 +13,11 @@ export function ReminderMessage() {
     <FeatureScreenZoom
       author="Hear Ye!"
       time="10:02 AM"
-      sx={{ top: '45px', left: '-25px', right: '-0px' }}
+      sx={{
+        top: '45px',
+        left: { md: '-25px', xs: '-10px' },
+        right: { md: '-0px', xs: '-10px' },
+      }}
     >
       Hey <ChatMention>@Michael</ChatMention>
       <br />
@@ -28,13 +33,15 @@ export function ReminderMessage() {
         <ChatLink>the message</ChatLink>
       </Tooltip>{' '}
       with a 👍
-      <Tooltip
-        arrow
-        placement="right"
-        title="Easily jump to the original message"
-      >
-        <ChatButton>Go To Message</ChatButton>
-      </Tooltip>
+      <Box>
+        <Tooltip
+          arrow
+          placement="right"
+          title="Easily jump to the original message"
+        >
+          <ChatButton>Go To Message</ChatButton>
+        </Tooltip>
+      </Box>
     </FeatureScreenZoom>
   )
 }

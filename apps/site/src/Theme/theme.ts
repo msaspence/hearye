@@ -1,6 +1,18 @@
 import { createTheme } from '@mui/material/styles'
 
+const { breakpoints } = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      md: 600,
+      md: 1024,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+})
 export const theme = createTheme({
+  breakpoints,
   components: {
     // Name of the component
     MuiTooltip: {
@@ -28,15 +40,21 @@ export const theme = createTheme({
           fontSize: '120px',
         },
         h2: {
-          fontSize: '55px',
+          fontSize: '50px',
           lineHeight: 1,
           fontWeight: 700,
+          [breakpoints.down('md')]: { fontSize: '40px' },
         },
         h3: {
           fontSize: '60px',
           fontWeight: 'normal',
           marginTop: '30px',
           marginBottom: '10px',
+          [breakpoints.down('md')]: {
+            fontSize: '50px',
+            marginTop: '30px',
+            marginBottom: '0px',
+          },
         },
         h4: {
           fontWeight: 'normal',
@@ -51,6 +69,12 @@ export const theme = createTheme({
           fontFamily: 'Archivo Narrow',
           fontSize: '24px',
           lineHeight: 1.3,
+
+          [breakpoints.down('md')]: {
+            fontSize: '22px',
+            marginTop: '10px',
+            marginBottom: '20px',
+          },
         },
       },
     },

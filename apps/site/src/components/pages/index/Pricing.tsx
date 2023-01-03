@@ -18,8 +18,8 @@ export function Pricing() {
         <Typography
           sx={{
             fontWeight: 'bold',
-            fontSize: '200px',
-            lineHeight: '150px',
+            fontSize: { md: '200px', xs: '150px' },
+            lineHeight: { md: '150px', xs: '65px' },
             marginRight: '20px',
             marginTop: '10px',
           }}
@@ -31,8 +31,8 @@ export function Pricing() {
       <Box>
         <Typography
           sx={{
-            fontSize: '75px',
-            lineHeight: '75px',
+            fontSize: { md: '75px', xs: '50px' },
+            lineHeight: { md: '75px', xs: '50px' },
           }}
           variant="h4"
         >
@@ -40,8 +40,8 @@ export function Pricing() {
         </Typography>
         <Typography
           sx={{
-            fontSize: '75px',
-            lineHeight: '75px',
+            fontSize: { md: '75px', xs: '50px' },
+            lineHeight: { md: '75px', xs: '50px' },
           }}
           variant="h4"
         >

@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
-import { CSSProperties } from '@mui/styled-engine'
+import { SxProps, Theme } from '@mui/material/styles'
+
 import { ReactNode } from 'react'
 import { Avatar } from './Avatar'
 export { Reaction } from './Reaction'
@@ -15,7 +16,7 @@ export function FeatureScreenZoom({
 }: {
   author: User
   children: ReactNode
-  sx?: CSSProperties
+  sx?: SxProps<Theme>
   reactions?: ReactNode
   time: string
 }) {
@@ -29,8 +30,8 @@ export function FeatureScreenZoom({
         position: 'absolute',
         top: '120px',
         zIndex: 1000,
-        left: '-10px',
-        right: '-20px',
+        left: { xs: '-10px', md: '-10px' },
+        right: { xs: '-10px', md: '-20px' },
         ...sx,
       }}
     >

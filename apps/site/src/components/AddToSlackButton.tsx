@@ -1,8 +1,16 @@
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import { SxProps, Theme } from '@mui/material/styles'
+
 import slackLogoUrl from '../../images/slack-logo.svg'
 
-export function AddToSlackButton({ variant }: { variant?: 'large' }) {
+export function AddToSlackButton({
+  sx = {},
+  variant,
+}: {
+  sx?: SxProps<Theme>
+  variant?: 'large'
+}) {
   return (
     <Button
       href="https://api.hearyebot.com/slack/install"
@@ -33,6 +41,7 @@ export function AddToSlackButton({ variant }: { variant?: 'large' }) {
               padding: '15px 30px',
             }
           : {}),
+        ...sx,
       }}
     >
       <Box

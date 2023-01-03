@@ -8,9 +8,10 @@ export function Layout({ children }: { children: ReactNode }) {
     <Box
       sx={{
         boxSizing: 'border-box',
-        maxWidth: '1024px',
+        maxWidth: { md: '958px', xs: '475px' },
         margin: '0 auto 0px',
-        padding: '50px 100px',
+        padding: { xs: '20px 20px', md: '50px 100px' },
+        minWidth: '355px',
       }}
     >
       {children}

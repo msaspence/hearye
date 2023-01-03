@@ -44,11 +44,12 @@ export function FeatureScreen({
     <SkeletonWidthProvider seed={seed}>
       <Box
         sx={{
-          minWidth: '450px',
-          [side == 'right' ? 'marginRight' : 'marginLeft']: '-100px',
-          padding: '10px',
+          minWidth: { md: '450px' },
+          [side == 'right' ? 'marginRight' : 'marginLeft']: { md: '-100px' },
+          padding: { md: '10px' },
           position: 'relative',
           height: '280px',
+          width: { xs: '100%' },
         }}
       >
         <Box

@@ -13,12 +13,4 @@ export function Page() {
       <Try />
     </Layout>
   )
-  // return (
-  //   <Layout>
-  //     <BannerHeader />
-  //     <Features />
-  //     <Pricing />
-  //     <Try />
-  //   </Layout>
-  // )
 }

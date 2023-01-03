@@ -15,7 +15,7 @@ export function Try() {
       <Typography
         variant="h4"
         sx={{
-          fontSize: '100px',
+          fontSize: { md: '100px', xs: '75px' },
           fontWeight: 'bold',
           marginBottom: '40px;',
         }}

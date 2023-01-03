@@ -9,6 +9,7 @@ export function TagLineTicker() {
     <Box
       sx={{
         position: 'relative',
+        height: '40px',
       }}
     >
       {next && (
@@ -26,8 +27,8 @@ export function TagLineTicker() {
   )
 }
 
-const ADJECTIVES = ['Urgent', 'Critical', 'Important', 'Crucial', 'Vital']
-const NOUNS = ['Announcement', 'Message', 'Update', 'Request']
+const ADJECTIVES = ['Urgent', 'Important', 'Critical', 'Crucial', 'Vital']
+const NOUNS = ['Message', 'Announcement', 'Update', 'Request']
 
 function useTickerState() {
   const {

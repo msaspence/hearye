@@ -11,7 +11,7 @@ import { ReminderMessage } from './ReminderMessage'
 
 export function Features() {
   return (
-    <Box id="features" sx={{ paddingTop: '50px' }}>
+    <Box id="features" sx={{ paddingTop: { xs: '0px', md: '50px' } }}>
       <Feature>
         <FeatureText>
           <FeatureTitle>1. Mark Critical Messages</FeatureTitle>
@@ -26,7 +26,14 @@ export function Features() {
         </FeatureScreen>
       </Feature>
 
-      <Feature>
+      <Feature swap>
+        <FeatureText>
+          <FeatureTitle>2. Receive Reminders</FeatureTitle>
+          <FeatureBody>
+            Hear Ye! will remind anyone mentioned once a day sometime between
+            10am and 11am until the message is acknowledged.
+          </FeatureBody>
+        </FeatureText>
         <FeatureScreen
           hearYeSelected
           messageCount={0}
@@ -36,13 +43,6 @@ export function Features() {
           <SkeletonHearYeMessage />
           <ReminderMessage />
         </FeatureScreen>
-        <FeatureText>
-          <FeatureTitle>2. Receive Reminders</FeatureTitle>
-          <FeatureBody>
-            Hear Ye! will remind anyone mentioned once a day sometime between
-            10am and 11am until the message is acknowledged.
-          </FeatureBody>
-        </FeatureText>
       </Feature>
 
       <Feature>
