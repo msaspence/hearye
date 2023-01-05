@@ -22,6 +22,9 @@ export function Footer() {
         <Link href="#pricing" variant="subtitle1">
           Pricing
         </Link>
+        <Link href="/privacy" variant="subtitle1">
+          Privacy Policy
+        </Link>
         <Link href="mailto:hello@hearyebot.com" variant="subtitle1">
           Contact Us
         </Link>

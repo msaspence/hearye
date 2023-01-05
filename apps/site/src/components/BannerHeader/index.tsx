@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Link from '@mui/material/Link'
 
 import { AddToSlackButton } from '../AddToSlackButton'
 import logoUrl from '../../../images/logo.png'
@@ -9,20 +10,21 @@ export function BannerHeader() {
   return (
     <Box sx={{ display: { xs: 'block', md: 'flex' } }}>
       <Box sx={{ alignItems: 'flex-start', display: 'flex', flexGrow: 1 }}>
-        <Typography sx={{ display: 'none' }} variant="h1">
-          Hear Ye!
-        </Typography>
-        <Box
-          component="img"
-          id="logo"
-          src={logoUrl}
-          sx={{
-            marginRight: { xs: '0', md: '50px' },
-            width: { xs: '100px', md: '180px' },
-          }}
-          alt="Hear Ye!"
-        />
-
+        <Link href="/">
+          <Typography sx={{ display: 'none' }} variant="h1">
+            Hear Ye!
+          </Typography>
+          <Box
+            component="img"
+            id="logo"
+            src={logoUrl}
+            sx={{
+              marginRight: { xs: '0', md: '50px' },
+              width: { xs: '100px', md: '180px' },
+            }}
+            alt="Hear Ye!"
+          />
+        </Link>
         <Box sx={{ display: { xs: 'block', md: 'none' }, flexGrow: 1 }} />
         <AddToSlackButton
           sx={{ display: { xs: 'inline-flex', md: 'none' }, marginTop: '8px' }}

@@ -30,7 +30,7 @@ export function ReminderMessage() {
         placement="bottom"
         title="Easily jump to the original message"
       >
-        <ChatLink>the message</ChatLink>
+        <ChatLink>this message</ChatLink>
       </Tooltip>{' '}
       with a 👍
       <Box>

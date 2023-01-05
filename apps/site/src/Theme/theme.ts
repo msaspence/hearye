@@ -4,7 +4,7 @@ const { breakpoints } = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      md: 600,
+      sm: 600,
       md: 1024,
       lg: 1200,
       xl: 1536,
@@ -14,7 +14,17 @@ const { breakpoints } = createTheme({
 export const theme = createTheme({
   breakpoints,
   components: {
-    // Name of the component
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          background: 'rgb(211, 112, 13)',
+          '&:hover': {
+            background: 'rgb(234, 125, 15)',
+          },
+        },
+      },
+    },
+
     MuiTooltip: {
       styleOverrides: {
         tooltip: {

@@ -43,13 +43,6 @@ async function generateBlocksForReminder(
 ) {
   return [
     {
-      type: 'header',
-      text: {
-        type: 'plain_text',
-        text: ':mega:  Hear Ye! Hear Ye!',
-      },
-    },
-    {
       type: 'section',
       text: {
         type: 'mrkdwn',
