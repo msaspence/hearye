@@ -2,6 +2,7 @@ import { FastifyPluginCallback } from 'fastify'
 import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 import { handleMessage } from './handleMessage'
+import { handleHomeOpened } from './handleHomeOpened'
 import { handleReaction } from './handleReaction'
 import { handleUserChange } from './handleUserChange'
 import { FastifyReceiver } from 'slack-bolt-fastify'
@@ -29,7 +30,17 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     signingSecret: SLACK_SIGNING_SECRET,
     clientId: SLACK_CLIENT_ID,
     clientSecret: SLACK_CLIENT_SECRET,
-    scopes: ['commands', 'chat:write', 'app_mentions:read'],
+    scopes: [
+      'commands',
+      'chat:write',
+      'app_mentions:read',
+      'channels:history',
+      'groups:history',
+      'im:history',
+      'reactions:read',
+      'reactions:write',
+      'users:read',
+    ],
     stateSecret: SLACK_STATE_SECRET,
     installationStore: installationManagement,
     path: '/events',
@@ -47,6 +58,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     receiver,
   })
 
+  app.event('app_home_opened', handleHomeOpened)
   app.event('app_mention', handleMessage)
   app.event('reaction_added', handleReaction)
   app.event('user_change', handleUserChange)

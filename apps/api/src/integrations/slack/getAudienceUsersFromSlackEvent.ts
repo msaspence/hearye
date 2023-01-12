@@ -40,14 +40,19 @@ function getUsersDetailsFromSlackEvent(event) {
   return uniqueMentions
 }
 
-function loadSlackUserData({ client }: { client: WebClient }) {
+export function loadSlackUserData({ client }: { client: WebClient }) {
   return async (userIds: string[]) => {
     const { results } = await PromisePool.for(userIds).process(
       async (externalId) => {
-        const { user } = await client.users.info({ user: externalId })
-        return { externalId, timezone: user?.tz || 'UTC' }
+        try {
+          const { user } = await client.users.info({ user: externalId })
+          return { externalId, timezone: user?.tz || 'UTC' }
+        } catch (error) {
+          console.error(error)
+        }
       }
     )
+    console.log('RESULTS', results)
     return results
   }
 }

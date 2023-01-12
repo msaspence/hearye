@@ -19,7 +19,7 @@
     "start:api": "npm run start --workspace @hearye/api",
     "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
     "start:site": "npm run start --workspace @hearye/site",
-    "tunnel": "lt --subdomain hearye --port 8080"
+    "tunnel": "./loophole http 8080 --hostname hearye"
   },
   "author": "",
   "license": "ISC",

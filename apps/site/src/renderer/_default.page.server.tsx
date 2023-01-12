@@ -6,7 +6,6 @@ import { App } from '../App'
 import { getFavIconsHtml } from '../favicons/getFavIcons'
 
 export async function render({ Page }: PageContextBuiltIn) {
-  console.log('Page', Page)
   const html = renderToString(
     <App>
       <Page />

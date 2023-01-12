@@ -81,5 +81,5 @@ async function generateTextForReminder(
   permalink: string,
   channelExternalId: string
 ) {
-  return `:mega: Hear Ye! Hear Ye! You have an unacknowledged message in <#${channelExternalId}>.\n\n<${permalink}|Go To Message>\n\nPlease take the time to read and acknowledge this message with a 👍🏻.`
+  return `You have an unacknowledged message in <#${channelExternalId}>.\n\nPlease take the time to read and acknowledge this message with a 👍🏻.`
 }
