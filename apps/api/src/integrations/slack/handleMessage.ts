@@ -12,6 +12,7 @@ const logger = createLogger('hearye:api:slack:handleMessage')
 
 export async function handleMessage(event: SlackEvent<'app_mention'>) {
   logger.debug('Handling message', { event })
+
   if (await isSlackEventMessage(event)) {
     const logPayload = {
       channel: event.payload.channel,

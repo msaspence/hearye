@@ -1,6 +1,13 @@
 import Box from '@mui/material/Box'
 
-import { Feature, FeatureBody, FeatureText, FeatureTitle } from './Feature'
+import {
+  Feature,
+  FeatureBody,
+  FeatureText,
+  FeatureTitle,
+  SubFeatureBody,
+  SubFeatureTitle,
+} from './Feature'
 import {
   ChatMention,
   FeatureScreen,
@@ -56,6 +63,51 @@ export function Features() {
         <FeatureScreen messageCount={7} user="Michael">
           <OriginalMessage acknowledged sx={{ top: '80px' }} />
         </FeatureScreen>
+      </Feature>
+
+      <FeatureTitle>Advanced Features</FeatureTitle>
+      <Feature>
+        <FeatureText>
+          <SubFeatureTitle>Notifying a Channel or Workspace</SubFeatureTitle>
+          <SubFeatureBody>
+            Use Slack's{' '}
+            <ChatMention
+              href="https://slack.com/intl/en-gb/help/articles/202009646-Notify-a-channel-or-workspace"
+              isInArchivo
+            >
+              @here
+            </ChatMention>
+            ,{' '}
+            <ChatMention
+              href="https://slack.com/intl/en-gb/help/articles/202009646-Notify-a-channel-or-workspace"
+              isInArchivo
+            >
+              @channel
+            </ChatMention>
+            , or{' '}
+            <ChatMention
+              href="https://slack.com/intl/en-gb/help/articles/202009646-Notify-a-channel-or-workspace"
+              isInArchivo
+            >
+              @everyone
+            </ChatMention>{' '}
+            to require acknowledgement from everyone in the channel.
+          </SubFeatureBody>
+          <SubFeatureBody
+            sx={{ marginTop: '10px', color: '#777', fontSize: '18px' }}
+          >
+            <em>Note:</em> Broadcast mentions are currently limited to 500
+            members of a channel.{' '}
+            <ChatMention
+              href="https://slack.com/intl/en-gb/help/articles/202009646-Notify-a-channel-or-workspace"
+              isInArchivo
+            >
+              @here
+            </ChatMention>{' '}
+            will require acknowledgement from all members of the channel not
+            just those online.
+          </SubFeatureBody>
+        </FeatureText>
       </Feature>
     </Box>
   )

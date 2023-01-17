@@ -67,6 +67,7 @@ export const theme = createTheme({
           },
         },
         h4: {
+          fontSize: '40px',
           fontWeight: 'normal',
         },
         h5: {
@@ -85,6 +86,11 @@ export const theme = createTheme({
             marginTop: '10px',
             marginBottom: '20px',
           },
+        },
+        body2: {
+          fontFamily: 'Archivo Narrow',
+          fontSize: '20px',
+          lineHeight: 1.3,
         },
       },
     },

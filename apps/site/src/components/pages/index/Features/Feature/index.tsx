@@ -4,6 +4,8 @@ import { ReactNode } from 'react'
 export * from './FeatureBody'
 export * from './FeatureText'
 export * from './FeatureTitle'
+export * from './SubFeatureBody'
+export * from './SubFeatureTitle'
 
 export function Feature({
   children,
