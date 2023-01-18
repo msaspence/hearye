@@ -91,6 +91,10 @@ export const theme = createTheme({
           fontFamily: 'Archivo Narrow',
           fontSize: '20px',
           lineHeight: 1.3,
+          '.MuiLink-root': {
+            fontSize: '20px',
+            fontWeight: 'normal',
+          },
         },
       },
     },

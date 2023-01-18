@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box'
+import Link from '@mui/material/Link'
 
 import shortcutUrl from '../../../../../images/shortcut.png'
 
 import {
   Feature,
   FeatureBody,
+  FeatureNote,
   FeatureText,
   FeatureTitle,
   SubFeatureBody,
@@ -68,6 +70,7 @@ export function Features() {
       </Feature>
 
       <FeatureTitle>Advanced Features</FeatureTitle>
+
       <Feature>
         <FeatureText>
           <SubFeatureTitle>Notifying a Channel or Workspace</SubFeatureTitle>
@@ -95,9 +98,7 @@ export function Features() {
             </ChatMention>{' '}
             to require acknowledgement from everyone in the channel.
           </SubFeatureBody>
-          <SubFeatureBody
-            sx={{ marginTop: '10px', color: '#777', fontSize: '18px' }}
-          >
+          <FeatureNote>
             <em>Note:</em> Broadcast mentions are currently limited to 500
             members of a channel.{' '}
             <ChatMention
@@ -108,7 +109,26 @@ export function Features() {
             </ChatMention>{' '}
             will require acknowledgement from all members of the channel not
             just those online.
+          </FeatureNote>
+        </FeatureText>
+      </Feature>
+
+      <Feature>
+        <FeatureText>
+          <SubFeatureTitle>Notifying a User Group</SubFeatureTitle>
+          <SubFeatureBody>
+            Mention a{' '}
+            <Link
+              href="https://slack.com/intl/en-gb/help/articles/212906697-Create-a-user-group"
+              target="_blank"
+            >
+              Slack User Group
+            </Link>{' '}
+            to require acknowledgement from everyone in that group.
           </SubFeatureBody>
+          <FeatureNote>
+            <em>Note:</em> Groups are currently limited to 500 users.{' '}
+          </FeatureNote>
         </FeatureText>
       </Feature>
 

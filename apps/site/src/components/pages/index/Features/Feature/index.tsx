@@ -2,6 +2,7 @@ import { Box } from '@mui/material'
 import { ReactNode } from 'react'
 
 export * from './FeatureBody'
+export * from './FeatureNote'
 export * from './FeatureText'
 export * from './FeatureTitle'
 export * from './SubFeatureBody'
