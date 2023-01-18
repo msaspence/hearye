@@ -9,5 +9,5 @@ export async function handleUserChange({
 }: {
   payload: SlackEvent<'user_change'>
 }) {
-  return updateUserTimezone(id, timezone)
+  return updateUserTimezone('slack', id, timezone)
 }

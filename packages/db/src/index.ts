@@ -4,6 +4,7 @@ export { deleteAccountInstallation } from './access/accounts/deleteAccountInstal
 export { findAccountInstallation } from './access/accounts/findAccountInstallation'
 export { findOrCreateAccount } from './access/accounts/findOrCreateAccount'
 export { findOrCreateUsers } from './access/users/findOrCreateUsers'
+export { findUserWithDetailsById } from './access/users/findUserWithDetailsById'
 export { findUserBySourceAndExternalId } from './access/users/findUserBySourceAndExternalId'
 export { findUserById } from './access/users/findUserById'
 export { shouldSendOnboardinMessage } from './access/onboarding_messages/shouldSendOnboardinMessage'

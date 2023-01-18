@@ -2,10 +2,14 @@ import { dayjs } from '@hearye/dayjs'
 import { Reminder } from '../../models/Reminder'
 import { User } from '../../models/User'
 
-export async function updateUserTimezone(externalId: string, timezone: string) {
+export async function updateUserTimezone(
+  source: string,
+  externalId: string,
+  timezone: string
+) {
   const { id: userId, timezone: currentTimezone } = (await User.query().findOne(
     {
-      source: 'slack',
+      source,
       externalId,
     }
   )) as User

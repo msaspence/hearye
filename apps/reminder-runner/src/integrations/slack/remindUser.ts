@@ -1,15 +1,20 @@
-import { findUserById, Reminder, markReminderSent } from '@hearye/db'
+import { Reminder, markReminderSent } from '@hearye/db'
 import { WebClient } from '@slack/web-api'
+import { findUserWithDetailsById } from '@hearye/db'
 
+import { loadSlackUserDetails } from './loadSlackUserDetails'
 import { clientForAccountId } from './clientForAccount'
 
 export async function remindUser(reminder: Reminder) {
   if (!reminder.accountId) throw new Error('Must provide accountId')
   const client = await clientForAccountId(reminder.accountId)
   if (!client) throw new Error("Couldn't initialize client")
-  const user = await findUserById(reminder.userId)
+  const user = await findUserWithDetailsById(
+    reminder.userId,
+    loadSlackUserDetails
+  )
   if (!user) throw new Error("User doesn't exist")
-  await markReminderSent(reminder, user.timezone, async () => {
+  await markReminderSent(reminder, user.timezone || 'UTC', async () => {
     const messagePermalink = await generateMessagePermalink(client, reminder)
     if (!messagePermalink) throw new Error("Couldn't generate permalink")
     await client.chat.postMessage({

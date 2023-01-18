@@ -3,7 +3,7 @@ import { isSlackEventMessage } from '../isSlackEventMessage'
 import { acknowledgeMessageReciept } from '../actions/acknowledgeMessageReciept'
 import { getAccountFromSlackEvent } from '../to-local/getAccountFromSlackEvent'
 import { getAudienceUsersFromSlackEvent } from '../to-local/getAudienceUsersFromSlackEvent'
-import { getMessageFromSlackEvent } from '../getMessageFromSlackEvent'
+import { getMessageFromSlackEvent } from '../to-local/getMessageFromSlackEvent'
 
 import { scheduleReminder } from '@hearye/db'
 import { createLogger } from '@hearye/logger'

@@ -8,10 +8,7 @@ const logger = createLogger('hearye:db:findOrCreateUsers')
 export async function findOrCreateUsers(
   source: string,
   accountId: string,
-  externalIds: string[],
-  loadAdditionalFields: (
-    userIds: string[]
-  ) => Promise<{ externalId: string; timezone: string }[]>
+  externalIds: string[]
 ): Promise<User[]> {
   logger.debug('Getting existing users')
   const existingUsers = await User.query()
@@ -29,23 +26,16 @@ export async function findOrCreateUsers(
   logger.debug('Missing users', { missingUserIds })
   if (!missingUserIds.length) return existingUsers
   try {
-    const additionalUserData = await loadAdditionalFields(missingUserIds)
-    const mappedUsersForInserts = additionalUserData.map((user) => ({
+    const mappedUsersForInserts = missingUserIds.map((id) => ({
       accountId,
       source,
-      ...user,
+      externalId: id,
     }))
     logger.debug('Inserting missing users', { users: mappedUsersForInserts })
     return await User.query().insert(mappedUsersForInserts)
   } catch (error) {
     if (error instanceof UniqueViolationError) {
-      // return []
-      return findOrCreateUsers(
-        source,
-        accountId,
-        externalIds,
-        loadAdditionalFields
-      )
+      return findOrCreateUsers(source, accountId, externalIds)
     }
     throw error
   }

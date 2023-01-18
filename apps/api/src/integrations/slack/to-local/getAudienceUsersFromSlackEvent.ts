@@ -1,6 +1,5 @@
 import { findOrCreateUsers } from '@hearye/db'
 import { WebClient } from '@slack/web-api'
-import { PromisePool } from '@supercharge/promise-pool'
 import uniq from 'lodash/uniq'
 
 import { getAllChannelMemberIdsFromSlackEvent } from '../getAllChannelMemberIdsFromSlackEvent'
@@ -34,14 +33,8 @@ export async function getAudienceUsersFromSlackEvent(
   accountId: string,
   event: Event
 ) {
-  //   console.dir(event.payload.blocks, { depth: null })
   const userIds = await getUsersIdsFromSlackEvent(event)
-  return findOrCreateUsers(
-    'slack',
-    accountId,
-    userIds,
-    loadSlackUserData(event)
-  )
+  return findOrCreateUsers('slack', accountId, userIds)
 }
 
 function isMentionBlock(block: Block): block is MentionBlock {
@@ -84,16 +77,4 @@ async function getUsersIdsFromSlackEvent(event: Event) {
   const broadcastUserIds = await getBroadcastUsersFromSlackEvent(event)
   const uniqueUserIds = uniq([...mentionIds, ...broadcastUserIds])
   return uniqueUserIds
-}
-
-export function loadSlackUserData({ client }: { client: WebClient }) {
-  return async (userIds: string[]) => {
-    const { results } = await PromisePool.for(userIds).process(
-      async (externalId) => {
-        const { user } = await client.users.info({ user: externalId })
-        return { externalId, timezone: user?.tz || 'UTC' }
-      }
-    )
-    return results
-  }
 }
