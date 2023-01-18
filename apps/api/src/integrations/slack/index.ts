@@ -3,10 +3,10 @@ import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 
 import { StringIndexed } from './events'
-import { handleMessage } from './handleMessage'
-import { handleHomeOpened } from './handleHomeOpened'
-import { handleReaction } from './handleReaction'
-import { handleUserChange } from './handleUserChange'
+import { handleMessage } from './event-handlers/handleMessage'
+import { handleHomeOpened } from './event-handlers/handleHomeOpened'
+import { handleReaction } from './event-handlers/handleReaction'
+import { handleUserChange } from './event-handlers/handleUserChange'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 import * as installationManagement from './installationManagement'
 import { env } from '@hearye/env'
@@ -48,7 +48,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       installPath: '/install',
       redirectUriPath: '/oauth_redirect',
     },
-    fastify,
+    fastify: fastify as never,
   })
   const app = new App<StringIndexed>({
     logLevel: LogLevel.DEBUG,

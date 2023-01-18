@@ -3,7 +3,7 @@ import { WebClient } from '@slack/web-api'
 import { PromisePool } from '@supercharge/promise-pool'
 import uniq from 'lodash/uniq'
 
-import { getAllChannelMemberIdsFromSlackEvent } from './getAllChannelMemberIdsFromSlackEvent'
+import { getAllChannelMemberIdsFromSlackEvent } from '../getAllChannelMemberIdsFromSlackEvent'
 
 type Block = {
   type: string

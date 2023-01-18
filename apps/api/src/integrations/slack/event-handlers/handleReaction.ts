@@ -1,6 +1,6 @@
 import { acknowledgeMessage, findUserBySourceAndExternalId } from '@hearye/db'
 
-import { SlackEvent } from './events'
+import { SlackEvent } from '../events'
 
 const ACCEPTED_REACTIONS = ['+1', 'mega']
 

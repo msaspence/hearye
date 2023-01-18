@@ -1,6 +1,6 @@
-import { SlackEvent } from './events'
-import { getAccountFromSlackEvent } from './getAccountFromSlackEvent'
-import { getUserFromSlackEvent } from './getUserFromSlackEvent'
+import { SlackEvent } from '../events'
+import { getAccountFromSlackEvent } from '../to-local/getAccountFromSlackEvent'
+import { getUserFromSlackEvent } from '../to-local/getUserFromSlackEvent'
 import { createLogger } from '@hearye/logger'
 import { shouldSendOnboardinMessage, onboardingMessageFailed } from '@hearye/db'
 
