@@ -10,6 +10,10 @@ import { createLogger } from '@hearye/logger'
 
 const logger = createLogger('hearye:api:slack:handleMessage')
 
+function isString(value: unknown): value is string {
+  return typeof value === 'string'
+}
+
 export async function handleMessage(event: SlackEvent<'app_mention'>) {
   logger.debug('Handling message', { event })
 
@@ -26,8 +30,9 @@ export async function handleMessage(event: SlackEvent<'app_mention'>) {
     logger.debug('Getting audience from slack event', logPayload)
     const users = await getAudienceUsersFromSlackEvent(account.id, event)
     const userIds = users
+      .filter(({ externalId }) => externalId !== event.payload.user)
       .map(({ id }) => id)
-      .filter((id) => id !== undefined) as string[]
+      .filter(isString)
 
     logger.debug('Getting message from slack event', logPayload)
     const message = await getMessageFromSlackEvent(account.id, event)
