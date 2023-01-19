@@ -24,16 +24,14 @@ type BroadcastBlock = {
   elements: Block[]
 }
 
-type Event = {
-  client: WebClient
-  payload: { blocks: Block[]; channel: string }
-}
+type Message = { blocks: Block[]; channel: string }
 
-export async function getAudienceUsersFromSlackEvent(
+export async function getAudienceUsersFromSlackMessage(
+  client: WebClient,
   accountId: string,
-  event: Event
+  message: Message
 ) {
-  const userIds = await getUsersIdsFromSlackEvent(event)
+  const userIds = await getUsersIdsFromSlackEvent(client, message)
   return findOrCreateUsers('slack', accountId, userIds)
 }
 
@@ -64,17 +62,26 @@ function recurseForBroadcasts(blocks: Block | Block[]): string[] {
   ])
 }
 
-async function getBroadcastUsersFromSlackEvent(event: Event) {
-  const broadcasts = recurseForBroadcasts(event.payload.blocks)
+async function getBroadcastUsersFromSlackEvent(
+  client: WebClient,
+  message: Message
+) {
+  const broadcasts = recurseForBroadcasts(message.blocks)
   if (broadcasts.length === 0) return []
-  const userIds = await getAllChannelMemberIdsFromSlackEvent(event)
+  const userIds = await getAllChannelMemberIdsFromSlackEvent(
+    client,
+    message.channel
+  )
 
   return userIds || []
 }
 
-async function getUsersIdsFromSlackEvent(event: Event) {
-  const mentionIds = recurseForMentions(event.payload.blocks)
-  const broadcastUserIds = await getBroadcastUsersFromSlackEvent(event)
+async function getUsersIdsFromSlackEvent(client: WebClient, message: Message) {
+  const mentionIds = recurseForMentions(message.blocks)
+  const broadcastUserIds = await getBroadcastUsersFromSlackEvent(
+    client,
+    message
+  )
   const uniqueUserIds = uniq([...mentionIds, ...broadcastUserIds])
   return uniqueUserIds
 }

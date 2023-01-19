@@ -1,12 +1,13 @@
 import { WebClient } from '@slack/web-api'
 
-export async function acknowledgeMessageReciept(event: {
-  client: WebClient
-  payload: { ts: string; channel: string }
-}) {
-  return event.client.reactions.add({
+export async function acknowledgeMessageReciept(
+  client: WebClient,
+  channel: string,
+  ts: string
+) {
+  return client.reactions.add({
+    channel: channel,
     name: 'mega',
-    timestamp: event.payload.ts,
-    channel: event.payload.channel,
+    timestamp: ts,
   })
 }

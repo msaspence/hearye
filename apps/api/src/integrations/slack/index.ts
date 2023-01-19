@@ -3,13 +3,14 @@ import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 
 import { StringIndexed } from './events'
-import { handleMessage } from './event-handlers/handleMessage'
+import { handleRequireAcknowledgementForMessage } from './event-handlers/handleRequireAcknowledgementForMessage'
 import { handleHomeOpened } from './event-handlers/handleHomeOpened'
 import { handleReaction } from './event-handlers/handleReaction'
 import { handleUserChange } from './event-handlers/handleUserChange'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 import * as installationManagement from './installationManagement'
 import { env } from '@hearye/env'
+import { handleAppMention } from './event-handlers/handleAppMention'
 
 const {
   SLACK_CLIENT_ID,
@@ -56,7 +57,12 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
   })
 
   app.event('app_home_opened', handleHomeOpened)
-  app.event('app_mention', handleMessage)
+  app.event('app_mention', handleAppMention)
   app.event('reaction_added', handleReaction)
   app.event('user_change', handleUserChange)
+
+  app.shortcut(
+    'require_acknowledgement_for_message',
+    handleRequireAcknowledgementForMessage as never // Slack types on shortcuts are incomplete
+  )
 }

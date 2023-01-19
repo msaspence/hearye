@@ -1,14 +1,11 @@
 import { WebClient } from '@slack/web-api'
 
-export async function getAllChannelMemberIdsFromSlackEvent({
-  client,
-  payload: { channel },
-}: {
-  client: WebClient
-  payload: { channel: string }
-}) {
+export async function getAllChannelMemberIdsFromSlackEvent(
+  client: WebClient,
+  channelId: string
+) {
   const result = await client.conversations.members({
-    channel: channel,
+    channel: channelId,
     limit: 500,
   })
 
