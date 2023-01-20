@@ -3,6 +3,7 @@ import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
 
 import { StringIndexed } from './events'
+import { handleRequestAcknowledgementForMessage } from './event-handlers/handleRequestAcknowledgementForMessage'
 import { handleRequireAcknowledgementForMessage } from './event-handlers/handleRequireAcknowledgementForMessage'
 import { handleHomeOpened } from './event-handlers/handleHomeOpened'
 import { handleReaction } from './event-handlers/handleReaction'
@@ -63,6 +64,11 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
 
   app.shortcut(
     'require_acknowledgement_for_message',
-    handleRequireAcknowledgementForMessage as never // Slack types on shortcuts are incomplete
+    handleRequestAcknowledgementForMessage as never // Slack types on shortcuts are incomplete
+  )
+
+  app.view(
+    'require_acknowledgement_for_messagex',
+    handleRequireAcknowledgementForMessage as never // Slack types on views are incomplete
   )
 }

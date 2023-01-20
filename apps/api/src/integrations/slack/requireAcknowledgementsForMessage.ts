@@ -4,7 +4,7 @@ import { getAccountFromSlackMessage } from './to-local/getAccountFromSlackMessag
 import { getAudienceUsersFromSlackMessage } from './to-local/getAudienceUsersFromSlackMessage'
 import { getMessageFromSlackMessage } from './to-local/getMessageDetailsFromSlackMessage'
 
-import { scheduleReminder } from '@hearye/db'
+import { findOrCreateUsers, scheduleReminder } from '@hearye/db'
 import { createLogger } from '@hearye/logger'
 
 const logger = createLogger(
@@ -35,7 +35,14 @@ export type Message = {
 
 export async function requireAcknowledgementsForMessage(
   client: WebClient,
-  slackMessage: Message
+  slackMessage: Message,
+  {
+    includeMentioned = true,
+    otherUsers: otherUserIds = [],
+  }: { includeMentioned: boolean; otherUsers: string[] } = {
+    includeMentioned: true,
+    otherUsers: [],
+  }
 ) {
   const logPayload = {
     channel: slackMessage.channel,
@@ -47,12 +54,13 @@ export async function requireAcknowledgementsForMessage(
   if (!account.id) throw new Error('Account with id required')
 
   logger.debug('Getting audience from slack event', logPayload)
-  const users = await getAudienceUsersFromSlackMessage(
-    client,
-    account.id,
-    slackMessage
-  )
-  const userIds = users
+
+  const mentionedUsers = includeMentioned
+    ? await getAudienceUsersFromSlackMessage(client, account.id, slackMessage)
+    : []
+  const otherUsers = await findOrCreateUsers('slack', account.id, otherUserIds)
+
+  const userIds = [...mentionedUsers, ...otherUsers]
     .filter(({ externalId }) => externalId !== slackMessage.user)
     .map(({ id }) => id)
     .filter(isString)
