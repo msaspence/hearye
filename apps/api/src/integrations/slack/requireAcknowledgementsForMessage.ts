@@ -54,14 +54,21 @@ export async function requireAcknowledgementsForMessage(
   if (!account.id) throw new Error('Account with id required')
 
   logger.debug('Getting audience from slack event', logPayload)
+  const {
+    bot: { userId: botUserId },
+  } = JSON.parse(account.installation as string)
 
   const mentionedUsers = includeMentioned
-    ? await getAudienceUsersFromSlackMessage(client, account.id, slackMessage)
+    ? await getAudienceUsersFromSlackMessage(
+        client,
+        account.id,
+        botUserId,
+        slackMessage
+      )
     : []
   const otherUsers = await findOrCreateUsers('slack', account.id, otherUserIds)
 
   const userIds = [...mentionedUsers, ...otherUsers]
-    .filter(({ externalId }) => externalId !== slackMessage.user)
     .map(({ id }) => id)
     .filter(isString)
 

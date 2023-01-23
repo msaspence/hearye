@@ -13,7 +13,7 @@ export async function findOrCreateAccount({
       source,
       externalId,
     })
-    .select('id')
+    .select('id', 'installation')
   if (existingAccount) return existingAccount
   try {
     return await Account.query().insert({

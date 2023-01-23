@@ -24,14 +24,16 @@ type BroadcastBlock = {
   elements: Block[]
 }
 
-type Message = { blocks: Block[]; channel: string }
+type Message = { blocks: Block[]; channel: string; user: string }
 
 export async function getAudienceUsersFromSlackMessage(
   client: WebClient,
   accountId: string,
+  botId: string,
   message: Message
 ) {
-  const userIds = await getUsersIdsFromSlackEvent(client, message)
+  const userIds = await getUsersIdsFromSlackEvent(client, botId, message)
+
   return findOrCreateUsers('slack', accountId, userIds)
 }
 
@@ -76,12 +78,25 @@ async function getBroadcastUsersFromSlackEvent(
   return userIds || []
 }
 
-async function getUsersIdsFromSlackEvent(client: WebClient, message: Message) {
+async function getUsersIdsFromSlackEvent(
+  client: WebClient,
+  botId: string,
+  message: Message
+) {
+  // Get all the users mentioned in the message directly eg @user
   const mentionIds = recurseForMentions(message.blocks)
+  // Get all the users mentioned in the message via broadcast ie @channel, @here, @everyone
   const broadcastUserIds = await getBroadcastUsersFromSlackEvent(
     client,
     message
   )
-  const uniqueUserIds = uniq([...mentionIds, ...broadcastUserIds])
-  return uniqueUserIds
+  // Remove the user who sent the message from the list of users to be reminded
+  // from "broadcast" mentions ie @channel, @here, @everyone
+  const indirectMentionIds = [...broadcastUserIds].filter(
+    (id) => id !== message.user
+  )
+  const uniqueUserIds = uniq([...mentionIds, ...indirectMentionIds])
+
+  // Remove the hear ye bot from the list of users to be reminded
+  return uniqueUserIds.filter((id) => id !== botId)
 }
