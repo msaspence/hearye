@@ -18,6 +18,7 @@ export async function render({ Page }: PageContextBuiltIn) {
       <head>
         <title>Hear Ye! - Slack message acknowledgements and reminders</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:900|Lato:700|Lato:400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Just+Another+Hand:400">
         ${dangerouslySkipEscape(favIconHtml.join('\n'))}
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>

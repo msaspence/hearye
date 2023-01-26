@@ -9,8 +9,19 @@ import { TagLineTicker } from './TagLineTicker'
 export function BannerHeader() {
   return (
     <Box sx={{ display: { xs: 'block', md: 'flex' } }}>
-      <Box sx={{ alignItems: 'flex-start', display: 'flex', flexGrow: 1 }}>
-        <Link href="/">
+      <Box
+        sx={{
+          alignItems: 'flex-start',
+          display: 'flex',
+          flexGrow: 1,
+        }}
+      >
+        <Link
+          href="/"
+          sx={{
+            position: 'absolute',
+          }}
+        >
           <Typography sx={{ display: 'none' }} variant="h1">
             Hear Ye!
           </Typography>
@@ -24,6 +35,19 @@ export function BannerHeader() {
             }}
             alt="Hear Ye!"
           />
+          <Typography
+            sx={{
+              color: '#777',
+              fontFamily: 'Just Another Hand',
+              position: 'absolute',
+              bottom: '-35px',
+              right: '55px',
+              transform: 'rotate(-10deg)',
+            }}
+            variant="h3"
+          >
+            Beta
+          </Typography>
         </Link>
         <Box sx={{ display: { xs: 'block', md: 'none' }, flexGrow: 1 }} />
         <AddToSlackButton
@@ -49,7 +73,41 @@ export function BannerHeader() {
             Again
           </Typography>
         </Box>
-        <AddToSlackButton sx={{ display: { xs: 'none', md: 'inline-flex' } }} />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Typography
+            component="span"
+            sx={{
+              color: '#777',
+              marginRight: '12px',
+              fontFamily: 'Just Another Hand',
+              fontSize: '2em',
+            }}
+            variant="h4"
+          >
+            Free for the Beta
+          </Typography>
+          <Typography
+            component="span"
+            sx={{
+              color: '#777',
+              fontFamily: 'Archivo Narrow',
+              marginRight: '12px',
+              fontSize: '1.5em',
+              lineHeight: '1em',
+            }}
+          >
+            →
+          </Typography>
+          <AddToSlackButton
+            sx={{ display: { xs: 'none', md: 'inline-flex' } }}
+          />
+        </Box>
       </Box>
     </Box>
   )
