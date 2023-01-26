@@ -12,7 +12,7 @@ export async function handleRequestAcknowledgementForMessage(event: {
     trigger_id: event.payload.trigger_id,
     view: {
       type: 'modal',
-      callback_id: 'require_acknowledgement_for_messagex',
+      callback_id: 'require_acknowledgement_for_message',
       private_metadata: JSON.stringify({
         message: {
           channel: event.payload.channel.id,

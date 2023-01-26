@@ -63,12 +63,12 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
   app.event('user_change', handleUserChange)
 
   app.shortcut(
-    'require_acknowledgement_for_message',
+    'request_acknowledgement_for_message',
     handleRequestAcknowledgementForMessage as never // Slack types on shortcuts are incomplete
   )
 
   app.view(
-    'require_acknowledgement_for_messagex',
+    'require_acknowledgement_for_message',
     handleRequireAcknowledgementForMessage as never // Slack types on views are incomplete
   )
 }
