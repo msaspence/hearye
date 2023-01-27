@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box'
 
+import shortcutUrl from '../../../../../images/shortcut.png'
+
 import {
   Feature,
   FeatureBody,
@@ -106,6 +108,31 @@ export function Features() {
             </ChatMention>{' '}
             will require acknowledgement from all members of the channel not
             just those online.
+          </SubFeatureBody>
+        </FeatureText>
+      </Feature>
+
+      <Feature>
+        <FeatureText>
+          <SubFeatureTitle>Message Shortcut</SubFeatureTitle>
+          <Box
+            component="img"
+            src={shortcutUrl}
+            sx={{
+              float: 'left',
+              width: '312px',
+              boxShadow: '1px 1px 4px rgba(0,0,0,0.3)',
+
+              borderRadius: '5px',
+              marginRight: '25px',
+              marginTop: '23px',
+            }}
+          />
+          <SubFeatureBody>
+            If you send out a message and forget to mention{' '}
+            <ChatMention isInArchivo>@Hear Ye</ChatMention> you can use the
+            "Require Acknowledgement" message short cut to require
+            acknowledgements from mentioned users and/or additional users.
           </SubFeatureBody>
         </FeatureText>
       </Feature>
