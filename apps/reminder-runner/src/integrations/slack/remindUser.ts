@@ -63,7 +63,7 @@ async function generateBlocksForReminder(
           type: 'button',
           text: {
             type: 'plain_text',
-            text: 'Go To message',
+            text: 'Go To Message',
             emoji: true,
           },
           url: permalink,
