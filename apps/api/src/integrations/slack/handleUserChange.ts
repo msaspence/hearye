@@ -1,12 +1,13 @@
-import { UserChangeEvent } from '@slack/bolt'
 import { updateUserTimezone } from '@hearye/db'
+
+import { SlackEvent } from './events'
 
 export async function handleUserChange({
   payload: {
     user: { id, tz: timezone },
   },
 }: {
-  payload: UserChangeEvent
+  payload: SlackEvent<'user_change'>
 }) {
   return updateUserTimezone(id, timezone)
 }

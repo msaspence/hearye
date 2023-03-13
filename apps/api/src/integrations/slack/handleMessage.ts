@@ -1,5 +1,4 @@
-import { SlackEventMiddlewareArgs } from '@slack/bolt'
-
+import { SlackEvent } from './events'
 import { isSlackEventMessage } from './isSlackEventMessage'
 import { acknowledgeMessageReciept } from './acknowledgeMessageReciept'
 import { getAccountFromSlackEvent } from './getAccountFromSlackEvent'
@@ -11,9 +10,7 @@ import { createLogger } from '@hearye/logger'
 
 const logger = createLogger('hearye:api:slack:handleMessage')
 
-export async function handleMessage(
-  event: SlackEventMiddlewareArgs<'app_mention'>
-) {
+export async function handleMessage(event: SlackEvent<'app_mention'>) {
   logger.debug('Handling message', { event })
   if (await isSlackEventMessage(event)) {
     const logPayload = {

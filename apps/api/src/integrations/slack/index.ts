@@ -1,6 +1,8 @@
 import { FastifyPluginCallback } from 'fastify'
 import { App, LogLevel } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
+
+import { StringIndexed } from './events'
 import { handleMessage } from './handleMessage'
 import { handleHomeOpened } from './handleHomeOpened'
 import { handleReaction } from './handleReaction'
@@ -48,8 +50,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     },
     fastify,
   })
-
-  const app = new App({
+  const app = new App<StringIndexed>({
     logLevel: LogLevel.DEBUG,
     receiver,
   })

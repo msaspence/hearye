@@ -1,5 +1,4 @@
-import { SlackEventMiddlewareArgs } from '@slack/bolt'
-
+import { SlackEvent } from './events'
 import { getAccountFromSlackEvent } from './getAccountFromSlackEvent'
 import { getUserFromSlackEvent } from './getUserFromSlackEvent'
 import { createLogger } from '@hearye/logger'
@@ -7,9 +6,7 @@ import { shouldSendOnboardinMessage, onboardingMessageFailed } from '@hearye/db'
 
 const logger = createLogger('hearye:api:slack:handleMessage')
 
-export async function handleHomeOpened(
-  event: SlackEventMiddlewareArgs<'app_home_opened'>
-) {
+export async function handleHomeOpened(event: SlackEvent<'app_home_opened'>) {
   logger.debug('Handling message', { event })
   if (event.payload.type === 'app_home_opened') {
     const account = await getAccountFromSlackEvent(event)
