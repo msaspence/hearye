@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { SxProps, Theme } from '@mui/material/styles'
-
 import slackLogoUrl from '../../images/slack-logo.svg'
 
 export function AddToSlackButton({
@@ -11,9 +11,17 @@ export function AddToSlackButton({
   sx?: SxProps<Theme>
   variant?: 'large'
 }) {
+  const [apiHost, setApiHost] = useState('api.hearyebot.com')
+  useEffect(() => {
+    setApiHost(
+      typeof window !== 'undefined' && window.location.host.match(/^localhost/)
+        ? 'hearye.loophole.site'
+        : 'api.hearyebot.com'
+    )
+  }, [])
   return (
     <Button
-      href="https://api.hearyebot.com/slack/install"
+      href={`https://${apiHost}/slack/install`}
       sx={{
         alignItems: 'center',
         color: '#fff',

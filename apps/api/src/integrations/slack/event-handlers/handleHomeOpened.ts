@@ -4,7 +4,7 @@ import { getUserFromSlackEvent } from '../to-local/getUserFromSlackEvent'
 import { createLogger } from '@hearye/logger'
 import { shouldSendOnboardinMessage, onboardingMessageFailed } from '@hearye/db'
 
-const logger = createLogger('hearye:api:slack:handleMessage')
+const logger = createLogger('hearye:api:slack:handleHomeOpened')
 
 export async function handleHomeOpened(event: SlackEvent<'app_home_opened'>) {
   logger.debug('Handling message', { event })

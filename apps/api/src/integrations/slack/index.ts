@@ -40,6 +40,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       'reactions:read',
       'reactions:write',
       'users:read',
+      'user',
     ],
     stateSecret: SLACK_STATE_SECRET,
     installationStore: installationManagement,

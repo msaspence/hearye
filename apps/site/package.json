@@ -8,6 +8,7 @@
     "build:vite": "NODE_OPTIONS='--experimental-specifier-resolution=node' vite build",
     "build:favicons": "ts-node src/favicons/generate",
     "test": "ts-node test.tsx",
+    "typecheck": "tsc --noEmit",
     "dev": "TZ=UTC DEBUG=\"${DEBUG:=hearye*}\" vite --port 4000",
     "start": "serve --listen 4001 ./dist/client"
   },

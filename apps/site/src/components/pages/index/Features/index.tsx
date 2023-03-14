@@ -1,16 +1,16 @@
 import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
+// import Link from '@mui/material/Link'
 
-import shortcutUrl from '../../../../../images/shortcut.png'
+// import shortcutUrl from '../../../../../images/shortcut.png'
 
 import {
   Feature,
   FeatureBody,
-  FeatureNote,
+  // FeatureNote,
   FeatureText,
   FeatureTitle,
-  SubFeatureBody,
-  SubFeatureTitle,
+  // SubFeatureBody,
+  // SubFeatureTitle,
 } from './Feature'
 import {
   ChatMention,
@@ -68,7 +68,7 @@ export function Features() {
           <OriginalMessage acknowledged sx={{ top: '80px' }} />
         </FeatureScreen>
       </Feature>
-
+      {/*
       <FeatureTitle>Advanced Features</FeatureTitle>
 
       <Feature>
@@ -156,6 +156,7 @@ export function Features() {
           </SubFeatureBody>
         </FeatureText>
       </Feature>
+          */}
     </Box>
   )
 }

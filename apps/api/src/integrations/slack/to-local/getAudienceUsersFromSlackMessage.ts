@@ -2,8 +2,8 @@ import { findOrCreateUsers } from '@hearye/db'
 import { WebClient } from '@slack/web-api'
 import uniq from 'lodash/uniq'
 
-import { getAllChannelMemberIdsFromSlackEvent } from '../getAllChannelMemberIdsFromSlackEvent'
-import { getAllGroupUserIdsFromSlackEvent } from '../getAllGroupUserIdsFromSlackEvent'
+import { getAllChannelMemberIds } from '../getAllChannelMemberIds'
+import { getAllGroupUserIds } from '../getAllGroupUserIds'
 
 type Block = {
   type: string
@@ -43,7 +43,7 @@ export async function getAudienceUsersFromSlackMessage(
   botId: string,
   message: Message
 ) {
-  const userIds = await getUsersIdsFromSlackEvent(client, botId, message)
+  const userIds = await getUsersIdsFromSlackMessage(client, botId, message)
 
   return findOrCreateUsers('slack', accountId, userIds)
 }
@@ -75,16 +75,13 @@ function recurseForBroadcasts(blocks: Block | Block[]): string[] {
   ])
 }
 
-async function getBroadcastUsersFromSlackEvent(
+async function getBroadcastUsersFromSlackMessage(
   client: WebClient,
   message: Message
 ) {
   const broadcasts = recurseForBroadcasts(message.blocks)
   if (broadcasts.length === 0) return []
-  const userIds = await getAllChannelMemberIdsFromSlackEvent(
-    client,
-    message.channel
-  )
+  const userIds = await getAllChannelMemberIds(client, message.channel)
 
   return userIds || []
 }
@@ -106,7 +103,7 @@ function recurseForGroups(blocks: Block | Block[]): string[] {
 function isString(value: unknown): value is string {
   return typeof value === 'string'
 }
-async function getGroupUsersFromSlackEvent(
+async function getGroupUsersFromSlackMessage(
   client: WebClient,
   message: Message
 ) {
@@ -115,29 +112,40 @@ async function getGroupUsersFromSlackEvent(
   const userIds = (
     await Promise.all(
       groups.map((groupId) => {
-        return getAllGroupUserIdsFromSlackEvent(client, groupId)
+        return getAllGroupUserIds(client, groupId)
       })
     )
   ).flat()
   return uniq(userIds).filter(isString) || []
 }
 
-async function getUsersIdsFromSlackEvent(
+async function getUsersIdsFromSlackMessage(
   client: WebClient,
   botId: string,
   message: Message
 ) {
   const mentionIds = recurseForMentions(message.blocks)
-  const broadcastUserIds = await getBroadcastUsersFromSlackEvent(
+
+  // Get all the users mentioned in the message via user groups ie @group
+  const groupUserIds = await getGroupUsersFromSlackMessage(client, message)
+
+  // Get all the users mentioned in the message via broadcast ie @channel, @here, @everyone
+  const broadcastUserIds = await getBroadcastUsersFromSlackMessage(
     client,
     message
   )
-  const groupUserIds = await getGroupUsersFromSlackEvent(client, message)
+  // Remove the user who sent the message from the list of users to be reminded
+  // from "broadcast" mentions ie @channel, @here, @everyone
+  const indirectMentionIds = [...broadcastUserIds].filter(
+    (id) => id !== message.user
+  )
+
   const uniqueUserIds = uniq([
     ...mentionIds,
-    ...broadcastUserIds,
+    ...indirectMentionIds,
     ...groupUserIds,
   ])
+
   // Remove the hear ye bot from the list of users to be reminded
   return uniqueUserIds.filter((id) => id !== botId)
 }

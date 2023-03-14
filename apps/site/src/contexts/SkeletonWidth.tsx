@@ -44,7 +44,11 @@ export function SkeletonWidthProvider({
 }) {
   const [prando, setPrando] = useState(new Prando(seed || 'global'))
   prando.reset()
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   if (import.meta.hot) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     import.meta.hot.on('vite:beforeUpdate', () => {
       prando.reset()
     })
