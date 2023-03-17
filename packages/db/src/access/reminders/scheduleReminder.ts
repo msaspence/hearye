@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { dayjs } from '@hearye/dayjs'
 import { UniqueViolationError } from 'objection'
 
 import { Reminder } from '../../models/Reminder'

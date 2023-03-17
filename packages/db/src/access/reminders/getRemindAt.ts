@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { dayjs } from '@hearye/dayjs'
 
 export function getRemindAt(_iteration: number, timezone: string) {
   return dayjs()

@@ -73,6 +73,7 @@ export async function requireAcknowledgementsForMessage(
     .filter(isString)
 
   logger.debug('Getting message from slack event', logPayload)
+
   const localMessage = await getMessageFromSlackMessage(
     account.id,
     slackMessage

@@ -25,7 +25,7 @@ export function createLogger(namespace: string) {
   if (logtailTransport) transports.push(logtailTransport)
 
   return winston.createLogger({
-    level: 'trace',
+    level: env.NODE_ENV === 'test' ? 'none' : 'trace',
     levels: Object.assign(
       { fatal: 0, warn: 4, trace: 7 },
       winston.config.syslog.levels

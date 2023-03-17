@@ -1,12 +1,8 @@
-import Fastify from 'fastify'
-
-import { apiApp } from './apiApp'
 import { env } from '@hearye/env'
 
-const { PORT } = env
-const fastify = Fastify({
-  logger: false,
-})
+import { createApp } from './createApp'
 
-apiApp(fastify)
-fastify.listen({ host: '0.0.0.0', port: parseInt(PORT || '3000') })
+const { PORT } = env
+
+const app = createApp()
+app.listen({ host: '0.0.0.0', port: parseInt(PORT || '3000') })

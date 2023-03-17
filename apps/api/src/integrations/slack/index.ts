@@ -1,6 +1,10 @@
 import { FastifyPluginCallback } from 'fastify'
-import { App, LogLevel } from '@slack/bolt'
+import { App } from '@slack/bolt'
 import { FileStateStore } from '@slack/oauth'
+import { FastifyReceiver } from 'slack-bolt-fastify'
+
+import { env } from '@hearye/env'
+import { createLogger } from '@hearye/logger'
 
 import { StringIndexed } from './events'
 import { handleRequestAcknowledgementForMessage } from './event-handlers/handleRequestAcknowledgementForMessage'
@@ -8,10 +12,11 @@ import { handleRequireAcknowledgementForMessage } from './event-handlers/handleR
 import { handleHomeOpened } from './event-handlers/handleHomeOpened'
 import { handleReaction } from './event-handlers/handleReaction'
 import { handleUserChange } from './event-handlers/handleUserChange'
-import { FastifyReceiver } from 'slack-bolt-fastify'
 import * as installationManagement from './installationManagement'
-import { env } from '@hearye/env'
 import { handleAppMention } from './event-handlers/handleAppMention'
+import { withHandlerResolutionForTests } from '../../../tests/slack/helpers/postSlackEvent'
+
+const logger = createLogger('hearye:api:bolt')
 
 const {
   SLACK_CLIENT_ID,
@@ -34,13 +39,30 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     signingSecret: SLACK_SIGNING_SECRET,
     clientId: SLACK_CLIENT_ID,
     clientSecret: SLACK_CLIENT_SECRET,
+    logger: {
+      ...logger,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      getLevel: () => {
+        // noop
+      },
+      setLevel: () => {
+        // noop
+      },
+      setName: () => {
+        // noop
+      },
+      info: logger.info.bind(logger),
+      debug: logger.debug.bind(logger),
+      warn: logger.warn.bind(logger),
+      error: logger.error.bind(logger),
+    },
     scopes: [
       'app_mentions:read',
       'chat:write',
       'reactions:read',
       'reactions:write',
       'users:read',
-      'user',
     ],
     stateSecret: SLACK_STATE_SECRET,
     installationStore: installationManagement,
@@ -54,14 +76,13 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     fastify: fastify as never,
   })
   const app = new App<StringIndexed>({
-    logLevel: LogLevel.DEBUG,
     receiver,
   })
 
-  app.event('app_home_opened', handleHomeOpened)
-  app.event('app_mention', handleAppMention)
-  app.event('reaction_added', handleReaction)
-  app.event('user_change', handleUserChange)
+  app.event('app_home_opened', withHandlerResolutionForTests(handleHomeOpened))
+  app.event('app_mention', withHandlerResolutionForTests(handleAppMention))
+  app.event('reaction_added', withHandlerResolutionForTests(handleReaction))
+  app.event('user_change', withHandlerResolutionForTests(handleUserChange))
 
   app.shortcut(
     'request_acknowledgement_for_message',

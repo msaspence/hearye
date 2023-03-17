@@ -11,7 +11,9 @@ export async function getMessageFromSlackMessage(
   message: Message
 ) {
   const messageDetails = getMessageDetailsFromSlackMessage(accountId, message)
-  return findOrCreateMessage(messageDetails)
+  const foundMessage = await findOrCreateMessage(messageDetails)
+
+  return foundMessage
 }
 
 function getMessageDetailsFromSlackMessage(

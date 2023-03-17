@@ -12,4 +12,8 @@ export class Account extends BaseModel {
   static get tableName() {
     return 'accounts'
   }
+
+  public getInstallation() {
+    return JSON.parse(this.installation || '')
+  }
 }

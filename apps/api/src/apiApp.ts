@@ -12,7 +12,7 @@ import { registerSlack } from './integrations/slack'
 
 import { sentry } from './sentry'
 import { logging } from './logging'
-
+import middleware from '@fastify/express'
 const { RENDER_GIT_COMMIT } = env
 export async function apiApp(
   app: FastifyInstance<
@@ -35,6 +35,7 @@ export async function apiApp(
     throw new CustomError('A message ')
   })
   app.register(registerSlack, { prefix: '/slack' })
+
   app.register(logging)
 }
 

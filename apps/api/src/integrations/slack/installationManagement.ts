@@ -6,6 +6,7 @@ import {
 } from '@hearye/db'
 
 import { Installation, InstallationQuery } from '@slack/bolt'
+
 export async function storeInstallation(installation: Installation) {
   const externalId = installation.isEnterpriseInstall
     ? installation.enterprise?.id
@@ -26,7 +27,8 @@ export async function fetchInstallation(
     ? installQuery.enterpriseId
     : installQuery.teamId
   if (!externalId) throw new Error('Must have external ID')
-  return await findAccountInstallation('slack', externalId)
+  const result = await findAccountInstallation('slack', externalId)
+  return result
 }
 
 export async function deleteInstallation(

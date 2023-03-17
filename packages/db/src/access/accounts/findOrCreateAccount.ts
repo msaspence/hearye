@@ -4,25 +4,39 @@ import { UniqueViolationError } from 'objection'
 export async function findOrCreateAccount({
   source,
   externalId,
+  installation,
 }: {
   source: string
   externalId: string
+  installation: any
 }): Promise<Account> {
   const existingAccount = await Account.query()
     .findOne({
       source,
       externalId,
     })
-    .select('id', 'installation')
-  if (existingAccount) return existingAccount
+    .select('*')
+  if (existingAccount) {
+    return existingAccount
+  }
   try {
-    return await Account.query().insert({
-      source,
-      externalId,
-    })
+    const created = await Account.query()
+      .insert({
+        source,
+        externalId,
+        installation,
+      })
+      .returning('*')
+
+    return created
   } catch (error) {
     if (error instanceof UniqueViolationError) {
-      return findOrCreateAccount({ source, externalId })
+      const refound = await findOrCreateAccount({
+        source,
+        externalId,
+        installation,
+      })
+      return refound
     }
     throw error
   }

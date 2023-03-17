@@ -30,8 +30,12 @@ export const logging = plugin(
     fastify.addHook('onRequest', async (request: FastifyRequest, response) => {
       const requestMeta = requestLogData(request)
       response.startTime = Date.now()
-      logger.info(`REQ ${requestMeta.method} ${request.raw.url}`)
     })
+
+    // fastify.addHook('preHandler', async (request: FastifyRequest, response) => {
+    //   console.dir(request.headers, { depth: 5 })
+    //   console.dir(request.body, { depth: 5 })
+    // })
 
     fastify.addHook('onResponse', async (request: FastifyRequest, response) => {
       const requestMeta = requestLogData(request)

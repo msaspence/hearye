@@ -12,16 +12,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'plugin:jest/all',
     'plugin:lodash/recommended',
-  ],
-  overrides: [
-    {
-      files: ['**/*.test.js', '**/*.test.ts'],
-      rules: {
-        'jest/require-hook': ERROR,
-      },
-    },
+    'plugin:vitest/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -32,7 +24,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'lodash'],
+  plugins: ['@typescript-eslint', 'lodash', 'vitest'],
   rules: {
     'no-console': ERROR,
     curly: [ERROR, 'multi-line'],
@@ -50,8 +42,6 @@ module.exports = {
     ],
     '@typescript-eslint/explicit-module-boundary-types': OFF,
     '@typescript-eslint/no-explicit-any': ERROR,
-    'jest/no-hooks': OFF,
-    'jest/require-hook': OFF,
 
     'lodash/prefer-lodash-method': OFF,
     'lodash/prefer-lodash-typecheck': OFF,
