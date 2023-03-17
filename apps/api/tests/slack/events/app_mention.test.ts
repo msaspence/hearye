@@ -109,7 +109,7 @@ describe('request to GET /slack/events', () => {
     describe('when the message mentions the author explicitly', () => {
       it('creates a reminder for the author', async () => {
         await postAppMentionEvent(account, {
-          mentionAuthor: true,
+          additionalMentions: [authorUserId],
         })
         const user = await User.query()
           .where({ source: 'slack', externalId: authorUserId })
@@ -122,22 +122,26 @@ describe('request to GET /slack/events', () => {
         })
       })
     })
+
+    describe('when the message mentions @here', () => {})
   })
 })
 
 async function postAppMentionEvent(
   account: Account,
   options: Partial<Parameters<typeof postSlackEvent>[1]> & {
-    mentionAuthor?: boolean
+    additionalMentions?: string[]
   } = {}
 ) {
   const response = await postSlackEvent(
     {
       client_msg_id: '1bd4f0f2-f57a-4408-aef1-9cd0d04ff95f',
       type: 'app_mention',
-      text: `<@${installation.bot.userId}> <@${mentionedUserId}> ${
-        options.mentionAuthor ? `<@${installation.user.id}> ` : ''
-      }hello`,
+      text: `<@${installation.bot.userId}> <@${mentionedUserId}> ${(
+        options.additionalMentions || []
+      )
+        .map((id) => `<@${id}>`)
+        .join(' ')} hello`,
       user: installation.user.id,
       ts: '1620920000',
       blocks: [
@@ -151,12 +155,10 @@ async function postAppMentionEvent(
                 { type: 'user', user_id: installation.bot.userId },
                 { type: 'text', text: ' ' },
                 { type: 'user', user_id: 'U03T5T28UU8' },
-                ...(options.mentionAuthor
-                  ? [
-                      { type: 'text', text: ' ' },
-                      { type: 'user', user_id: installation.user.id },
-                    ]
-                  : []),
+                ...(options.additionalMentions || []).flatMap((id) => [
+                  { type: 'text', text: ' ' },
+                  { type: 'user', user_id: id },
+                ]),
                 { type: 'text', text: ' hello' },
               ],
             },

@@ -57,7 +57,7 @@ export async function requireAcknowledgementsForMessage(
   const {
     bot: { userId: botUserId },
   } = JSON.parse(account.installation as string)
-
+  console.dir(slackMessage, { depth: null })
   const mentionedUsers = includeMentioned
     ? await getAudienceUsersFromSlackMessage(
         client,
