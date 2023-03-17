@@ -9,7 +9,7 @@ type PostSlackEventOptions = {
   poisonSignature?: boolean
 }
 
-let eventHandlerResolvers: ((value: unknown) => void)[] = []
+let eventHandlerResolver: (value: unknown) => void
 
 export function withHandlerResolutionForTests(handler: unknown) {
   return async (...args: unknown[]) => {
@@ -19,7 +19,6 @@ export function withHandlerResolutionForTests(handler: unknown) {
       return result
     } catch (error) {
     } finally {
-      const eventHandlerResolver = eventHandlerResolvers.shift()
       if (eventHandlerResolver) eventHandlerResolver(null)
     }
   }
@@ -35,11 +34,9 @@ export async function postSlackEvent(
 ) {
   if (!account.externalId) throw new Error('Must have external ID')
   const installation = account.getInstallation()
-  let eventHandlerResolver
   const promise = new Promise((resolve) => {
     eventHandlerResolver = resolve
   })
-  if (eventHandlerResolver) eventHandlerResolvers.push(eventHandlerResolver)
   const payload = {
     token: 'xeghsQqBaEOuqMVYIONG82tX',
     team_id: installation.team.id,

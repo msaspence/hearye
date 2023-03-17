@@ -11,6 +11,7 @@ export async function findOrCreateUsers(
   externalIds: string[]
 ): Promise<User[]> {
   logger.debug('Getting existing users')
+
   const existingUsers = await User.query()
     .where('accountId', accountId)
     .where('source', 'slack')

@@ -1,10 +1,15 @@
 import type { Knex } from 'knex'
 import '@hearye/env'
 
-const connection =
+console.log()
+export const connection =
   process.env.DATABASE_URL ||
   `psql://localhost:5432/hearye${
-    process.env.VITEST_POOL_ID ? `_test_${process.env.VITEST_POOL_ID}` : ''
+    process.env.VITEST_POOL_ID
+      ? `_test${process.env.VSCODE_TESTING === 'true' ? '_vscode' : ''}_${
+          process.env.VITEST_POOL_ID
+        }`
+      : ''
   }`
 
 const config: Knex.Config | { [key: string]: Knex.Config } = {
