@@ -1,7 +1,6 @@
 import { Account, User, Message, Reminder } from '@hearye/db'
 import { postSlackEvent } from '../helpers/postSlackEvent'
 import { createSlackAccount } from '../../fixtures/accounts/createSlackAccount'
-import 'jest-extended'
 
 const channelId = 'C03SD7H923F'
 const messageTs = '1620920000'

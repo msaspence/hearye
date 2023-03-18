@@ -23,7 +23,6 @@ export async function updateUserTimezone(
   if (!user) return
 
   const newOffset = dayjs().tz(timezone).utcOffset()
-
   const currentOffset = dayjs().tz(currentTimezone).utcOffset()
   const offset = newOffset - currentOffset
 
