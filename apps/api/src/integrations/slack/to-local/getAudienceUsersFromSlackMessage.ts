@@ -116,6 +116,7 @@ async function getGroupUsersFromSlackMessage(
       })
     )
   ).flat()
+
   return uniq(userIds).filter(isString) || []
 }
 
@@ -136,15 +137,11 @@ async function getUsersIdsFromSlackMessage(
   )
   // Remove the user who sent the message from the list of users to be reminded
   // from "broadcast" mentions ie @channel, @here, @everyone
-  const indirectMentionIds = [...broadcastUserIds].filter(
+  const indirectMentionIds = [...broadcastUserIds, ...groupUserIds].filter(
     (id) => id !== message.user
   )
 
-  const uniqueUserIds = uniq([
-    ...mentionIds,
-    ...indirectMentionIds,
-    ...groupUserIds,
-  ])
+  const uniqueUserIds = uniq([...mentionIds, ...indirectMentionIds])
 
   // Remove the hear ye bot from the list of users to be reminded
   return uniqueUserIds.filter((id) => id !== botId)

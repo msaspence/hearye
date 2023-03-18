@@ -13,6 +13,8 @@ const messageTs = '1620920000'
 const mentionedUserId = 'U03T5T28UU9'
 const authorUserId = 'U03T5T28UU8'
 const channelMemberId = 'U03T5T28UU7'
+const groupMemberId = 'U03T5T28UU6'
+const subTeamId = 'S04KAKHFV36'
 
 let account: Account
 let installation: Record<string, any>
@@ -28,6 +30,14 @@ describe('request to GET /slack/events', () => {
         (req, res, ctx) => {
           return res(
             ctx.json({ ok: true, members: [channelMemberId, authorUserId] })
+          )
+        }
+      ),
+      rest.post(
+        'https://slack.com/api/usergroups.users.list',
+        (req, res, ctx) => {
+          return res(
+            ctx.json({ ok: true, users: [groupMemberId, authorUserId] })
           )
         }
       )
@@ -163,6 +173,36 @@ describe('request to GET /slack/events', () => {
         })
       })
     })
+
+    describe('when the message mentions a user group', () => {
+      it('creates reminders for everyone in the group', async () => {
+        await postAppMentionEvent(account, {
+          additionalMentions: [subTeamId],
+        })
+        const user = await User.query()
+          .where({ source: 'slack', externalId: groupMemberId })
+          .first()
+        await expect(user).toMatchObject({
+          externalId: groupMemberId,
+        })
+        expect(
+          await Reminder.query().where({ userId: user?.id }).first()
+        ).toMatchObject({
+          userId: user?.id,
+        })
+      })
+
+      it("doesn't create reminders for the author", async () => {
+        await postAppMentionEvent(account, {
+          additionalMentions: [subTeamId],
+        })
+        expect(
+          await User.query()
+            .where({ source: 'slack', externalId: authorUserId })
+            .resultSize()
+        ).toBe(0)
+      })
+    })
   })
 })
 
@@ -180,7 +220,10 @@ async function postAppMentionEvent(
       text: `<@${installation.bot.userId}> <@${mentionedUserId}> ${(
         options.additionalMentions || []
       )
-        .map((id) => `<${BROADCAST_MENTIONS.includes(id) ? '!' : '@'}${id}>`)
+        .map((id) => {
+          if (id.match(/^S/)) return `<!subteam^${id}|@subteamname${id}>`
+          return `<${BROADCAST_MENTIONS.includes(id) ? '!' : '@'}${id}>`
+        })
         .join(' ')} hello`,
       user: authorUserId,
       ts: '1620920000',
@@ -199,6 +242,8 @@ async function postAppMentionEvent(
                   { type: 'text', text: ' ' },
                   BROADCAST_MENTIONS.includes(id)
                     ? { type: 'broadcast', range: id }
+                    : id.match(/^S/)
+                    ? { type: 'usergroup', usergroup_id: id }
                     : { type: 'user', user_id: id },
                 ]),
                 { type: 'text', text: ' hello' },
