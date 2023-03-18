@@ -7,8 +7,7 @@ export async function handleRequestAcknowledgementForMessage(event: {
   client: WebClient
   payload: { channel: { id: string }; message: Message; trigger_id: string }
 }) {
-  await event.ack()
-  event.client.views.open({
+  await event.client.views.open({
     trigger_id: event.payload.trigger_id,
     view: {
       type: 'modal',
@@ -97,4 +96,5 @@ export async function handleRequestAcknowledgementForMessage(event: {
       ],
     },
   })
+  await event.ack()
 }
