@@ -18,6 +18,7 @@ const subTeamId = 'S04KAKHFV36'
 
 let account: Account
 let installation: Record<string, any>
+let noChannelOrGroupScope: boolean
 
 describe('request to GET /slack/events', () => {
   describe('when it is an app_mention event', async () => {
@@ -28,6 +29,9 @@ describe('request to GET /slack/events', () => {
       rest.post(
         'https://slack.com/api/conversations.members',
         (req, res, ctx) => {
+          if (noChannelOrGroupScope) {
+            return res(ctx.json({ ok: false, error: 'missing_scope' }))
+          }
           return res(
             ctx.json({ ok: true, members: [channelMemberId, authorUserId] })
           )
@@ -36,6 +40,9 @@ describe('request to GET /slack/events', () => {
       rest.post(
         'https://slack.com/api/usergroups.users.list',
         (req, res, ctx) => {
+          if (noChannelOrGroupScope) {
+            return res(ctx.json({ ok: false, error: 'missing_scope' }))
+          }
           return res(
             ctx.json({ ok: true, users: [groupMemberId, authorUserId] })
           )
@@ -45,6 +52,7 @@ describe('request to GET /slack/events', () => {
     beforeEach(async () => {
       account = await createSlackAccount()
       installation = account.getInstallation()
+      noChannelOrGroupScope = false
     })
 
     it('responds with 200', async () => {
@@ -171,6 +179,25 @@ describe('request to GET /slack/events', () => {
               .resultSize()
           ).toBe(0)
         })
+
+        describe('when the installation is not authorized to access the channel', () => {
+          it('adds other mentioned users and silently ignores the broadcast', async () => {
+            noChannelOrGroupScope = true
+            await postAppMentionEvent(account, {
+              additionalMentions: [channelId, mentionedUserId],
+            })
+            expect(
+              await User.query()
+                .where({ source: 'slack', externalId: channelMemberId })
+                .resultSize()
+            ).toBe(0)
+            expect(
+              await User.query()
+                .where({ source: 'slack', externalId: mentionedUserId })
+                .resultSize()
+            ).toBe(1)
+          })
+        })
       })
     })
 
@@ -201,6 +228,25 @@ describe('request to GET /slack/events', () => {
             .where({ source: 'slack', externalId: authorUserId })
             .resultSize()
         ).toBe(0)
+      })
+
+      describe('when the installation is not authorized to access the group', () => {
+        it('adds other mentioned users and silently ignores the group', async () => {
+          noChannelOrGroupScope = true
+          await postAppMentionEvent(account, {
+            additionalMentions: [subTeamId, mentionedUserId],
+          })
+          expect(
+            await User.query()
+              .where({ source: 'slack', externalId: subTeamId })
+              .resultSize()
+          ).toBe(0)
+          expect(
+            await User.query()
+              .where({ source: 'slack', externalId: mentionedUserId })
+              .resultSize()
+          ).toBe(1)
+        })
       })
     })
   })
