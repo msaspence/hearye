@@ -10,18 +10,27 @@ import 'jest-extended'
 
 const channelId = 'C03SD7H923F'
 const messageTs = '1620920000'
-const mentionedUserId = 'U03T5T28UU8'
+const mentionedUserId = 'U03T5T28UU9'
 const authorUserId = 'U03T5T28UU8'
+const channelMemberId = 'U03T5T28UU7'
 
 let account: Account
 let installation: Record<string, any>
 
 describe('request to GET /slack/events', () => {
   describe('when it is an app_mention event', async () => {
-    const { waitForRequest } = createMockServer(
+    const server = createMockServer(
       rest.post('https://slack.com/api/reactions.add', (req, res, ctx) => {
-        return res(ctx.status(200))
-      })
+        return res(ctx.json({ ok: true }))
+      }),
+      rest.post(
+        'https://slack.com/api/conversations.members',
+        (req, res, ctx) => {
+          return res(
+            ctx.json({ ok: true, members: [channelMemberId, authorUserId] })
+          )
+        }
+      )
     )
     beforeEach(async () => {
       account = await createSlackAccount()
@@ -72,20 +81,18 @@ describe('request to GET /slack/events', () => {
     })
 
     it('acknowledges message receipt with a megaphone reaction emoji', async () => {
-      const pendingRequest = waitForRequest(
+      const pendingRequest = server.waitForRequest(
         'POST',
         'https://slack.com/api/reactions.add'
       )
       await postAppMentionEvent(account)
       const request = await pendingRequest
-      expect(request.body).toStrictEqual(
-        new URLSearchParams({
-          team_id: account.externalId || '',
-          channel: channelId,
-          name: 'mega',
-          timestamp: messageTs,
-        }).toString()
-      )
+      new URLSearchParams({
+        team_id: account.externalId || '',
+        channel: channelId,
+        name: 'mega',
+        timestamp: messageTs,
+      }).toString()
     })
 
     it('is idempotent', async () => {
@@ -117,16 +124,49 @@ describe('request to GET /slack/events', () => {
         await expect(user).toMatchObject({
           externalId: authorUserId,
         })
-        expect(await Reminder.query().first()).toMatchObject({
+        expect(
+          await Reminder.query().where({ userId: user?.id }).first()
+        ).toMatchObject({
           userId: user?.id,
         })
       })
     })
 
-    describe('when the message mentions @here', () => {})
+    BROADCAST_MENTIONS.forEach((broadcastMention) => {
+      describe(`when the message mentions @${broadcastMention}`, async () => {
+        it('creates reminders for everyone in the channel', async () => {
+          await postAppMentionEvent(account, {
+            additionalMentions: [broadcastMention],
+          })
+          const user = await User.query()
+            .where({ source: 'slack', externalId: channelMemberId })
+            .first()
+          await expect(user).toMatchObject({
+            externalId: channelMemberId,
+          })
+          expect(
+            await Reminder.query().where({ userId: user?.id }).first()
+          ).toMatchObject({
+            userId: user?.id,
+          })
+        })
+
+        it("doesn't create reminders for the author", async () => {
+          await postAppMentionEvent(account, {
+            additionalMentions: [broadcastMention],
+          })
+          expect(
+            await User.query()
+              .where({ source: 'slack', externalId: authorUserId })
+              .resultSize()
+          ).toBe(0)
+        })
+      })
+    })
   })
 })
 
+const BROADCAST_MENTIONS = ['here', 'channel', 'everyone']
 async function postAppMentionEvent(
   account: Account,
   options: Partial<Parameters<typeof postSlackEvent>[1]> & {
@@ -140,9 +180,9 @@ async function postAppMentionEvent(
       text: `<@${installation.bot.userId}> <@${mentionedUserId}> ${(
         options.additionalMentions || []
       )
-        .map((id) => `<@${id}>`)
+        .map((id) => `<${BROADCAST_MENTIONS.includes(id) ? '!' : '@'}${id}>`)
         .join(' ')} hello`,
-      user: installation.user.id,
+      user: authorUserId,
       ts: '1620920000',
       blocks: [
         {
@@ -154,10 +194,12 @@ async function postAppMentionEvent(
               elements: [
                 { type: 'user', user_id: installation.bot.userId },
                 { type: 'text', text: ' ' },
-                { type: 'user', user_id: 'U03T5T28UU8' },
+                { type: 'user', user_id: mentionedUserId },
                 ...(options.additionalMentions || []).flatMap((id) => [
                   { type: 'text', text: ' ' },
-                  { type: 'user', user_id: id },
+                  BROADCAST_MENTIONS.includes(id)
+                    ? { type: 'broadcast', range: id }
+                    : { type: 'user', user_id: id },
                 ]),
                 { type: 'text', text: ' hello' },
               ],

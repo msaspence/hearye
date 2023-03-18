@@ -6,8 +6,15 @@ import { shouldSendOnboardinMessage, onboardingMessageFailed } from '@hearye/db'
 
 const logger = createLogger('hearye:api:slack:handleHomeOpened')
 
-export async function handleHomeOpened(event: SlackEvent<'app_home_opened'>) {
+type AppHomeOpenedEvent = SlackEvent<'app_home_opened'>
+type Event = Pick<AppHomeOpenedEvent, 'client'> & {
+  payload: Pick<AppHomeOpenedEvent['payload'], 'type' | 'user' | 'channel'>
+  body: Pick<AppHomeOpenedEvent['body'], 'team_id'>
+}
+
+export async function handleHomeOpened(event: Event) {
   logger.debug('Handling message', { event })
+
   if (event.payload.type === 'app_home_opened') {
     const account = await getAccountFromSlackEvent(event)
     if (!account.id) throw new Error('Account with id required')

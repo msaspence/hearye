@@ -8,6 +8,7 @@ export function createWaitForRequest(server: SetupServer) {
       server.events.on('request:start', (req) => {
         const matchesMethod = req.method.toLowerCase() === method.toLowerCase()
         const matchesUrl = matchRequestUrl(req.url, url).matches
+
         if (matchesMethod && matchesUrl) {
           requestId = req.id
         }

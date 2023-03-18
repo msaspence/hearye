@@ -23,6 +23,7 @@ const {
   SLACK_CLIENT_SECRET,
   SLACK_SIGNING_SECRET,
   SLACK_STATE_SECRET,
+  NODE_ENV,
 } = env
 
 if (
@@ -33,7 +34,6 @@ if (
 ) {
   throw new Error('Slack creditials missing')
 }
-
 export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const receiver = new FastifyReceiver({
     signingSecret: SLACK_SIGNING_SECRET,
@@ -68,6 +68,11 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     installationStore: installationManagement,
     path: '/events',
     installerOptions: {
+      clientOptions: {
+        retryConfig: {
+          retries: NODE_ENV === 'test' ? 0 : undefined,
+        },
+      },
       directInstall: true,
       stateStore: new FileStateStore({}),
       installPath: '/install',

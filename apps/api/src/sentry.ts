@@ -18,10 +18,12 @@ export async function sentry(
     FastifyTypeProviderDefault
   >
 ) {
-  app.register(fastifySentry, {
-    dsn: SENTRY_DSN,
-    environment: NODE_ENV,
-    release: RENDER_GIT_COMMIT,
-    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
-  })
+  if (env.NODE_ENV !== 'test') {
+    app.register(fastifySentry, {
+      dsn: SENTRY_DSN,
+      environment: NODE_ENV,
+      release: RENDER_GIT_COMMIT,
+      tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
+    })
+  }
 }

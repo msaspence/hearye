@@ -8,7 +8,7 @@ export async function findOrCreateAccount({
 }: {
   source: string
   externalId: string
-  installation: any
+  installation?: any
 }): Promise<Account> {
   const existingAccount = await Account.query()
     .findOne({

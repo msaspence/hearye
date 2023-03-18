@@ -1,7 +1,6 @@
 import type { Knex } from 'knex'
 import '@hearye/env'
 
-console.log()
 export const connection =
   process.env.DATABASE_URL ||
   `psql://localhost:5432/hearye${

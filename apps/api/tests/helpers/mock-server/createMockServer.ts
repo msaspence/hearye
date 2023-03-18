@@ -1,13 +1,28 @@
-import { setupServer } from 'msw/node'
-import { rest } from 'msw'
+import { setupServer, SetupServer } from 'msw/node'
+import { MockedRequest } from 'msw'
 import { createWaitForRequest } from './createWaitForRequest'
 
 export function createMockServer(...args: Parameters<typeof setupServer>) {
-  const server = setupServer(...args)
-  beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
-  afterAll(() => {
-    server.close()
+  const result: {
+    server?: SetupServer
+    waitForRequest: ReturnType<typeof createWaitForRequest>
+    requests: MockedRequest[]
+  } = {
+    waitForRequest: () => Promise.reject(new Error('Mock server not ready')),
+    requests: [],
+  }
+  beforeAll(() => {
+    const server = setupServer(...args)
+    result.server = server
+    result.waitForRequest = createWaitForRequest(server)
+    server.events.on('request:start', (req) => {
+      result.requests.push(req)
+    })
+    server.listen({ onUnhandledRequest: 'error' })
   })
-  afterEach(() => server.resetHandlers())
-  return { server, waitForRequest: createWaitForRequest(server) }
+  afterAll(() => {
+    result.server?.close()
+  })
+  afterEach(() => result.server?.resetHandlers())
+  return result
 }
