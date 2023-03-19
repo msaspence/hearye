@@ -31,12 +31,8 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     clientId: SLACK_CLIENT_ID,
     clientSecret: SLACK_CLIENT_SECRET,
     scopes: [
-      'commands',
-      'chat:write',
       'app_mentions:read',
-      'channels:history',
-      'groups:history',
-      'im:history',
+      'chat:write',
       'reactions:read',
       'reactions:write',
       'users:read',
