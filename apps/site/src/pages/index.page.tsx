@@ -10,7 +10,7 @@ export function Page() {
       <BannerHeader />
       <Features />
       <Pricing />
-      {/* <Try /> */}
+      <Try />
     </Layout>
   )
 }

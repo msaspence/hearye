@@ -12,7 +12,7 @@ export function Try() {
         textAlign: 'center',
       }}
     >
-      <Typography
+      {/* <Typography
         variant="h4"
         sx={{
           fontSize: { md: '100px', xs: '75px' },
@@ -21,7 +21,7 @@ export function Try() {
         }}
       >
         Try For Free
-      </Typography>
+      </Typography> */}
       <AddToSlackButton variant="large" />
     </Box>
   )
