@@ -82,7 +82,6 @@ export async function requireAcknowledgementsForMessage(
 
   logger.debug('Scheduling reminder for slack event', logPayload)
   await scheduleReminder(account.id, localMessage.id, userIds)
-
   logger.debug('Acknowledging reciept of slack event', logPayload)
   await acknowledgeMessageReciept(client, slackMessage.channel, slackMessage.ts)
 }

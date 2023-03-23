@@ -8,19 +8,19 @@ export async function updateUserTimezone(
   externalId: string,
   timezone: string
 ) {
-  const { id: userId, timezone: currentTimezone } = (await User.query().findOne(
-    {
-      source,
-      externalId,
-    }
-  )) as User
+  const user = await User.query().findOne({
+    source,
+    externalId,
+  })
+  if (!user) return
+  const { id: userId, timezone: currentTimezone } = user
 
-  const [user] = await User.query()
+  const [newUser] = await User.query()
     .where('id', userId)
     .patch({ timezone })
     .returning('id')
 
-  if (!user) return
+  if (!newUser) return
 
   const newOffset = dayjs().tz(timezone).utcOffset()
   const currentOffset = dayjs().tz(currentTimezone).utcOffset()

@@ -103,12 +103,14 @@ describe('request to GET /slack/events', () => {
       )
       await postAppMentionEvent(account)
       const request = await pendingRequest
-      new URLSearchParams({
-        team_id: account.externalId || '',
-        channel: channelId,
-        name: 'mega',
-        timestamp: messageTs,
-      }).toString()
+      expect(request.body).toBe(
+        new URLSearchParams({
+          team_id: account.externalId || '',
+          channel: channelId,
+          name: 'mega',
+          timestamp: messageTs,
+        }).toString()
+      )
     })
 
     it('is idempotent', async () => {

@@ -1,5 +1,6 @@
 import { dayjs } from '@hearye/dayjs'
 import { UniqueViolationError } from 'objection'
+import uniq from 'lodash/uniq'
 
 import { Reminder } from '../../models/Reminder'
 import { User } from '../../models/User'
@@ -11,22 +12,22 @@ export async function scheduleReminder(
   userIds: string[],
   iteration = 1
 ): Promise<void> {
+  const uniqueUserIds = uniq(userIds)
   const existingReminders = await Reminder.query()
     .where('accountId', accountId)
     .where('messageId', messageId)
-    .whereIn('userId', userIds)
+    .whereIn('userId', uniqueUserIds)
     .where('iteration', iteration)
     .select('id', 'userId')
-  const timezones = (await User.query().whereIn('id', userIds)).reduce(
+  const timezones = (await User.query().whereIn('id', uniqueUserIds)).reduce(
     (result, { id, timezone }) => {
       if (id) result[id] = timezone || 'UTC'
       return result
     },
     {} as Record<string, string>
   )
-
   const existingReminderUserIds = existingReminders.map(({ userId }) => userId)
-  const missingUsers = userIds.filter(
+  const missingUsers = uniqueUserIds.filter(
     (userId) => !existingReminderUserIds.includes(userId)
   )
   if (!missingUsers.length) return
@@ -47,7 +48,7 @@ export async function scheduleReminder(
     return
   } catch (error) {
     if (error instanceof UniqueViolationError) {
-      return scheduleReminder(accountId, messageId, userIds)
+      return scheduleReminder(accountId, messageId, uniqueUserIds)
     }
     throw error
   }

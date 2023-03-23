@@ -20,6 +20,7 @@ export function withHandlerResolutionForTests(handler: unknown) {
       const result = await handler(...args)
       return result
     } catch (error) {
+      console.error(error)
     } finally {
       if (eventHandlerResolver) eventHandlerResolver(null)
     }

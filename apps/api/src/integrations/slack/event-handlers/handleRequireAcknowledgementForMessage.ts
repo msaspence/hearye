@@ -15,17 +15,16 @@ export async function handleRequireAcknowledgementForMessage({
   client: WebClient
   payload: {
     team_id: string
-    channel: { id: string }
     private_metadata: string
     state: PayloadState
     trigger_id: string
   }
 }) {
-  await ack()
   const options = getOptionsFromPayload(payload)
   const message = await getOriginalMessage(client, payload)
 
   await requireAcknowledgementsForMessage(client, message, options)
+  await ack()
 }
 
 type PayloadState = {
