@@ -18,6 +18,7 @@ export async function sentry(
     FastifyTypeProviderDefault
   >
 ) {
+  /* c8 ignore start - code not run in tests by design */
   if (env.NODE_ENV !== 'test') {
     app.register(fastifySentry, {
       dsn: SENTRY_DSN,
@@ -26,4 +27,5 @@ export async function sentry(
       tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
     })
   }
+  /* c8 ignore stop */
 }

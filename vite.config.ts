@@ -7,5 +7,12 @@ export default defineConfig({
     globals: true,
     setupFiles: ['tests/setup', 'jest-extended/all'],
     globalSetup: ['tests/setup/global'],
+    coverage: {
+      all: true,
+      provider: 'c8',
+      src: ['apps', 'packages'],
+      exclude: ['**/tests/**', 'apps/site'],
+      skipFull: true,
+    },
   },
 })

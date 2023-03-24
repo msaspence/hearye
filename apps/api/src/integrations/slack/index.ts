@@ -12,7 +12,7 @@ import { handleRequireAcknowledgementForMessage } from './event-handlers/handleR
 import { handleHomeOpened } from './event-handlers/handleHomeOpened'
 import { handleReaction } from './event-handlers/handleReaction'
 import { handleUserChange } from './event-handlers/handleUserChange'
-import * as installationManagement from './installationManagement'
+import { installationStore } from './installationManagement'
 import { handleAppMention } from './event-handlers/handleAppMention'
 import { withHandlerResolutionForTests } from '../../../tests/slack/helpers/postSlackEvent'
 
@@ -26,6 +26,7 @@ const {
   NODE_ENV,
 } = env
 
+/* c8 ignore start - environment variables would only be set up by the test */
 if (
   !SLACK_CLIENT_ID ||
   !SLACK_CLIENT_SECRET ||
@@ -34,6 +35,8 @@ if (
 ) {
   throw new Error('Slack creditials missing')
 }
+/* c8 ignore end */
+
 export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const receiver = new FastifyReceiver({
     signingSecret: SLACK_SIGNING_SECRET,
@@ -42,6 +45,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     logger: {
       ...logger,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      /* c8 ignore start - these are being noop'd for typescript */
       // @ts-ignore
       getLevel: () => {
         // noop
@@ -52,6 +56,8 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       setName: () => {
         // noop
       },
+      /* c8 ignore start */
+
       info: logger.info.bind(logger),
       debug: logger.debug.bind(logger),
       warn: logger.warn.bind(logger),
@@ -65,7 +71,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       'users:read',
     ],
     stateSecret: SLACK_STATE_SECRET,
-    installationStore: installationManagement,
+    installationStore,
     path: '/events',
     installerOptions: {
       clientOptions: {

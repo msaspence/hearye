@@ -1,4 +1,5 @@
 import {
+  Account,
   findOrCreateAccount,
   updateAccountInstallation,
   findAccountInstallation,
@@ -6,6 +7,12 @@ import {
 } from '@hearye/db'
 
 import { Installation, InstallationQuery } from '@slack/bolt'
+
+export const installationStore = {
+  storeInstallation,
+  fetchInstallation,
+  deleteInstallation,
+}
 
 export async function storeInstallation(installation: Installation) {
   const externalId = installation.isEnterpriseInstall
@@ -38,10 +45,10 @@ export async function deleteInstallation(
     ? installQuery.enterpriseId
     : installQuery.teamId
   if (!externalId) throw new Error('Must have external ID')
-  const account = await findOrCreateAccount({
+  const account = await Account.query().findOne({
     source: 'slack',
     externalId,
   })
-  if (!account.id) throw new Error('Must find account')
+  if (!account?.id) return
   await deleteAccountInstallation(account.id)
 }
