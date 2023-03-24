@@ -32,11 +32,6 @@ type GroupBlock = {
   elements: Block[]
 }
 
-type Event = {
-  client: WebClient
-  payload: { blocks: Block[]; channel: string }
-}
-
 export async function getAudienceUsersFromSlackMessage(
   client: WebClient,
   accountId: string,

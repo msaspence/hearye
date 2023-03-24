@@ -1,5 +1,4 @@
 import { Account } from '@hearye/db'
-import { Installation, InstallationQuery } from '@slack/bolt'
 
 import {
   storeInstallation,
@@ -12,8 +11,9 @@ describe('storeInstallation', () => {
   describe('when the account already exists', () => {
     it('updates the installation', async () => {
       const account = await createSlackAccount()
-      if (!account.externalId || !account.id)
+      if (!account.externalId || !account.id) {
         throw new Error('Must have account id')
+      }
       const installation = {
         isEnterpriseInstall: false,
         team: { id: account.externalId },
@@ -49,8 +49,9 @@ describe('storeInstallation', () => {
   describe('when the account is enterprise', () => {
     it('uses the enterprise id', async () => {
       const account = await createSlackAccount()
-      if (!account.externalId || !account.id)
+      if (!account.externalId || !account.id) {
         throw new Error('Must have account id')
+      }
       const installation = {
         isEnterpriseInstall: true,
         enterprise: { id: account.externalId },
@@ -140,8 +141,9 @@ describe('deleteInstallation', () => {
   describe('when the account already exists', () => {
     it('deletes the installation, but not the account', async () => {
       const account = await createSlackAccount()
-      if (!account.externalId || !account.id)
+      if (!account.externalId || !account.id) {
         throw new Error('Must have account id')
+      }
       const installation = {
         isEnterpriseInstall: false,
         teamId: account.externalId,
@@ -171,8 +173,9 @@ describe('deleteInstallation', () => {
   describe('when the account is enterprise', () => {
     it('uses the enterprise id', async () => {
       const account = await createSlackAccount()
-      if (!account.externalId || !account.id)
+      if (!account.externalId || !account.id) {
         throw new Error('Must have account id')
+      }
       const installation = {
         isEnterpriseInstall: true,
         enterpriseId: account.externalId,

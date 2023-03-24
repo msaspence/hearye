@@ -5,6 +5,7 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
     globals: true,
+    deps: {},
     setupFiles: ['tests/setup', 'jest-extended/all'],
     globalSetup: ['tests/setup/global'],
     coverage: {
@@ -14,5 +15,7 @@ export default defineConfig({
       exclude: ['**/tests/**', 'apps/site'],
       skipFull: true,
     },
+    useAtomics: true,
+    testTimeout: 300,
   },
 })

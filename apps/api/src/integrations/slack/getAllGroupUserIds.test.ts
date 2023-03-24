@@ -4,8 +4,6 @@ import { mock } from 'vitest-mock-extended'
 
 const groupId = 'C1234567890'
 
-const users = ['U1234567890', 'U2345678901']
-
 describe('getAllGroupUserIds', () => {
   const users = mock<WebClient['users']>()
   const client = {

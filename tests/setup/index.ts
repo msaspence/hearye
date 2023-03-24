@@ -2,8 +2,6 @@ import { connection } from '@hearye/db'
 
 import { Client } from 'pg'
 
-import { expect } from 'vitest'
-
 const TRUNCATE_ALL_TABLES_QUERY = `
   COMMENT ON SCHEMA public IS 'standard public schema';
   DO $$ DECLARE

@@ -1,11 +1,10 @@
 import { createApp } from '../../../src/createApp'
-import { Account, findAccountInstallation } from '@hearye/db'
+import { Account } from '@hearye/db'
 import { env } from '@hearye/env'
 import { createHmac } from 'crypto'
-import { InjectPayload } from 'light-my-request'
-type PostSlackEventOptions = {
+
+type PostSlackRequestOptions = {
   account: Account
-  awaitHandler?: boolean
   poisonSignature?: boolean
 }
 
@@ -18,6 +17,7 @@ export function withHandlerResolutionForTests(handler: unknown) {
       const result = await handler(...args)
       return result
     } catch (error) {
+      // noop
     } finally {
       if (eventHandlerResolver) eventHandlerResolver(null)
     }
@@ -26,11 +26,7 @@ export function withHandlerResolutionForTests(handler: unknown) {
 
 export async function postSlackRequest(
   incomingPayload: object,
-  {
-    account,
-    awaitHandler = true,
-    poisonSignature = false,
-  }: PostSlackEventOptions
+  { account, poisonSignature = false }: PostSlackRequestOptions
 ) {
   if (!account.externalId) throw new Error('Must have external ID')
   const installation = account.getInstallation()

@@ -1,6 +1,5 @@
-import { Reminder, markReminderSent } from '@hearye/db'
+import { findUserWithDetailsById, Reminder, markReminderSent } from '@hearye/db'
 import { WebClient } from '@slack/web-api'
-import { findUserWithDetailsById } from '@hearye/db'
 
 import { loadSlackUserDetails } from './loadSlackUserDetails'
 import { clientForAccountId } from './clientForAccount'

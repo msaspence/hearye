@@ -1,7 +1,4 @@
-import { createApp } from '../../../src/createApp'
-import { Account, findAccountInstallation } from '@hearye/db'
-import { env } from '@hearye/env'
-import { createHmac } from 'crypto'
+import { Account } from '@hearye/db'
 
 import { postSlackRequest } from './postSlackRequest'
 
@@ -15,15 +12,15 @@ let eventHandlerResolver: (value: unknown) => void
 
 export function withHandlerResolutionForTests(handler: unknown) {
   return async (...args: unknown[]) => {
-    try {
-      // @ts-ignore
-      const result = await handler(...args)
-      return result
-    } catch (error) {
-      console.error(error)
-    } finally {
-      if (eventHandlerResolver) eventHandlerResolver(null)
-    }
+    // try {
+    // @ts-ignore
+    const result = await handler(...args)
+    if (eventHandlerResolver) eventHandlerResolver(null)
+    return result
+    // } catch (error) {
+    //   // nnop
+    // } finally {
+    // }
   }
 }
 
@@ -36,7 +33,6 @@ export async function postSlackEvent(
   }: PostSlackEventOptions
 ) {
   if (!account.externalId) throw new Error('Must have external ID')
-  const installation = account.getInstallation()
   const promise = new Promise((resolve) => {
     eventHandlerResolver = resolve
   })
@@ -50,7 +46,7 @@ export async function postSlackEvent(
       event_context:
         '4-eyJldCI6InJlYWN0aW9uX2FkZGVkIiwidGlkIjoiVDAzUzlISzBYQlEiLCJhaWQiOiJBMDNUNVRQRFhBNCIsImNpZCI6IkMwM1NEN0g5MjNGIn0',
     },
-    { account, awaitHandler, poisonSignature }
+    { account, poisonSignature }
   )
   if (awaitHandler) await promise
 

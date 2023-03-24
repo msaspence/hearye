@@ -10,8 +10,6 @@ import { createMockServer } from '../../../helpers/mock-server'
 let account: Account
 let installation: Record<string, any>
 let noChannelOrGroupScope: boolean
-const triggerId = '944799105734.773906753841.38b5894552bdd4a780554ee59d1f3638'
-const userId = 'U03T5T28UU8'
 const channelId = 'C03SD7H923F'
 const messageTs = '1620920000'
 const mentionedUserId = 'U03T5T28UU9'
@@ -19,7 +17,6 @@ const authorUserId = 'U03T5T28UU8'
 const selectedUserId = 'U03T5T28UU6'
 const channelMemberId = 'U03T5T28UU7'
 const groupMemberId = 'U03T5T28UU6'
-const subTeamId = 'S04KAKHFV36'
 
 describe('request to GET /slack/events', () => {
   beforeEach(async () => {
@@ -212,7 +209,6 @@ describe('request to GET /slack/events', () => {
   })
 })
 
-const BROADCAST_MENTIONS = ['here', 'channel', 'everyone']
 async function postRequestAcknowledgementForMessage(
   account: Account,
   options: Partial<Parameters<typeof postSlackEvent>[1]> & {

@@ -14,6 +14,7 @@ module.exports = {
     'prettier',
     'plugin:lodash/recommended',
     'plugin:vitest/recommended',
+    'plugin:import/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -24,7 +25,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'lodash', 'vitest'],
+  plugins: ['@typescript-eslint', 'lodash', 'vitest', 'import'],
   rules: {
     'no-console': ERROR,
     curly: [ERROR, 'multi-line'],
@@ -50,6 +51,8 @@ module.exports = {
     'lodash/prefer-noop': OFF,
     'lodash/prefer-includes': OFF,
     'lodash/prefer-matches': OFF,
+
+    'import/no-unused-modules': [ERROR, { unusedExports: true }],
   },
   ignorePatterns: ['dist'],
 }

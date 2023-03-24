@@ -35,7 +35,7 @@ describe('request to GET /slack/events', () => {
       )
       await postRequestAcknowledgementForMessage(account)
       const request = await pendingRequest
-      const params = new URLSearchParams(request.body as string) as any
+      const params = new URLSearchParams(request.body as string)
       expect(params.get('team_id')).toBe(account.externalId)
       expect(params.get('trigger_id')).toBe(triggerId)
       const view = JSON.parse(params.get('view') as string)
