@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography'
 import { ReactNode } from 'react'
-import { CSSProperties } from '@mui/styled-engine'
+import type { CSSProperties } from '@mui/styled-engine'
 
 export function SubFeatureBody({
   children,

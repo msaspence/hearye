@@ -46,6 +46,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       ...logger,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       /* c8 ignore start - these are being noop'd for typescript */
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       getLevel: () => {
         // noop

@@ -1,4 +1,4 @@
-import { Account, findOrCreateAccount } from '@hearye/db'
+import { findOrCreateAccount } from '@hearye/db'
 
 export async function createSlackAccount() {
   return await findOrCreateAccount({

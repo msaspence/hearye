@@ -1,7 +1,7 @@
 import { Account, User, Message, Reminder } from '@hearye/db'
 import { postSlackEvent } from '../helpers/postSlackEvent'
 import { createSlackAccount } from '../../fixtures/accounts/createSlackAccount'
-import { dayjs } from 'packages/dayjs/src'
+import { dayjs } from '@hearye/dayjs'
 
 let account: Account
 const userId = 'U03T5T28UU8'
@@ -49,7 +49,7 @@ describe('request to GET /slack/events', () => {
         expect(updatedReminder?.remindAt).toStrictEqual(remindAt)
       })
 
-      it("doesn't update the user's acknowledged reminders ", async () => {
+      it("doesn't update the user's acknowledged reminders", async () => {
         const reminder = await createReminder({
           acknowledgedAt: new Date(),
           remindedAt: null,

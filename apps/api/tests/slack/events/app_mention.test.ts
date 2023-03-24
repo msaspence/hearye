@@ -15,6 +15,7 @@ const groupMemberId = 'U03T5T28UU6'
 const subTeamId = 'S04KAKHFV36'
 
 let account: Account
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let installation: Record<string, any>
 let noChannelOrGroupScope: boolean
 

@@ -1,8 +1,9 @@
 import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
+import type { CSSProperties } from '@mui/styled-engine'
+
 import { usePrando } from '../../../../../contexts/SkeletonWidth'
 import { Skeleton, SkeletonBox } from '../../../../Skeleton'
-import { CSSProperties } from '@mui/styled-engine'
 
 export function SkeletonMessage({
   children,

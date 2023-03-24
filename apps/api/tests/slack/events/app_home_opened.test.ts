@@ -9,6 +9,7 @@ const channelId = 'C03SD7H923F'
 const authorUserId = 'U03T5T28UU8'
 
 let account: Account
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let installation: Record<string, any>
 
 describe('request to GET /slack/events', () => {
@@ -36,6 +37,7 @@ describe('request to GET /slack/events', () => {
         )
         await postAppHomeEvent(account)
         const request = await pendingRequest
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const params = new URLSearchParams(request.body as string) as any
         expect(params.get('team_id')).toBe(installation.team.id)
         expect(params.get('channel')).toBe(channelId)
@@ -63,7 +65,6 @@ describe('request to GET /slack/events', () => {
   })
 })
 
-const BROADCAST_MENTIONS = ['here', 'channel', 'everyone']
 async function postAppHomeEvent(
   account: Account,
   options: Partial<Parameters<typeof postSlackEvent>[1]> = {}

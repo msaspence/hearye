@@ -13,6 +13,7 @@ let eventHandlerResolver: (value: unknown) => void
 export function withHandlerResolutionForTests(handler: unknown) {
   return async (...args: unknown[]) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const result = await handler(...args)
       return result

@@ -1,4 +1,4 @@
-import { CSSProperties } from '@mui/styled-engine'
+import type { CSSProperties } from '@mui/styled-engine'
 import { SkeletonBox } from '../../../../Skeleton'
 
 export function SearchBar({ sx }: { sx: CSSProperties }) {

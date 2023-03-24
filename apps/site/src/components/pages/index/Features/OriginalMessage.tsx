@@ -1,4 +1,4 @@
-import { CSSProperties } from '@mui/styled-engine'
+import type { CSSProperties } from '@mui/styled-engine'
 import Tooltip from '@mui/material/Tooltip'
 
 import { FeatureScreenZoom, ChatMention, Reaction } from './FeatureScreen'

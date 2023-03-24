@@ -42,7 +42,7 @@ describe('handleHomeOpened', () => {
         body: { team_id: teamId },
       })
       const request = await pendingRequest
-      const params = new URLSearchParams(request.body as string) as any
+      const params = new URLSearchParams(request.body as string)
       expect(params.get('channel')).toBe(channelId)
       expect(params.get('text')).toMatch(/^Welcome to Hear Ye!/)
       expect(await OnboardingMessage.query().resultSize()).toBe(1)

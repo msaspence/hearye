@@ -23,13 +23,14 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: 'module',
-    project: './tsconfig.json',
   },
-  plugins: ['@typescript-eslint', 'lodash', 'vitest', 'import'],
+  plugins: [
+    '@typescript-eslint', 'lodash', 'vitest', 'import'
+  ],
   rules: {
     'no-console': ERROR,
+    'import/extensions': OFF,
     curly: [ERROR, 'multi-line'],
-
     '@typescript-eslint/no-unused-vars': [
       ERROR,
       {
@@ -43,7 +44,6 @@ module.exports = {
     ],
     '@typescript-eslint/explicit-module-boundary-types': OFF,
     '@typescript-eslint/no-explicit-any': ERROR,
-
     'lodash/prefer-lodash-method': OFF,
     'lodash/prefer-lodash-typecheck': OFF,
     'lodash/prefer-is-nil': OFF,
@@ -51,8 +51,17 @@ module.exports = {
     'lodash/prefer-noop': OFF,
     'lodash/prefer-includes': OFF,
     'lodash/prefer-matches': OFF,
-
-    'import/no-unused-modules': [ERROR, { unusedExports: true }],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
+        project: ['tsconfig.json'],
+      },
+      typescript: {
+        project: ['tsconfig.json'],
+      },
+    },
   },
   ignorePatterns: ['dist'],
 }

@@ -1,4 +1,4 @@
-import { CSSProperties } from '@mui/styled-engine'
+import type { CSSProperties } from '@mui/styled-engine'
 
 import { useSkeletonWidth } from '../../contexts/SkeletonWidth'
 import { SkeletonBox } from './SkeletonBox'

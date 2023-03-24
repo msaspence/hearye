@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { CSSProperties } from '@mui/styled-engine'
+import type { CSSProperties } from '@mui/styled-engine'
 import Box from '@mui/material/Box'
 
 type On = 'light' | 'dark'

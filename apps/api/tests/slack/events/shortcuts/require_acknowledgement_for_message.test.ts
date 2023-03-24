@@ -8,6 +8,7 @@ import { postSlackRequest } from '../../helpers/postSlackRequest'
 import { createMockServer } from '../../../helpers/mock-server'
 
 let account: Account
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let installation: Record<string, any>
 let noChannelOrGroupScope: boolean
 const channelId = 'C03SD7H923F'

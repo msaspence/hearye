@@ -28,7 +28,6 @@ export const logging = plugin(
     >
   ) => {
     fastify.addHook('onRequest', async (request: FastifyRequest, response) => {
-      const requestMeta = requestLogData(request)
       response.startTime = Date.now()
     })
 

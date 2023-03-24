@@ -1,5 +1,5 @@
 import { matchRequestUrl, MockedRequest } from 'msw'
-import { setupServer, SetupServer } from 'msw/node'
+import { SetupServer } from 'msw/node'
 
 export function createWaitForRequest(server: SetupServer) {
   return function waitForRequest(method: string, url: string) {

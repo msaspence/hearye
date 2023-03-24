@@ -1,6 +1,5 @@
 {
   "vitest.commandLine": "",
-  "testing.automaticallyOpenPeekView": "never",
   "vitest.nodeEnv": {
     "VSCODE_TESTING": "true"
   }
