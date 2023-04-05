@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "experimentalDecorators": true,
     "jsx": "react-jsx",
     "module": "NodeNext",

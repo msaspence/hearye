@@ -14,7 +14,8 @@ import { handleReaction } from './event-handlers/handleReaction'
 import { handleUserChange } from './event-handlers/handleUserChange'
 import { installationStore } from './installationManagement'
 import { handleAppMention } from './event-handlers/handleAppMention'
-import { withHandlerResolutionForTests } from '../../../tests/slack/helpers/postSlackEvent'
+
+
 
 const logger = createLogger('hearye:api:bolt')
 
@@ -90,6 +91,10 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const app = new App<StringIndexed>({
     receiver,
   })
+  
+  const { withHandlerResolutionForTests } = NODE_ENV === 'test'
+    ? await import('../../../tests/slack/helpers/postSlackEvent.ts')
+    : { withHandlerResolutionForTests:(handler: unknown) => handler as (...args: unknown[]) => Promise<unknown> }
 
   app.event('app_home_opened', withHandlerResolutionForTests(handleHomeOpened))
   app.event('app_mention', withHandlerResolutionForTests(handleAppMention))
