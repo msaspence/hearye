@@ -25,7 +25,7 @@ export async function handleRequestAcknowledgementForMessage(event: {
       },
       submit: {
         type: 'plain_text',
-        text: 'Hear Ye!',
+        text: 'Require Acknowledgements',
         emoji: true,
       },
       close: {
