@@ -13,6 +13,7 @@ export async function getAllChannelMemberIds(
     })
     return result.members
   } catch (error) {
+    console.log("ERROR", error)
     if (isSlackError(error) && error.data.error === 'missing_scope') {
       return []
     }
