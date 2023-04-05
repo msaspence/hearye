@@ -10,7 +10,6 @@ export async function getAllGroupUserIds(client: WebClient, usergroup: string) {
     })
     return result.users
   } catch (error) {
-    console.log("ERROR", error)
     if (isSlackError(error) && error.data.error === 'missing_scope') {
       return []
     }
