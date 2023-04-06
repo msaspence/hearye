@@ -19,7 +19,7 @@ export function BannerHeader() {
         <Link
           href="/"
           sx={{
-            position: 'absolute',
+            position: 'relative',
           }}
         >
           <Typography sx={{ display: 'none' }} variant="h1">
@@ -40,9 +40,10 @@ export function BannerHeader() {
               color: '#777',
               fontFamily: 'Just Another Hand',
               position: 'absolute',
-              bottom: '-35px',
-              right: '55px',
+              bottom: { md: '-35px', xs: '-20px' },
+              right: { md: '55px', xs: '-15px' },
               transform: 'rotate(-10deg)',
+              fontSize: { md: '50px', xs: '40px' },
             }}
             variant="h3"
           >
@@ -51,7 +52,7 @@ export function BannerHeader() {
         </Link>
         <Box sx={{ display: { xs: 'block', md: 'none' }, flexGrow: 1 }} />
         <AddToSlackButton
-          sx={{ display: { xs: 'inline-flex', md: 'none' }, marginTop: '8px' }}
+          sx={{ display: { xs: 'inline-flex', md: 'none' }, marginTop: '28px' }}
         />
       </Box>
       <Box
@@ -80,30 +81,32 @@ export function BannerHeader() {
             justifyContent: 'flex-end',
           }}
         >
-          <Typography
-            component="span"
-            sx={{
-              color: '#777',
-              marginRight: '12px',
-              fontFamily: 'Just Another Hand',
-              fontSize: '2em',
-            }}
-            variant="h4"
-          >
-            Free for the Beta
-          </Typography>
-          <Typography
-            component="span"
-            sx={{
-              color: '#777',
-              fontFamily: 'Archivo Narrow',
-              marginRight: '12px',
-              fontSize: '1.5em',
-              lineHeight: '1em',
-            }}
-          >
-            →
-          </Typography>
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Typography
+              component="span"
+              sx={{
+                color: '#777',
+                marginRight: '12px',
+                fontFamily: 'Just Another Hand',
+                fontSize: '2em',
+              }}
+              variant="h4"
+            >
+              Free for the Beta
+            </Typography>
+            <Typography
+              component="span"
+              sx={{
+                color: '#777',
+                fontFamily: 'Archivo Narrow',
+                marginRight: '12px',
+                fontSize: '1.5em',
+                lineHeight: '1em',
+              }}
+            >
+              →
+            </Typography>
+          </Box>
           <AddToSlackButton
             sx={{ display: { xs: 'none', md: 'inline-flex' } }}
           />
