@@ -3,7 +3,7 @@ import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import { Dayjs } from '@hearye/dayjs'
+import type { Dayjs } from '@hearye/dayjs'
 
 import { PublishedAt } from './PublishedAt'
 

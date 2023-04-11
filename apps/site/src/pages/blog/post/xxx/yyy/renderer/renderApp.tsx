@@ -1,6 +1,6 @@
 import type { PageContextBuiltIn } from 'vite-plugin-ssr'
 import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client'
-import { Dayjs } from '@hearye/dayjs'
+import type { Dayjs } from '@hearye/dayjs'
 
 import { BlogLayout } from '../../../../../../components/Layout/BlogLayout'
 import { App } from '../../../../../../App'

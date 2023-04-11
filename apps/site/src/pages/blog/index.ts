@@ -1,5 +1,5 @@
 import { VoidFunctionComponent } from 'react'
-import { Dayjs } from '@hearye/dayjs'
+import type { Dayjs } from '@hearye/dayjs'
 
 const postsForPaths = import.meta.glob<{
   description: string
