@@ -1,73 +1,24 @@
 import Box from '@mui/material/Box'
 // import Link from '@mui/material/Link'
 
+import { MainFunctionality } from './MainFunctionality'
+
 // import shortcutUrl from '../../../../../images/shortcut.png'
 
-import {
-  Feature,
-  FeatureBody,
-  // FeatureNote,
-  FeatureText,
-  FeatureTitle,
-  // SubFeatureBody,
-  // SubFeatureTitle,
-} from './Feature'
-import {
-  ChatMention,
-  FeatureScreen,
-  SkeletonHearYeMessage,
-} from './FeatureScreen'
-import { OriginalMessage } from './OriginalMessage'
-import { ReminderMessage } from './ReminderMessage'
+// import {
+// Feature,
+// FeatureBody,
+// FeatureNote,
+// FeatureText,
+// FeatureTitle,
+// SubFeatureBody,
+// SubFeatureTitle,
+// } from './Feature'
 
 export function Features() {
   return (
     <Box id="features" sx={{ paddingTop: { xs: '0px', md: '50px' } }}>
-      <Feature>
-        <FeatureText>
-          <FeatureTitle>1. Mark Critical Messages</FeatureTitle>
-          <FeatureBody>
-            To indicate a message is critical and requires acknowledgement that
-            it has been read, simply mention <ChatMention>@Hear Ye</ChatMention>{' '}
-            in the message body.
-          </FeatureBody>
-        </FeatureText>
-        <FeatureScreen messageCount={7} user="Pam">
-          <OriginalMessage />
-        </FeatureScreen>
-      </Feature>
-
-      <Feature swap>
-        <FeatureText>
-          <FeatureTitle>2. Receive Reminders</FeatureTitle>
-          <FeatureBody>
-            Hear Ye! will remind anyone mentioned once a day sometime between
-            10am and 11am until the message is acknowledged.
-          </FeatureBody>
-        </FeatureText>
-        <FeatureScreen
-          hearYeSelected
-          messageCount={0}
-          side="left"
-          user="Michael"
-        >
-          <SkeletonHearYeMessage />
-          <ReminderMessage />
-        </FeatureScreen>
-      </Feature>
-
-      <Feature>
-        <FeatureText>
-          <FeatureTitle>3. React to Acknowledge</FeatureTitle>
-          <FeatureBody>
-            Messages can be acknowledged by reacting with a 👍. Once
-            acknowledged no further reminders will be sent.
-          </FeatureBody>
-        </FeatureText>
-        <FeatureScreen messageCount={7} user="Michael">
-          <OriginalMessage acknowledged sx={{ top: '80px' }} />
-        </FeatureScreen>
-      </Feature>
+      <MainFunctionality />
       {/*
       <FeatureTitle>Advanced Features</FeatureTitle>
 

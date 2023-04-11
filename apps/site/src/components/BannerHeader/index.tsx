@@ -6,7 +6,7 @@ import { AddToSlackButton } from '../AddToSlackButton'
 import logoUrl from '../../../images/logo.png'
 import { TagLineTicker } from './TagLineTicker'
 
-export function BannerHeader() {
+export function BannerHeader({ variant }: { variant?: 'home' | 'blog' }) {
   return (
     <Box sx={{ display: { xs: 'block', md: 'flex' } }}>
       <Box
@@ -50,10 +50,16 @@ export function BannerHeader() {
             Beta
           </Typography>
         </Link>
-        <Box sx={{ display: { xs: 'block', md: 'none' }, flexGrow: 1 }} />
-        <AddToSlackButton
-          sx={{ display: { xs: 'inline-flex', md: 'none' }, marginTop: '28px' }}
-        />
+
+        <>
+          <Box sx={{ display: { xs: 'block', md: 'none' }, flexGrow: 1 }} />
+          <AddToSlackButton
+            sx={{
+              display: { xs: 'inline-flex', md: 'none' },
+              marginTop: '28px',
+            }}
+          />
+        </>
       </Box>
       <Box
         sx={{
@@ -61,19 +67,26 @@ export function BannerHeader() {
           marginTop: { xs: '30px', md: '15px' },
         }}
       >
-        <Typography variant="h2">Don't Miss Another</Typography>
-        <Box
-          sx={{
-            display: { xs: 'block', md: 'flex' },
-            justifyContent: { xs: 'left', md: 'right' },
-            marginBottom: '20px',
-          }}
-        >
-          <TagLineTicker />{' '}
-          <Typography variant="h2" sx={{ marginLeft: { xs: '0', md: '8px' } }}>
-            Again
-          </Typography>
-        </Box>
+        {variant === 'home' && (
+          <>
+            <Typography variant="h2">Never Miss Another</Typography>
+            <Box
+              sx={{
+                display: { xs: 'block', md: 'flex' },
+                justifyContent: { xs: 'left', md: 'right' },
+                marginBottom: '20px',
+              }}
+            >
+              <TagLineTicker />{' '}
+              <Typography
+                variant="h2"
+                sx={{ marginLeft: { xs: '0', md: '8px' } }}
+              >
+                Again
+              </Typography>
+            </Box>
+          </>
+        )}
         <Box
           sx={{
             display: 'flex',
@@ -111,6 +124,13 @@ export function BannerHeader() {
             sx={{ display: { xs: 'none', md: 'inline-flex' } }}
           />
         </Box>
+        {variant === 'blog' && (
+          <Link href="/blog" sx={{ color: 'black' }}>
+            <Typography variant="h2" sx={{ fontSize: '100px', marginTop: 4 }}>
+              Our Blog
+            </Typography>
+          </Link>
+        )}
       </Box>
     </Box>
   )

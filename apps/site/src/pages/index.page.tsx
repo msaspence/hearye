@@ -1,5 +1,5 @@
 import { BannerHeader } from '../components/BannerHeader'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/Layout/Layout'
 import { Features } from '../components/pages/index/Features'
 import { Pricing } from '../components/pages/index/Pricing'
 import { Try } from '../components/pages/index/Try'
@@ -7,7 +7,7 @@ import { Try } from '../components/pages/index/Try'
 export function Page() {
   return (
     <Layout>
-      <BannerHeader />
+      <BannerHeader variant="home" />
       <Features />
       <Pricing />
       <Try />

@@ -2,5 +2,8 @@
   "vitest.commandLine": "",
   "vitest.nodeEnv": {
     "VSCODE_TESTING": "true"
-  }
+  },
+  "cSpell.words": [
+    "prando"
+  ]
 }

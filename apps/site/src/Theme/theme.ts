@@ -25,6 +25,19 @@ export const theme = createTheme({
       },
     },
 
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          color: '#666',
+          border: '1px solid #ccc',
+          fontSize: '24px',
+          '&:hover': {
+            background: 'rgb(211, 112, 13)',
+          }
+        }
+      }
+    },
+
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
@@ -39,6 +52,7 @@ export const theme = createTheme({
         },
       },
     },
+
     MuiTypography: {
       styleOverrides: {
         root: {

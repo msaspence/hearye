@@ -20,7 +20,7 @@ export function OriginalMessage({
           {
             <Tooltip
               arrow
-              placement="top"
+              placement="left"
               title="Hear Ye! will confirm it has registered a message requires acknowledgement by reacting with a 🔔"
             >
               <Reaction>🔔</Reaction>
@@ -29,7 +29,7 @@ export function OriginalMessage({
           {acknowledged && (
             <Tooltip
               arrow
-              placement="top"
+              placement="right"
               title="To acknowledge a message, and dismiss future reminders just react with a 👍"
             >
               <Reaction self>👍</Reaction>
@@ -49,7 +49,7 @@ export function OriginalMessage({
       the last pick up for overnight delivery.{' '}
       <Tooltip
         arrow
-        placement="top"
+        placement="left"
         title="To indicate a message requires acknowledgement, just mention @Hear Ye"
       >
         <ChatMention>@Hear Ye</ChatMention>

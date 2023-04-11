@@ -4,11 +4,10 @@
     "isolatedModules": true,
     "moduleResolution": "Node",
     "baseUrl": "../../",
-    "types": ["vite/client"],
+    "types": ["vite/client", "./src/posts.d.ts"],
     "jsx": "react-jsxdev",
-    "module": "commonjs",
-
-    "target": "es2015"
+    "module": "es2020",
+    "target": "es2015",
   },
   "ts-node": {
     "swc": true

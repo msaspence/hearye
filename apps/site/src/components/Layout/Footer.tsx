@@ -16,11 +16,15 @@ export function Footer() {
       </Typography>
       <Box sx={{ flexGrow: 1 }} />
       <Box>
-        <Link href="#features" variant="subtitle1">
+        <Link href="/#features" variant="subtitle1">
           Features
         </Link>
-        <Link href="#pricing" variant="subtitle1">
+        <Link href="/#pricing" variant="subtitle1">
           Pricing
+        </Link>
+
+        <Link href="/blog" variant="subtitle1">
+          Blog
         </Link>
         <Link href="/privacy.html" variant="subtitle1">
           Privacy Policy

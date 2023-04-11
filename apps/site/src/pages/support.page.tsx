@@ -2,12 +2,12 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 
 import { BannerHeader } from '../components/BannerHeader'
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/Layout/Layout'
 
 export function Page() {
   return (
     <Layout>
-      <BannerHeader />
+      <BannerHeader variant="home" />
       <Box sx={{ marginTop: '50px' }}>
         <Box
           sx={{ display: 'flex', justifyContent: 'center', marginY: '50px' }}
