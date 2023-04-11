@@ -6,7 +6,7 @@
     "baseUrl": "../../",
     "types": ["vite/client", "./src/posts.d.ts"],
     "jsx": "react-jsxdev",
-    "module": "es2020",
+    "module": "commonjs",
     "target": "es2015",
   },
   "ts-node": {
