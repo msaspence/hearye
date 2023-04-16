@@ -1,7 +1,7 @@
 import { OnboardingMessage } from '../../models/OnboardingMessage'
 import { UniqueViolationError } from 'objection'
 
-export async function shouldSendOnboardinMessage(
+export async function shouldSendOnboardingMessage(
   accountId: string,
   userId: string,
   messageKey: string

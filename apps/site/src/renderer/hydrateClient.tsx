@@ -1,18 +1,19 @@
-import type { PageContextBuiltInClient } from 'vite-plugin-ssr/client'
-import { getTitle } from './getTitle'
-
 import ReactDOM from 'react-dom/client'
+
+import { getTitle } from './getTitle'
+import { mixpanel } from '../contexts/MixPanel'
+import { ClientContext } from './types'
 
 let root: ReactDOM.Root
 
 export function hydrateClient(
-  renderApp: (
-    pageContext: PageContextBuiltInClient & {
-      pageProps: Record<string, unknown>
-    }
-  ) => JSX.Element,
-  pageContext: PageContextBuiltInClient & { pageProps: Record<string, unknown> }
+  renderApp: (pageContext: ClientContext) => JSX.Element,
+  pageContext: ClientContext
 ) {
+  mixpanel.track('Page View', {
+    title: document.title,
+    path: pageContext.urlOriginal,
+  })
   const page = renderApp(pageContext)
   const container = document.getElementById('page-root')
   document.title = getTitle(pageContext)

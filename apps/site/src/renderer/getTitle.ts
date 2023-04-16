@@ -1,10 +1,7 @@
-import type { PageContextBuiltIn } from 'vite-plugin-ssr'
+import type { ClientContext } from './types'
 
 export function getTitle(
-  pageContext: PageContextBuiltIn & {
-    pageProps: Record<string, unknown>
-    exports: Record<string, unknown>
-  }
+  pageContext: ClientContext
 ) {
   switch (typeof pageContext.exports.title) {
     case 'string':

@@ -20,6 +20,7 @@
     "start:reminder-runner": "npm run start --workspace @hearye/reminder-runner",
     "start:site": "npm run start --workspace @hearye/site",
     "tunnel": "./loophole http 8080 --hostname hearye",
+    "tunnel:site": "./loophole http 4000 --hostname hearyesite",
     "test": "vitest",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
   },
@@ -34,7 +35,9 @@
     "@swc/jest": "^0.2.24",
     "@tsconfig/recommended": "^1.0.1",
     "@types/debug": "^4.1.7",
+    "@types/mixpanel-browser": "^2.38.1",
     "@types/pg": "^8.6.6",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "@vitest/coverage-c8": "^0.29.7",
@@ -77,9 +80,14 @@
     "@logtail/winston": "^0.1.13",
     "@sentry/node": "^7.16.0",
     "@sentry/tracing": "^7.16.0",
+    "cookie": "^0.5.0",
     "dotenv": "^16.0.2",
     "fastify-plugin": "^4.3.0",
+    "mixpanel": "^0.17.0",
+    "mixpanel-browser": "^2.46.0",
     "pg": "^8.10.0",
+    "react-use-cookie": "^1.4.0",
+    "uuid": "^9.0.0",
     "winston": "^3.8.2"
   }
 }

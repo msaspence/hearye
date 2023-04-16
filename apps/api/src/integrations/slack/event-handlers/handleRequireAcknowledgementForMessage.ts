@@ -1,28 +1,33 @@
 import { WebClient } from '@slack/web-api'
 import some from 'lodash/some'
 
+import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEventFromSlackEvent'
+
 import {
   requireAcknowledgementsForMessage,
   Message,
 } from '../requireAcknowledgementsForMessage'
 
-export async function handleRequireAcknowledgementForMessage({
-  ack,
-  client,
-  payload,
-}: {
+export async function handleRequireAcknowledgementForMessage(event: {
   ack: () => Promise<void>
   client: WebClient
+  body: { team_id: string }
   payload: {
     team_id: string
     private_metadata: string
     state: PayloadState
     trigger_id: string
+    user: string
   }
 }) {
+  const {
+    ack,
+    client,
+    payload,
+  } = event
   const options = getOptionsFromPayload(payload)
+  trackAnalyticsEventFromSlackEvent('Require Acknowledgement', event, { from_shortcut: true, include_mentioned: options.includeMentioned, other_users: options.otherUsers.length > 0 })
   const message = await getOriginalMessage(client, payload)
-
   await requireAcknowledgementsForMessage(client, message, options)
   await ack()
 }

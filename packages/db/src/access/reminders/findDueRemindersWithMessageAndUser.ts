@@ -1,5 +1,6 @@
 import { dayjs } from '@hearye/dayjs'
 import { createLogger } from '@hearye/logger'
+import { env } from '@hearye/env'
 
 import { Reminder } from '../../models/Reminder'
 
@@ -10,8 +11,11 @@ export async function findDueRemindersWithMessageAndUser() {
     await Reminder.query()
       .patch({ lockedUntil: dayjs().add(1, 'minute').toDate() })
       .whereIn('reminders.id', function () {
-        return this.select('reminders.id')
-          .where('remindAt', '<', new Date())
+        (
+          env.NODE_ENV === 'development'
+            ? this.select('reminders.id')
+            : this.select('reminders.id').where('remindAt', '<', new Date())
+        )
           .whereNull('remindedAt')
           .whereNull('acknowledgedAt')
           .where(function () {
@@ -27,7 +31,7 @@ export async function findDueRemindersWithMessageAndUser() {
   logger.info(`Locked ${lockedIds.length} reminders for processing`)
   const reminders = await Reminder.query()
     .whereIn('reminders.id', lockedIds)
-    .withGraphJoined('[user, message]')
+    .withGraphJoined('[user, message, account]')
 
   return reminders
 }

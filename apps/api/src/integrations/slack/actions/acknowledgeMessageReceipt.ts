@@ -2,7 +2,7 @@ import { WebClient } from '@slack/web-api'
 
 import { isSlackError } from '../type-guards/isSlackError'
 
-export async function acknowledgeMessageReciept(
+export async function acknowledgeMessageReceipt(
   client: WebClient,
   channel: string,
   ts: string

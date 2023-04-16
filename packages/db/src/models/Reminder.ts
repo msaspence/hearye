@@ -1,6 +1,7 @@
 import { User } from './User'
 import { BaseModel } from './BaseModel'
 import '../init'
+import { Account } from './Account'
 import { Message } from './Message'
 
 export class Reminder extends BaseModel {
@@ -17,6 +18,7 @@ export class Reminder extends BaseModel {
 
   user!: User
   message!: Message
+  account!: Account
 
   static relationMappings = {
     message: {
@@ -35,6 +37,14 @@ export class Reminder extends BaseModel {
         to: 'users.id',
       },
     },
+    account: {
+      relation: BaseModel.BelongsToOneRelation,
+      modelClass: Account,
+      join: {
+        from: 'reminders.accountId',
+        to: 'accounts.id',
+      },
+    }
   }
 
   static get tableName() {

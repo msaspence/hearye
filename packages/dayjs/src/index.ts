@@ -5,9 +5,8 @@ import timezone from 'dayjs/plugin/timezone'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import type { Dayjs } from 'dayjs'
 export type { Dayjs }
-import Typography from '@mui/material/Typography'
 
-original.extend(dayjsBusinessDays.default || dayjsBusinessDays)
+original.extend(dayjsBusinessDays)
 original.extend(timezone)
 original.extend(advancedFormat)
 original.extend(utc)

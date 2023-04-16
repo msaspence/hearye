@@ -1,12 +1,15 @@
 import { WebClient } from '@slack/web-api'
 
 import { Message } from '../requireAcknowledgementsForMessage'
+import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEventFromSlackEvent'
 
 export async function handleRequestAcknowledgementForMessage(event: {
   ack: () => Promise<void>
   client: WebClient
-  payload: { channel: { id: string }; message: Message; trigger_id: string }
+  body: { team_id: string },
+  payload: { channel: { id: string }; message: Message; trigger_id: string, user: string }
 }) {
+  trackAnalyticsEventFromSlackEvent('Request Acknowledgement', event)
   await event.client.views.open({
     trigger_id: event.payload.trigger_id,
     view: {

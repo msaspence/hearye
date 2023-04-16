@@ -1,11 +1,14 @@
+import { IncomingMessage } from 'http'
 import { FastifyPluginCallback } from 'fastify'
 import { App } from '@slack/bolt'
-import { FileStateStore } from '@slack/oauth'
+import { FileStateStore, defaultCallbackSuccess } from '@slack/oauth'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 
 import { env } from '@hearye/env'
 import { createLogger } from '@hearye/logger'
 
+import { getUserId } from '../../getUserId'
+import { mixpanel } from '../../mixpanel'
 import { StringIndexed } from './events'
 import { handleRequestAcknowledgementForMessage } from './event-handlers/handleRequestAcknowledgementForMessage'
 import { handleRequireAcknowledgementForMessage } from './event-handlers/handleRequireAcknowledgementForMessage'
@@ -73,20 +76,49 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       'reactions:read',
       'reactions:write',
       'users:read',
+      'channels:history',
+      'groups:history',
+      'mpim:history',
+      'im:history',
     ],
     stateSecret: SLACK_STATE_SECRET,
     installationStore,
     path: '/events',
     installerOptions: {
+      callbackOptions: {
+        success: (installation, options, req, res) => {
+          const userId = getUserId(req, res)
+          mixpanel.alias(userId, installation.user.id)
+          mixpanel.people.set(installation.user.id, { 
+            team_id: installation.team?.id || installation.enterprise?.id, 
+            team_name: installation.team?.name || installation.enterprise?.name
+          })
+          mixpanel.track('Installed', { 
+            distinct_id: installation.user.id, 
+            source: 'slack',
+            team_id: installation.team?.id || installation.enterprise?.id, 
+            team_name: installation.team?.name || installation.enterprise?.name, 
+            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+          })
+          return defaultCallbackSuccess(installation, options, req, res)
+        }
+      },
       clientOptions: {
         retryConfig: {
           retries: NODE_ENV === 'test' ? 0 : undefined,
         },
       },
       directInstall: true,
-      stateStore: new FileStateStore({}),
       installPath: '/install',
+      installPathOptions: {
+        beforeRedirection: async (req: IncomingMessage, res) => {
+          const userId = getUserId(req, res)
+          mixpanel.track('Add to Slack', { distinct_id: userId, source: 'slack' })
+          return true
+        },
+      },
       redirectUriPath: '/oauth_redirect',
+      stateStore: new FileStateStore({}),
     },
     fastify: fastify as never,
   })

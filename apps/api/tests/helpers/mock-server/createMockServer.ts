@@ -1,5 +1,5 @@
 import { setupServer, SetupServer } from 'msw/node'
-import { MockedRequest } from 'msw'
+import { rest, MockedRequest } from 'msw'
 import { createWaitForRequest } from './createWaitForRequest'
 
 export function createMockServer(...args: Parameters<typeof setupServer>) {
@@ -12,7 +12,15 @@ export function createMockServer(...args: Parameters<typeof setupServer>) {
     requests: [],
   }
   beforeAll(() => {
-    const server = setupServer(...args)
+    const server = setupServer(...[
+      rest.get(
+        'https://api.mixpanel.com/track',
+        (req, res, ctx) => {
+          return res(ctx.json({}))
+        }
+      ),
+      ...args
+    ])
     result.server = server
     result.waitForRequest = createWaitForRequest(server)
     server.events.on('request:start', (req) => {

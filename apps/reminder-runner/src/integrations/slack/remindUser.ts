@@ -1,6 +1,8 @@
 import { findUserWithDetailsById, Reminder, markReminderSent } from '@hearye/db'
 import { WebClient } from '@slack/web-api'
 
+import { mixpanel } from '@hearye/api/mixpanel'
+
 import { loadSlackUserDetails } from './loadSlackUserDetails'
 import { clientForAccountId } from './clientForAccount'
 
@@ -16,6 +18,14 @@ export async function remindUser(reminder: Reminder) {
   await markReminderSent(reminder, user.timezone || 'UTC', async () => {
     const messagePermalink = await generateMessagePermalink(client, reminder)
     if (!messagePermalink) throw new Error("Couldn't generate permalink")
+    if (reminder.account.installation) {
+      const installation = JSON.parse(reminder.account.installation)
+      mixpanel.track('Reminder Sent', {
+        distinct_id: reminder.user.externalId,
+        team_id: installation?.team?.id || installation?.enterprise?.id,
+        team_name: installation?.team?.name || installation?.enterprise?.name,
+      })
+    }
     await client.chat.postMessage({
       channel: reminder.user.externalId,
       blocks: await generateBlocksForReminder(

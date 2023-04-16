@@ -1,5 +1,6 @@
 import { WebClient } from '@slack/web-api'
-import { acknowledgeMessageReciept } from './actions/acknowledgeMessageReciept'
+
+import { acknowledgeMessageReceipt } from './actions/acknowledgeMessageReceipt'
 import { getAccountFromSlackMessage } from './to-local/getAccountFromSlackMessage'
 import { getAudienceUsersFromSlackMessage } from './to-local/getAudienceUsersFromSlackMessage'
 import { getMessageFromSlackMessage } from './to-local/getMessageDetailsFromSlackMessage'
@@ -82,6 +83,6 @@ export async function requireAcknowledgementsForMessage(
 
   logger.debug('Scheduling reminder for slack event', logPayload)
   await scheduleReminder(account.id, localMessage.id, userIds)
-  logger.debug('Acknowledging reciept of slack event', logPayload)
-  await acknowledgeMessageReciept(client, slackMessage.channel, slackMessage.ts)
+  logger.debug('Acknowledging Receipt of slack event', logPayload)
+  await acknowledgeMessageReceipt(client, slackMessage.channel, slackMessage.ts)
 }

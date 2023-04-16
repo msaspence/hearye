@@ -59,7 +59,7 @@ describe('request to GET /slack/events', () => {
           messageKey: 'welcome',
         })
         await postAppHomeEvent(account)
-        expect(server.requests.length).toBe(0)
+        expect(server.requests.length).toBe(1)
       })
     })
   })

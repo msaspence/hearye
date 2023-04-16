@@ -1,11 +1,11 @@
 import { WebClient } from '@slack/web-api'
-import { acknowledgeMessageReciept } from './acknowledgeMessageReciept'
+import { acknowledgeMessageReceipt } from './acknowledgeMessageReceipt'
 import { mock } from 'vitest-mock-extended'
 
 const channelId = 'C1234567890'
 const timestamp = '1234567890.123456'
 
-describe('acknowledgeMessageReciept', () => {
+describe('acknowledgeMessageReceipt', () => {
   const reactions = mock<WebClient['reactions']>()
   const client = {
     reactions,
@@ -13,12 +13,12 @@ describe('acknowledgeMessageReciept', () => {
 
   it('returns true', async () => {
     expect(
-      await acknowledgeMessageReciept(client, channelId, timestamp)
+      await acknowledgeMessageReceipt(client, channelId, timestamp)
     ).toBeTrue()
   })
 
   it('reacts to the message with a mega emoji', async () => {
-    await acknowledgeMessageReciept(client, channelId, timestamp)
+    await acknowledgeMessageReceipt(client, channelId, timestamp)
     expect(client.reactions.add).toHaveBeenCalledWith({
       channel: channelId,
       name: 'mega',
@@ -33,7 +33,7 @@ describe('acknowledgeMessageReciept', () => {
         data: { error: 'already_reacted' },
       })
       expect(
-        await acknowledgeMessageReciept(client, channelId, timestamp)
+        await acknowledgeMessageReceipt(client, channelId, timestamp)
       ).toBeTrue()
     })
   })
@@ -45,7 +45,7 @@ describe('acknowledgeMessageReciept', () => {
         throw error
       })
       await expect(
-        acknowledgeMessageReciept(client, channelId, timestamp)
+        acknowledgeMessageReceipt(client, channelId, timestamp)
       ).rejects.toThrow(error)
     })
   })

@@ -9,13 +9,16 @@ import { cjsInterop } from 'vite-plugin-cjs-interop'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+  },
   plugins: [
     md({ mode: [Mode.REACT] }),
     tsconfigPaths(),
     react(),
     ssr({ prerender: true }),
     cjsInterop({
-      dependencies: ['@mui/material/*'],
+      dependencies: ['@mui/material/*', 'react-use-cookie'],
     }),
   ],
   build: {

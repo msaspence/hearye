@@ -14,13 +14,15 @@ export function AddToSlackButton({
   const [apiHost, setApiHost] = useState('api.hearyebot.com')
   useEffect(() => {
     setApiHost(
-      typeof window !== 'undefined' && window.location.host.match(/^localhost/)
+      typeof window !== 'undefined' &&
+        window.location.host.match(/(^localhost)|(loophole.site$)/)
         ? 'hearye.loophole.site'
         : 'api.hearyebot.com'
     )
   }, [])
   return (
     <Button
+      suppressHydrationWarning
       href={`https://${apiHost}/slack/install`}
       sx={{
         alignItems: 'center',

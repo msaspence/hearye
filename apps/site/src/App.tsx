@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { SkeletonWidthProvider } from './contexts/SkeletonWidth'
-
+import { MixPanelProvider } from './contexts/MixPanel'
 import { ThemeProvider } from './Theme'
 
 type AppProps = {
@@ -9,7 +9,9 @@ type AppProps = {
 export function App({ children }: AppProps) {
   return (
     <ThemeProvider>
-      <SkeletonWidthProvider>{children}</SkeletonWidthProvider>
+      <MixPanelProvider>
+        <SkeletonWidthProvider>{children}</SkeletonWidthProvider>
+      </MixPanelProvider>
     </ThemeProvider>
   )
 }

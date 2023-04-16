@@ -2,8 +2,8 @@ import { SlackEvent } from '../events'
 import { getAccountFromSlackEvent } from '../to-local/getAccountFromSlackEvent'
 import { getUserFromSlackEvent } from '../to-local/getUserFromSlackEvent'
 import { createLogger } from '@hearye/logger'
-import { shouldSendOnboardinMessage, onboardingMessageFailed } from '@hearye/db'
-
+import { shouldSendOnboardingMessage, onboardingMessageFailed } from '@hearye/db'
+import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEventFromSlackEvent'
 const logger = createLogger('hearye:api:slack:handleHomeOpened')
 
 type AppHomeOpenedEvent = SlackEvent<'app_home_opened'>
@@ -18,9 +18,10 @@ export async function handleHomeOpened(event: Event) {
   if (event.payload.type === 'app_home_opened') {
     const account = await getAccountFromSlackEvent(event)
     if (!account.id) throw new Error('Account with id required')
+    trackAnalyticsEventFromSlackEvent('Opened Home', event)
     const user = await getUserFromSlackEvent(account.id, event)
     if (!user.id) throw new Error('User with id required')
-    if (!(await shouldSendOnboardinMessage(account.id, user.id, 'welcome'))) {
+    if (!(await shouldSendOnboardingMessage(account.id, user.id, 'welcome'))) {
       return
     }
     try {
