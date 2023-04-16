@@ -44,7 +44,7 @@ export class Reminder extends BaseModel {
         from: 'reminders.accountId',
         to: 'accounts.id',
       },
-    }
+    },
   }
 
   static get tableName() {

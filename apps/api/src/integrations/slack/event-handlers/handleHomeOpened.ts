@@ -2,7 +2,10 @@ import { SlackEvent } from '../events'
 import { getAccountFromSlackEvent } from '../to-local/getAccountFromSlackEvent'
 import { getUserFromSlackEvent } from '../to-local/getUserFromSlackEvent'
 import { createLogger } from '@hearye/logger'
-import { shouldSendOnboardingMessage, onboardingMessageFailed } from '@hearye/db'
+import {
+  shouldSendOnboardingMessage,
+  onboardingMessageFailed,
+} from '@hearye/db'
 import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEventFromSlackEvent'
 const logger = createLogger('hearye:api:slack:handleHomeOpened')
 

@@ -1,8 +1,8 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { 
+  "compilerOptions": {
     "isolatedModules": true,
-    "baseUrl": "../../",
+    "baseUrl": "../../"
   },
   "ts-node": {
     "swc": true

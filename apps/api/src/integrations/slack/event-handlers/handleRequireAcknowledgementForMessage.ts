@@ -20,13 +20,13 @@ export async function handleRequireAcknowledgementForMessage(event: {
     user: string
   }
 }) {
-  const {
-    ack,
-    client,
-    payload,
-  } = event
+  const { ack, client, payload } = event
   const options = getOptionsFromPayload(payload)
-  trackAnalyticsEventFromSlackEvent('Require Acknowledgement', event, { from_shortcut: true, include_mentioned: options.includeMentioned, other_users: options.otherUsers.length > 0 })
+  trackAnalyticsEventFromSlackEvent('Require Acknowledgement', event, {
+    from_shortcut: true,
+    include_mentioned: options.includeMentioned,
+    other_users: options.otherUsers.length > 0,
+  })
   const message = await getOriginalMessage(client, payload)
   await requireAcknowledgementsForMessage(client, message, options)
   await ack()

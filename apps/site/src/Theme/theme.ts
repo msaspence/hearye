@@ -33,9 +33,9 @@ export const theme = createTheme({
           fontSize: '24px',
           '&:hover': {
             background: 'rgb(211, 112, 13)',
-          }
-        }
-      }
+          },
+        },
+      },
     },
 
     MuiTooltip: {

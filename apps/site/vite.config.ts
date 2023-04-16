@@ -18,7 +18,11 @@ export default defineConfig({
     react(),
     ssr({ prerender: true }),
     cjsInterop({
-      dependencies: ['@mui/material/*', 'react-use-cookie', 'dayjs-business-days2'],
+      dependencies: [
+        '@mui/material/*',
+        'react-use-cookie',
+        'dayjs-business-days2',
+      ],
     }),
   ],
   build: {

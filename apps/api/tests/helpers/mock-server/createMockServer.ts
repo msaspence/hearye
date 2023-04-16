@@ -12,15 +12,14 @@ export function createMockServer(...args: Parameters<typeof setupServer>) {
     requests: [],
   }
   beforeAll(() => {
-    const server = setupServer(...[
-      rest.get(
-        'https://api.mixpanel.com/track',
-        (req, res, ctx) => {
+    const server = setupServer(
+      ...[
+        rest.get('https://api.mixpanel.com/track', (req, res, ctx) => {
           return res(ctx.json({}))
-        }
-      ),
-      ...args
-    ])
+        }),
+        ...args,
+      ]
+    )
     result.server = server
     result.waitForRequest = createWaitForRequest(server)
     server.events.on('request:start', (req) => {

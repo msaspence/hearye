@@ -18,8 +18,6 @@ import { handleUserChange } from './event-handlers/handleUserChange'
 import { installationStore } from './installationManagement'
 import { handleAppMention } from './event-handlers/handleAppMention'
 
-
-
 const logger = createLogger('hearye:api:bolt')
 
 const {
@@ -40,6 +38,24 @@ if (
   throw new Error('Slack creditials missing')
 }
 /* c8 ignore end */
+
+export const SLACK_SCOPES = [
+  'app_mentions:read',
+  'chat:write',
+  'reactions:read',
+  'reactions:write',
+  'users:read',
+  ...(NODE_ENV === 'production'
+    ? [
+        'channels:read',
+        'groups:read',
+        'channels:history',
+        'groups:history',
+        'mpim:history',
+        'im:history',
+      ]
+    : []),
+]
 
 export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const receiver = new FastifyReceiver({
@@ -68,19 +84,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       warn: logger.warn.bind(logger),
       error: logger.error.bind(logger),
     },
-    scopes: [
-      'app_mentions:read',
-      'chat:write',
-      // 'channels:read',
-      // 'groups:read',
-      'reactions:read',
-      'reactions:write',
-      'users:read',
-      // 'channels:history',
-      // 'groups:history',
-      // 'mpim:history',
-      // 'im:history',
-    ],
+    scopes: [],
     stateSecret: SLACK_STATE_SECRET,
     installationStore,
     path: '/events',
@@ -89,19 +93,19 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
         success: (installation, options, req, res) => {
           const userId = getUserId(req, res)
           mixpanel.alias(userId, installation.user.id)
-          mixpanel.people.set(installation.user.id, { 
-            team_id: installation.team?.id || installation.enterprise?.id, 
-            team_name: installation.team?.name || installation.enterprise?.name
+          mixpanel.people.set(installation.user.id, {
+            team_id: installation.team?.id || installation.enterprise?.id,
+            team_name: installation.team?.name || installation.enterprise?.name,
           })
-          mixpanel.track('Installed', { 
-            distinct_id: installation.user.id, 
+          mixpanel.track('Installed', {
+            distinct_id: installation.user.id,
             source: 'slack',
-            team_id: installation.team?.id || installation.enterprise?.id, 
-            team_name: installation.team?.name || installation.enterprise?.name, 
-            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+            team_id: installation.team?.id || installation.enterprise?.id,
+            team_name: installation.team?.name || installation.enterprise?.name,
+            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
           })
           return defaultCallbackSuccess(installation, options, req, res)
-        }
+        },
       },
       clientOptions: {
         retryConfig: {
@@ -113,7 +117,10 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       installPathOptions: {
         beforeRedirection: async (req: IncomingMessage, res) => {
           const userId = getUserId(req, res)
-          mixpanel.track('Add to Slack', { distinct_id: userId, source: 'slack' })
+          mixpanel.track('Add to Slack', {
+            distinct_id: userId,
+            source: 'slack',
+          })
           return true
         },
       },
@@ -125,10 +132,14 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
   const app = new App<StringIndexed>({
     receiver,
   })
-  
-  const { withHandlerResolutionForTests } = NODE_ENV === 'test'
-    ? await import('../../../tests/slack/helpers/postSlackEvent.ts')
-    : { withHandlerResolutionForTests:(handler: unknown) => handler as (...args: unknown[]) => Promise<unknown> }
+
+  const { withHandlerResolutionForTests } =
+    NODE_ENV === 'test'
+      ? await import('../../../tests/slack/helpers/postSlackEvent.ts')
+      : {
+          withHandlerResolutionForTests: (handler: unknown) =>
+            handler as (...args: unknown[]) => Promise<unknown>,
+        }
 
   app.event('app_home_opened', withHandlerResolutionForTests(handleHomeOpened))
   app.event('app_mention', withHandlerResolutionForTests(handleAppMention))

@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { 
+  "compilerOptions": {
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "isolatedModules": true,
+    "isolatedModules": true
   },
   "ts-node": {
     "swc": true

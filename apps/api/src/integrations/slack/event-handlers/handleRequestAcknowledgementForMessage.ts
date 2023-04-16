@@ -6,8 +6,13 @@ import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEven
 export async function handleRequestAcknowledgementForMessage(event: {
   ack: () => Promise<void>
   client: WebClient
-  body: { team_id: string },
-  payload: { channel: { id: string }; message: Message; trigger_id: string, user: string }
+  body: { team_id: string }
+  payload: {
+    channel: { id: string }
+    message: Message
+    trigger_id: string
+    user: string
+  }
 }) {
   trackAnalyticsEventFromSlackEvent('Request Acknowledgement', event)
   await event.client.views.open({

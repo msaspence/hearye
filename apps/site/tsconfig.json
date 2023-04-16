@@ -1,13 +1,13 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { 
+  "compilerOptions": {
     "isolatedModules": true,
     "moduleResolution": "Node",
     "baseUrl": "../../",
     "types": ["vite/client", "./src/posts.d.ts"],
     "jsx": "react-jsxdev",
     "module": "commonjs",
-    "target": "es2015",
+    "target": "es2015"
   },
   "ts-node": {
     "swc": true

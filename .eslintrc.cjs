@@ -24,9 +24,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    '@typescript-eslint', 'lodash', 'vitest', 'import'
-  ],
+  plugins: ['@typescript-eslint', 'lodash', 'vitest', 'import'],
   rules: {
     'no-console': ERROR,
     'import/extensions': OFF,

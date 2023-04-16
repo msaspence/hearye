@@ -4,6 +4,8 @@ import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEven
 import { requireAcknowledgementsForMessage } from '../requireAcknowledgementsForMessage'
 
 export async function handleAppMention(event: SlackEvent<'app_mention'>) {
-  trackAnalyticsEventFromSlackEvent('Require Acknowledgement', event, { from_mention: true })
+  trackAnalyticsEventFromSlackEvent('Require Acknowledgement', event, {
+    from_mention: true,
+  })
   await requireAcknowledgementsForMessage(event.client, event.payload)
 }

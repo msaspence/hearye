@@ -11,10 +11,9 @@ export async function findDueRemindersWithMessageAndUser() {
     await Reminder.query()
       .patch({ lockedUntil: dayjs().add(1, 'minute').toDate() })
       .whereIn('reminders.id', function () {
-        (
-          env.NODE_ENV === 'development'
-            ? this.select('reminders.id')
-            : this.select('reminders.id').where('remindAt', '<', new Date())
+        ;(env.NODE_ENV === 'development'
+          ? this.select('reminders.id')
+          : this.select('reminders.id').where('remindAt', '<', new Date())
         )
           .whereNull('remindedAt')
           .whereNull('acknowledgedAt')
