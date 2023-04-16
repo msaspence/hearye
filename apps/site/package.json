@@ -20,6 +20,7 @@
     "@mui/material": "^5.10.12",
     "@slack/bolt": "^3.12.1",
     "@supercharge/promise-pool": "^2.3.2",
+    "@tsconfig/recommended": "^1.0.2",
     "@vitejs/plugin-react": "^2.2.0",
     "dd-trace": "^3.2.0",
     "debug": "^4.3.4",
