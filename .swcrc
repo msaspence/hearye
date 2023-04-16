@@ -7,6 +7,8 @@
     "target": "es2019",
     "baseUrl": ".",
     "paths": {
+      "@hearye/api": ["../../apps/api/dist"],
+      "@hearye/api/*": ["../../apps/api/dist/*"],
       "@hearye/env": ["../../packages/env/dist"],
       "@hearye/env/*": ["../../packages/env/dist/*"],
       "@hearye/db": ["../../packages/db/dist"],
