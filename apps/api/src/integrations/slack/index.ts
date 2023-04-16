@@ -71,8 +71,8 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
     scopes: [
       'app_mentions:read',
       'chat:write',
-      'channels:read',
-      'groups:read',
+      // 'channels:read',
+      // 'groups:read',
       'reactions:read',
       'reactions:write',
       'users:read',
