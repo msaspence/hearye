@@ -2,6 +2,8 @@ import { WebClient } from '@slack/web-api'
 
 import { Message } from '../requireAcknowledgementsForMessage'
 import { trackAnalyticsEventFromSlackEvent } from '../actions/trackAnalyticsEventFromSlackEvent'
+import { getOriginalMessage } from './handleRequireAcknowledgementForMessage'
+import { isSlackError } from '../type-guards/isSlackError'
 
 export async function handleRequestAcknowledgementForMessage(event: {
   ack: () => Promise<void>
@@ -15,17 +17,64 @@ export async function handleRequestAcknowledgementForMessage(event: {
   }
 }) {
   trackAnalyticsEventFromSlackEvent('Request Acknowledgement', event)
+  const private_metadata = JSON.stringify({
+    message: {
+      channel: event.payload.channel.id,
+      ts: event.payload.message.ts,
+    },
+  })
+  try {
+    // Check that we'll be able to get the original message
+    // when the modal is submitted.
+    await getOriginalMessage(event.client, {
+      private_metadata,
+      team_id: event.body.team_id,
+    })
+  } catch (error) {
+    if (isSlackError(error) && error.data.error === 'not_in_channel') {
+      return event.client.views.open({
+        trigger_id: event.payload.trigger_id,
+        view: {
+          type: 'modal',
+          callback_id: 'require_acknowledgement_for_message',
+          title: {
+            type: 'plain_text',
+            text: 'Require Acknowledgements',
+            emoji: true,
+          },
+          blocks: [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: '*Please add the Hear Ye! bot to this channel first.*',
+              },
+            },
+            {
+              type: 'section',
+              text: {
+                type: 'plain_text',
+                text: '⚠️  Hear Ye! needs to be in this channel to require acknowledgements.',
+                emoji: true,
+              },
+            },
+          ],
+          close: {
+            type: 'plain_text',
+            text: 'Close',
+            emoji: true,
+          },
+        },
+      })
+    }
+    throw error
+  }
   await event.client.views.open({
     trigger_id: event.payload.trigger_id,
     view: {
       type: 'modal',
       callback_id: 'require_acknowledgement_for_message',
-      private_metadata: JSON.stringify({
-        message: {
-          channel: event.payload.channel.id,
-          ts: event.payload.message.ts,
-        },
-      }),
+      private_metadata,
       title: {
         type: 'plain_text',
         text: 'Require Acknowledgements',

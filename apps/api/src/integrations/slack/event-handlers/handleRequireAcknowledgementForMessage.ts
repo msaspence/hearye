@@ -55,7 +55,7 @@ function getOptionsFromPayload(payload: { state: PayloadState }) {
   return { includeMentioned, otherUsers }
 }
 
-async function getOriginalMessage(
+export async function getOriginalMessage(
   client: WebClient,
   payload: { private_metadata: string; team_id: string }
 ) {
