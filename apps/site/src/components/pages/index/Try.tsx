@@ -8,7 +8,8 @@ export function Try({ sx: sxProp }: { sx?: SxProps<Theme> }) {
     <Box
       id="try"
       sx={{
-        marginY: 7,
+        marginTop: 4,
+        marginBottom: 7,
         marginX: 'auto',
         textAlign: 'center',
         ...sxProp,

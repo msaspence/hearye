@@ -37,6 +37,13 @@ export const theme = createTheme({
         },
       },
     },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          verticalAlign: 'bottom',
+        },
+      },
+    },
 
     MuiTooltip: {
       styleOverrides: {

@@ -150,7 +150,7 @@ export function Page() {
         Ye! in any message where you want to require an acknowledgement. Easy
         peasy, right?
       </Paragraph>
-      <Try sx={{ marginTop: 3, marginBottom: 7 }} />
+      <Try />
       <Paragraph>To start using simply:</Paragraph>
       <List ordered>
         <ListItem>
