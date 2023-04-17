@@ -45,7 +45,7 @@ export const SLACK_SCOPES = [
   'reactions:read',
   'reactions:write',
   'users:read',
-  ...(NODE_ENV === 'production'
+  ...(NODE_ENV !== 'production'
     ? [
         'channels:read',
         'groups:read',
