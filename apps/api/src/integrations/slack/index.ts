@@ -84,7 +84,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
       warn: logger.warn.bind(logger),
       error: logger.error.bind(logger),
     },
-    scopes: [],
+    scopes: SLACK_SCOPES,
     stateSecret: SLACK_STATE_SECRET,
     installationStore,
     path: '/events',
