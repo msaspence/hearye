@@ -1,15 +1,17 @@
 import Box from '@mui/material/Box'
 // import Typography from '@mui/material/Typography'
 import { AddToSlackButton } from '../../AddToSlackButton'
+import type { SxProps, Theme } from '@mui/material/styles'
 
-export function Try() {
+export function Try({ sx: sxProp }: { sx?: SxProps<Theme> }) {
   return (
     <Box
       id="try"
       sx={{
-        margin: '0 auto',
-        padding: '50px 0',
+        marginY: 7,
+        marginX: 'auto',
         textAlign: 'center',
+        ...sxProp,
       }}
     >
       {/* <Typography

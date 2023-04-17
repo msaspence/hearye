@@ -111,7 +111,7 @@ export function BannerHeader({ variant }: { variant?: 'home' | 'blog' }) {
               component="span"
               sx={{
                 color: '#777',
-                fontFamily: 'Archivo Narrow',
+                fontFamily: 'Archivo',
                 marginRight: '12px',
                 fontSize: '1.5em',
                 lineHeight: '1em',

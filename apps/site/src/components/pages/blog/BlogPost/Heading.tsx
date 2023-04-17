@@ -8,7 +8,8 @@ export function Heading({ children }: { children: React.ReactNode }) {
       fontWeight={600}
       variant="h4"
       paragraph
-      marginBottom={2}
+      marginBottom={3}
+      marginTop={8}
     >
       {children}
     </Typography>

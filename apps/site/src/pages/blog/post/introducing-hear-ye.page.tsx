@@ -10,6 +10,9 @@ import {
 } from '../../../components/pages/blog/BlogPost/SummaryPoints'
 import { MainFunctionality } from '../../../components/pages/index/Features/MainFunctionality'
 
+import { Pricing } from '../../../components/pages/index/Pricing'
+import { Try } from '../../../components/pages/index/Try'
+
 export const title = 'Introducing Hear Ye!'
 export const subTitle = 'Never miss an important message again'
 export const description =
@@ -78,6 +81,9 @@ export function Page() {
         support, and we look forward to hearing from you soon.
       </Paragraph>
       <Paragraph>The Hear Ye Team</Paragraph>
+
+      <Pricing />
+      <Try />
     </div>
   )
 }

@@ -7,7 +7,7 @@ export function Paragraph({ children }: { children: React.ReactNode }) {
       fontSize={22}
       variant="body1"
       paragraph
-      marginBottom={5}
+      marginY={3}
     >
       {children}
     </Typography>
