@@ -7,6 +7,7 @@ import {
   Facebook as FacebookIcon,
   Email as EmailIcon,
 } from '@mui/icons-material'
+import { Icon } from '@iconify/react'
 
 export function Footer() {
   return (
@@ -22,6 +23,26 @@ export function Footer() {
       </Typography>
       <Box sx={{ flexGrow: 1 }} />
       <List sx={{ marginRight: 4 }}>
+        <ListItem
+          href="https://slack.com/apps/A046NME2JAX-hear-ye"
+          sx={{ marginTop: '0px' }}
+        >
+          <Icon
+            icon="mdi:slack"
+            style={{
+              height: '24px',
+              width: '24px',
+              position: 'relative',
+              top: '3px',
+              marginTop: '-4px',
+            }}
+          />{' '}
+          Slack App Directory
+        </ListItem>
+
+        <ListItem href="mailto:hello@hearyebot.com">
+          <EmailIcon /> Contact Us
+        </ListItem>
         <ListItem href="https://twitter.com/HearYeBot">
           <TwitterIcon /> Twitter
         </ListItem>
@@ -30,9 +51,6 @@ export function Footer() {
         </ListItem>
         <ListItem href="https://www.facebook.com/HearYeBot">
           <FacebookIcon /> Facebook
-        </ListItem>
-        <ListItem href="mailto:hello@hearyebot.com">
-          <EmailIcon /> Contact Us
         </ListItem>
       </List>
       <List>

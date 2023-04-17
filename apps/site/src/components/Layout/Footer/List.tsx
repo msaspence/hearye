@@ -24,9 +24,11 @@ export function List({
 export function ListItem({
   children,
   href,
+  sx,
 }: {
   children: ReactNode
   href?: string
+  sx?: SxProps<Theme>
 }) {
   if (href) {
     return (
@@ -34,7 +36,7 @@ export function ListItem({
         href={href}
         target={href.match(/^https?:\/\//) ? '_blank' : ''}
         variant="subtitle1"
-        sx={{ minHeight: '24px', lineHeight: '24px' }}
+        sx={{ minHeight: '24px', lineHeight: '24px', ...sx }}
       >
         {children}
       </Link>
