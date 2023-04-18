@@ -39,6 +39,7 @@
     "@types/debug": "^4.1.7",
     "@types/mixpanel-browser": "^2.38.1",
     "@types/pg": "^8.6.6",
+    "@types/scriptjs": "^0.0.2",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",

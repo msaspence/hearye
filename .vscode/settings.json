@@ -3,5 +3,10 @@
   "vitest.nodeEnv": {
     "VSCODE_TESTING": "true"
   },
-  "cSpell.words": ["fastify", "hearye", "prando"]
+  "cSpell.words": [
+    "fastify",
+    "hearye",
+    "prando",
+    "twttr"
+  ]
 }
