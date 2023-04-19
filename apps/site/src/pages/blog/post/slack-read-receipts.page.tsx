@@ -5,6 +5,7 @@ import { Tweet } from '../../../components/Tweet'
 import { List, ListItem } from '../../../components/pages/blog/BlogPost/List'
 import { Paragraph } from '../../../components/pages/blog/BlogPost/Paragraph'
 import { Heading } from '../../../components/pages/blog/BlogPost/Heading'
+import { Quote } from '../../../components/pages/blog/BlogPost/Quote'
 import {
   SummaryPoints,
   SummaryPoint,
@@ -47,7 +48,15 @@ export function Page() {
         Slack have slowly gone from "we're looking into this" to "we have no
         plans for read receipts".
       </Paragraph>
-      <Tweet tweetId="504326324891430912" />
+      <Tweet
+        tweetId="504326324891430912"
+        placeholder={
+          <Quote author="@hermansje">
+            @svencharleer @slackHQ only missing a 'last messages read by ...'
+            but search and integrations for git, docs, pictures... are great!
+          </Quote>
+        }
+      />
 
       <Paragraph>
         Read receipts, which indicate when someone has "read" your message, have

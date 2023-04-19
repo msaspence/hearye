@@ -1,8 +1,11 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, ReactNode } from 'react'
 const { default: script } =
-  typeof document !== 'undefined' ? await import('scriptjs') : {}
+  typeof document !== 'undefined' ? await import('scriptjs') : { default: null }
 
-export function EmbeddedTweet(props) {
+export function EmbeddedTweet(props: {
+  tweetId: string
+  placeholder?: ReactNode
+}) {
   const ref = useRef(null)
   const [loading, setLoading] = useState(true)
   const methodName$5 = 'createTweet'
@@ -12,6 +15,8 @@ export function EmbeddedTweet(props) {
     let isComponentMounted = true
     if (!script) return
     script(twitterWidgetJs, 'twitter-embed', function () {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       if (!window.twttr) {
         // eslint-disable-next-line no-console
         console.error('Failure to load window.twttr, aborting load')
@@ -19,6 +24,8 @@ export function EmbeddedTweet(props) {
       }
 
       if (isComponentMounted) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         if (!window.twttr.widgets[methodName$5]) {
           // eslint-disable-next-line no-console
           console.error(
@@ -27,16 +34,14 @@ export function EmbeddedTweet(props) {
           return
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         window.twttr.widgets[methodName$5](
           props.tweetId,
           ref === null || ref === void 0 ? void 0 : ref.current,
-          props.options
-        ).then(function (element) {
+          {}
+        ).then(() => {
           setLoading(false)
-
-          if (props.onLoad) {
-            props.onLoad(element)
-          }
         })
       }
     })
@@ -44,12 +49,10 @@ export function EmbeddedTweet(props) {
       isComponentMounted = false
     }
   }, [])
-  return React.createElement(
-    React.Fragment,
-    null,
-    loading && React.createElement(React.Fragment, null, props.placeholder),
-    React.createElement('div', {
-      ref: ref,
-    })
+  return (
+    <>
+      {loading && <>{props.placeholder}</>}
+      <div ref={ref} />
+    </>
   )
 }
