@@ -23,7 +23,7 @@ export const publishedAt = dayjs('2022-04-17')
 
 export function Page() {
   return (
-    <div>
+    <>
       <SummaryPoints>
         <SummaryPoint>The short answer is you can't.</SummaryPoint>
         <SummaryPoint>
@@ -178,6 +178,6 @@ export function Page() {
         improve communication, and increase accountability in your Slack
         workspace.
       </Paragraph>
-    </div>
+    </>
   )
 }

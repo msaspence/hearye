@@ -22,7 +22,7 @@ export const publishedAt = dayjs('2022-04-10')
 
 export function Page() {
   return (
-    <div>
+    <>
       <SummaryPoints>
         <SummaryPoint>
           A Slack bot that ensures important messages are acknowledged by
@@ -84,6 +84,6 @@ export function Page() {
 
       <Pricing />
       <Try />
-    </div>
+    </>
   )
 }

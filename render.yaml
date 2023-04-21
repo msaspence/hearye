@@ -1,5 +1,20 @@
 services:
   - type: web
+    name: Site Production
+    env: static
+    repo: https://github.com/msaspence/hearye
+    branch: staging
+    rootDir: .
+
+    envVars:
+      - fromGroup: Production
+    buildCommand: npm run build:site
+    publishDir: apps/site/dist/client
+    autoDeploy: true
+    domains:
+      - staging.hearyebot.com
+
+  - type: web
     name: API Production
     env: node
     repo: https://github.com/msaspence/hearye
