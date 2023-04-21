@@ -108,7 +108,7 @@ services:
           property: connectionString
     autoDeploy: true
     domains:
-      - api.hearyebot.com
+      - api.staging.hearyebot.com
 
   - type: worker
     name: Reminder Runner Staging
