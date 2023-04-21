@@ -3,7 +3,7 @@ services:
     name: Site Production
     env: static
     repo: https://github.com/msaspence/hearye
-    branch: staging
+    branch: main
     rootDir: .
 
     envVars:
@@ -12,7 +12,7 @@ services:
     staticPublishPath: apps/site/dist/client
     autoDeploy: true
     domains:
-      - staging.hearyebot.com
+      - hearyebot.com
 
   - type: web
     name: API Production
@@ -41,6 +41,7 @@ services:
     autoDeploy: true
     domains:
       - api.hearyebot.com
+
   - type: worker
     name: Reminder Runner Production
     env: node
