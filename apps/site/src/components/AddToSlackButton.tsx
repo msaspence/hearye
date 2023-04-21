@@ -17,6 +17,8 @@ export function AddToSlackButton({
       typeof window !== 'undefined' &&
         window.location.host.match(/(^localhost)|(loophole.site$)/)
         ? 'hearye.loophole.site'
+        : window.location.host.match(/(^staging$)/)
+        ? 'api.staging.hearyebot.com'
         : 'api.hearyebot.com'
     )
   }, [])
