@@ -9,7 +9,7 @@ services:
     envVars:
       - fromGroup: Production
     buildCommand: npm run build:site
-    publishDir: apps/site/dist/client
+    staticPublishPath: apps/site/dist/client
     autoDeploy: true
     domains:
       - staging.hearyebot.com
