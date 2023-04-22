@@ -9,6 +9,8 @@ export function getUserId(
   const { userId = uuid() } = req.headers.cookie
     ? cookie.parse(req.headers.cookie)
     : {}
+  const [domain] = req.headers.host?.match(/(^localhost)|([^.]+\.[^.]+)$/) || []
+
   if (userId) {
     res.setHeader(
       'Set-Cookie',
@@ -16,11 +18,7 @@ export function getUserId(
         expires: new Date(2033, 1, 1),
         httpOnly: false,
         path: '/',
-        domain: req.headers.host?.match(/^localhost/)
-          ? 'localhost'
-          : req.headers.host?.match(/loophole.site$/)
-          ? 'loophole.site'
-          : 'hearye.com',
+        domain,
       })
     )
   }
