@@ -97,7 +97,7 @@ services:
     healthCheckPath: /
     region: oregon
     plan: free
-    branch: main
+    branch: staging
     rootDir: .
     numInstances: 1
     envVars:
@@ -124,7 +124,7 @@ services:
     startCommand: npm run sentry:release:deploy --workspace @hearye/reminder-runner && DEBUG=* npm run start:reminder-runner
     region: oregon
     plan: starter
-    branch: main
+    branch: staging
     rootDir: .
     numInstances: 1
     envVars:
