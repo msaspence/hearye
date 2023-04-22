@@ -1,6 +1,9 @@
 import { WebClient } from '@slack/web-api'
+import { createLogger } from '@hearye/logger'
 
 import { isSlackError } from './type-guards/isSlackError'
+
+const logger = createLogger('hearye:api:slack:getAllGroupUserIds')
 
 export async function getAllGroupUserIds(client: WebClient, usergroup: string) {
   try {
@@ -11,6 +14,7 @@ export async function getAllGroupUserIds(client: WebClient, usergroup: string) {
     return result.users
   } catch (error) {
     if (isSlackError(error) && error.data.error === 'missing_scope') {
+      logger.warn('Missing scope to get user group users', error)
       return []
     }
     throw error
