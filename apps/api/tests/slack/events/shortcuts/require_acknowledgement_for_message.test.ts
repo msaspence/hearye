@@ -26,7 +26,7 @@ describe('request to GET /slack/events', () => {
     noChannelOrGroupScope = false
   })
 
-  describe('when it is an request_acknowledgement_for_message shortcut', async () => {
+  describe('when it is an require_acknowledgement_for_message shortcut', async () => {
     const server = createMockServer(
       rest.post('https://slack.com/api/reactions.add', (req, res, ctx) => {
         return res(ctx.json({ ok: true }))

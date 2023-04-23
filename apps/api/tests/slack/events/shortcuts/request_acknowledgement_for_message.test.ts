@@ -7,6 +7,7 @@ import { postSlackRequest } from '../../helpers/postSlackRequest'
 import { createMockServer } from '../../../helpers/mock-server'
 
 let account: Account
+const authorUserId = 'U03T5T28UU8'
 const triggerId = '944799105734.773906753841.38b5894552bdd4a780554ee59d1f3638'
 const userId = 'U03T5T28UU8'
 const channelId = 'C03SD7H923F'
@@ -21,7 +22,27 @@ describe('request to GET /slack/events', () => {
     const server = createMockServer(
       rest.post('https://slack.com/api/views.open', (req, res, ctx) => {
         return res(ctx.json({ ok: true }))
-      })
+      }),
+      rest.post(
+        'https://slack.com/api/conversations.history',
+        (req, res, ctx) => {
+          return res(
+            ctx.json({
+              ok: true,
+              messages: [
+                {
+                  team: account.externalId,
+                  channel: channelId,
+                  ts: messageTs,
+                  blocks: [],
+                  user: authorUserId,
+                  client_msg_id: '1bd4f0f2-f57a-4408-aef1-9cd0d04ff95f',
+                },
+              ],
+            })
+          )
+        }
+      )
     )
     it('responds with 200', async () => {
       const response = await postRequestAcknowledgementForMessage(account)
