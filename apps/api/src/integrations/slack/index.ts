@@ -48,6 +48,8 @@ export const SLACK_SCOPES = [
   ...(NODE_ENV !== 'production'
     ? [
         'channels:read',
+        'commands',
+        'usergroups:read',
         'groups:read',
         'channels:history',
         'groups:history',

@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box'
 import { ReactNode } from 'react'
-
 import { Footer } from './Footer'
 
 export function Layout({ children }: { children: ReactNode }) {
