@@ -152,7 +152,7 @@ describe('deleteInstallation', () => {
       }
       await deleteInstallation(installation)
       const updatedAccount = await Account.query().findById(account.id)
-      expect(updatedAccount?.installation).toBeNull
+      expect(updatedAccount?.installation).toBeNull()
     })
   })
 

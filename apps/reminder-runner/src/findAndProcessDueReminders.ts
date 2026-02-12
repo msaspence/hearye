@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/node'
+import { PromisePool } from '@supercharge/promise-pool'
 import {
   findDueRemindersWithMessageAndUser,
   Reminder,
@@ -7,17 +8,19 @@ import {
 import { traced } from './sentry'
 
 import { createLogger } from '@hearye/logger'
+import { env } from '@hearye/env'
 
 import { remindUser } from './integrations/slack/remindUser'
 
 const logger = createLogger('hearye:db:findAndProcessDueReminders')
+const CONCURRENCY = env.REMINDER_CONCURRENCY
 
 export async function findAndProcessDueReminders() {
   const reminders = await findDueRemindersWithMessageAndUser()
   logger.info(`${reminders.length} found to process`)
-  await Promise.all(
-    reminders.map(manageErrors(traced('remindUser', remindUser)))
-  )
+  await PromisePool.withConcurrency(CONCURRENCY)
+    .for(reminders)
+    .process(manageErrors(traced('remindUser', remindUser)))
   return reminders.length
 }
 
@@ -25,14 +28,14 @@ export async function findAndProcessDueReminders() {
 function manageErrors(callback: (reminder: Reminder) => Promise<any>) {
   return async (reminder: Reminder) => {
     try {
-      return callback(reminder)
+      return await callback(reminder)
     } catch (error: unknown) {
       try {
         logger.info('Reminder failed, rescheduling')
         Sentry.captureException(error)
         // eslint-disable-next-line no-console
         console.error(error)
-        return scheduleRetryReminder(reminder)
+        return await scheduleRetryReminder(reminder)
       } catch (scheduleRetryError) {
         Sentry.captureException(scheduleRetryError)
         // eslint-disable-next-line no-console

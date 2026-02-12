@@ -12,7 +12,7 @@ const { LOGTAIL_ENABLED, LOGTAIL_SOURCE_TOKEN, NODE_ENV, RENDER_GIT_COMMIT } =
 const logtailTransport =
   LOGTAIL_SOURCE_TOKEN && LOGTAIL_ENABLED
     ? new LogtailTransport(new Logtail(LOGTAIL_SOURCE_TOKEN))
-    : false
+    : undefined
 declare module 'winston' {
   export interface Logger {
     fatal: winston.LeveledLogMethod

@@ -4,7 +4,6 @@ import { createLogger } from '@hearye/logger'
 
 import { mixpanel } from '../../../mixpanel'
 import { getAccountFromSlackEvent } from '../to-local/getAccountFromSlackEvent'
-import { error } from 'winston'
 
 const logger = createLogger('hearye:api:trackAnalyticsEventFromSlackEvent')
 
@@ -37,7 +36,7 @@ export async function trackAnalyticsEventFromSlackEvent(
     }
     logger.debug('Tracking event', { eventName, payload })
     mixpanel.track(eventName, payload)
-  } catch (e) {
-    logger.error(error)
+  } catch (err) {
+    logger.error(err)
   }
 }

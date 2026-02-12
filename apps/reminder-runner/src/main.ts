@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/node'
 import { createLogger } from '@hearye/logger'
+import { env } from '@hearye/env'
 import { initSentry, trace } from './sentry'
 
 import { findAndProcessDueReminders } from './findAndProcessDueReminders'
@@ -7,7 +8,7 @@ import { findAndProcessDueReminders } from './findAndProcessDueReminders'
 const logger = createLogger('hearye:runner:main')
 
 let loop: ReturnType<typeof setTimeout>
-const SLEEP: number = parseInt(process.env.LOOP_LENGTH || '1') * 1000
+const LOOP_INTERVAL_MS = env.LOOP_LENGTH * 1000
 
 initSentry()
 
@@ -23,7 +24,7 @@ export async function main() {
     logger.error(error)
     Sentry.captureException(error)
   } finally {
-    loop = setTimeout(main, processed === 0 ? SLEEP : 0)
+    loop = setTimeout(main, processed === 0 ? LOOP_INTERVAL_MS : 0)
   }
 }
 

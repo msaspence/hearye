@@ -22,6 +22,7 @@
     "tunnel": "./loophole http 8080 --hostname hearye",
     "tunnel:site": "./loophole http 4000 --hostname hearyesite",
     "test": "vitest",
+    "typecheck": "npm run -ws --if-present typecheck",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:eslint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:prettier": "prettier --check ."

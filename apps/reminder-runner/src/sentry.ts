@@ -8,7 +8,7 @@ export function initSentry() {
   Sentry.init({
     dsn: SENTRY_DSN,
     environment: NODE_ENV,
-    tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
+    tracesSampleRate: SENTRY_SAMPLE_RATE,
     release: RENDER_GIT_COMMIT,
   })
 }

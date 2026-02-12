@@ -24,7 +24,7 @@ export async function sentry(
       dsn: SENTRY_DSN,
       environment: NODE_ENV,
       release: RENDER_GIT_COMMIT,
-      tracesSampleRate: parseFloat(SENTRY_SAMPLE_RATE ?? '1'),
+      tracesSampleRate: SENTRY_SAMPLE_RATE,
     })
   }
   /* c8 ignore stop */

@@ -5,15 +5,18 @@ import { mixpanel } from '../contexts/MixPanel'
 import { ClientContext } from './types'
 
 let root: ReactDOM.Root
+const MIXPANEL_ENABLED = Boolean(import.meta.env.VITE_MIXPANEL_TOKEN)
 
 export function hydrateClient(
   renderApp: (pageContext: ClientContext) => JSX.Element,
   pageContext: ClientContext
 ) {
-  mixpanel.track('Page View', {
-    title: document.title,
-    path: pageContext.urlOriginal,
-  })
+  if (MIXPANEL_ENABLED) {
+    mixpanel.track('Page View', {
+      title: document.title,
+      path: pageContext.urlOriginal,
+    })
+  }
   const page = renderApp(pageContext)
   const container = document.getElementById('page-root')
   document.title = getTitle(pageContext)

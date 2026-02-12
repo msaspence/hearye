@@ -1,7 +1,7 @@
 import { IncomingMessage } from 'http'
 import { FastifyPluginCallback } from 'fastify'
 import { App } from '@slack/bolt'
-import { FileStateStore, defaultCallbackSuccess } from '@slack/oauth'
+import { defaultCallbackSuccess } from '@slack/oauth'
 import { FastifyReceiver } from 'slack-bolt-fastify'
 
 import { env } from '@hearye/env'
@@ -17,6 +17,7 @@ import { handleReaction } from './event-handlers/handleReaction'
 import { handleUserChange } from './event-handlers/handleUserChange'
 import { installationStore } from './installationManagement'
 import { handleAppMention } from './event-handlers/handleAppMention'
+import { DatabaseStateStore } from './stateStore'
 
 const logger = createLogger('hearye:api:bolt')
 
@@ -127,7 +128,7 @@ export const registerSlack: FastifyPluginCallback = async (fastify) => {
         },
       },
       redirectUriPath: '/oauth_redirect',
-      stateStore: new FileStateStore({}),
+      stateStore: new DatabaseStateStore(),
     },
     fastify: fastify as never,
   })

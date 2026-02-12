@@ -63,8 +63,8 @@ function useTickerStateForWordClass(array: string[]) {
   }, [setState])
   return useMemo(
     () => ({
-      current: state[0] || array[1],
-      next: state[1] || null,
+      current: state[0] ?? array[0],
+      next: state[1] ?? array[1] ?? array[0],
       doNext,
     }),
     [state, doNext]

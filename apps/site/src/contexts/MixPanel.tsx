@@ -4,29 +4,36 @@ import useCookie from 'react-use-cookie'
 import { v4 as uuid } from 'uuid'
 export { mixpanel }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-mixpanel.init(import.meta.env.VITE_MIXPANEL_TOKEN, { debug: true })
+const MIXPANEL_TOKEN = import.meta.env.VITE_MIXPANEL_TOKEN
+const isBrowser = typeof window !== 'undefined'
+
+if (isBrowser && MIXPANEL_TOKEN) {
+  mixpanel.init(MIXPANEL_TOKEN, { debug: import.meta.env.DEV })
+}
 
 const MixPanelContext = createContext<typeof mixpanel | null>(null)
 
 export function MixPanelProvider({ children }: { children: ReactNode }) {
   const [userId, setUserId] = useCookie('userId', undefined)
   useEffect(() => {
-    if (!userId) {
-      setUserId(uuid(), {
-        domain: window.location.host.match(/^localhost/)
-          ? 'localhost'
-          : window.location.host.match(/loophole.site$/)
-          ? 'loophole.site'
-          : 'hearye.com',
-        days: 3650,
-      })
-    }
-  }, [])
+    if (!MIXPANEL_TOKEN || !isBrowser || userId) return
+    const hostname = window.location.host
+    setUserId(uuid(), {
+      domain: hostname.match(/^localhost/)
+        ? 'localhost'
+        : hostname.match(/loophole.site$/)
+        ? 'loophole.site'
+        : 'hearye.com',
+      days: 3650,
+    })
+  }, [userId, setUserId, MIXPANEL_TOKEN])
   useEffect(() => {
-    if (userId) mixpanel.identify(userId)
-  }, [userId])
+    if (!MIXPANEL_TOKEN || !isBrowser || !userId) return
+    mixpanel.identify(userId)
+  }, [userId, MIXPANEL_TOKEN])
+  if (!MIXPANEL_TOKEN) {
+    return <>{children}</>
+  }
   return (
     <MixPanelContext.Provider value={mixpanel}>
       {children}

@@ -31,9 +31,11 @@ export async function apiApp(
       version: RENDER_GIT_COMMIT,
     }
   })
-  app.get('/error', async () => {
-    throw new CustomError('A message ')
-  })
+  if (env.NODE_ENV !== 'production') {
+    app.get('/error', async () => {
+      throw new CustomError('A message ')
+    })
+  }
   app.register(registerSlack, { prefix: '/slack' })
 
   app.register(logging)
